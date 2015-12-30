@@ -1,0 +1,23 @@
+\chapter*{\centerline{NOTATIONS}}
+\addcontentsline{toc}{chapter}{NOTATIONS}
+\begin{singlespace}
+\begin{tabbing}
+xxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \kill
+\textbf{$D$}		\> Integer Sequence  \\
+\textbf{$S$}	\> Integer Set \\
+\textbf{$\Gamma(S)$}  	\> Family of non-isomorphic simple graphs realizing $S$ \\
+\textbf{$\mu(S)$}		\> Minimum order of a simple graph realizing $S$ \\
+\textbf{$\mu_T(S)$}		\> Minimum order of a tree realizing $S$ \\
+\textbf{$\mu_B(S)$}		\> Minimum order of a bipartite graph realizing $S$ \\
+\textbf{$\mu_{\lor}(S)$}		\> Minimum order of a simple digraph $\lor$-realizing $S$ \\
+\textbf{$\mu_{\land}(S)$}		\> Minimum order of a simple digraph $\land$-realizing $S$ \\
+\textbf{$\mu_A(S)$}		\> Minimum order of a simple asymmetric digraph $\land$-realizing $S$ \\
+\textbf{$\mathbb{K}_n$}		\> Complete graph on $n$ vertices \\
+\textbf{$|A|$}		\> Cardinality of set $|A|$  \\
+\textbf{$A\setminus B$}	\> Set of elements of $A$ not in $B$ \\
+\textbf{$\overline{G}$}		\> Complement of $G$ \\
+\textbf{$N(v)$}	\> Set of adjacent neighbors of vertex $v$ in the given graph \\
+\end{tabbing}
+\end{singlespace}
+\pagebreak
+\clearpage

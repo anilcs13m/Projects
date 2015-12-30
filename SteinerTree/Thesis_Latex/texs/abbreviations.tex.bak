@@ -1,0 +1,14 @@
+\abbreviations
+ 
+\noindent 
+\begin{tabbing}
+xxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \kill
+\textbf{APSP}   \> All Pairs Shortest Path \\
+\textbf{APASP}   \> All Pairs Approximate Shortest Path \\
+\textbf{PEO}   \> Perfect Elimination Ordering\\
+\textbf{LCA}   \> Least Common Ancestor\\
+
+
+\end{tabbing}
+
+\pagebreak

@@ -1,0 +1,124 @@
+\chapter{Preliminaries} \label{ch_prelim}
+% %Chapter 2
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Chordal Graphs}
+ A graph $G = (V,E)$ is chordal if every cycle of length greater than three has a chord. 
+ A chord is an edge connecting two non adjacent vertices of a cycle. 
+ In this section we define and prove many characteristic properties of chordal graphs.
+\subsection{Minimal Vertex Separator}
+ A $\emph{separator}$ $S \subset V$ is subset of vertices such that $G \setminus S$ contains at least two connected component. 
+ A separator $S$ is called as $\emph{xy-separator}$
+ if $x,y \in V$ are in different connected components in $G \setminus S$. 
+ If vertices are not specified, then $S$ is called as $\emph{vertex separator}$.
+ A vertex separator $S$ is $\emph{minimal vertex separator}$ if no proper subset of $S$ is a vertex separator.
+\begin{theorem}[\cite{dirac}]
+ A graph $G$ is chordal if and only if every minimal vertex separator of $G$ is a clique.
+\end{theorem}
+\begin{proof}
+ Let $G$ be a chordal graph and $S$ be a minimal vertex separator such that $x,y \in V$ are in different connected component in $G \setminus S$.
+ Let $G(X)$ and $G(Y)$ be connected components of $G$ such that $x \in G(X)$ and $Y \in G(Y)$. Every vertex $u \in S$ is adjacent to a vertex in $G(X)$
+ and a vertex in $G(Y)$, otherwise $S \setminus \{u\}$ is also a $xy$-separator, contradicting the minimality of $S$. Let $u,v \in S$, there must
+ exist a path $\mu_1$ joining $u$ and $v$ such that all internal vertices of $\mu_1$ are in $G(X)$. Let $\mu_1$ is chosen such that
+ length of $\mu_1$ is minimum over all such paths.
+ Similarly, let $\mu_2$ be the shortest path joining $u$ and $v$ such that all vertices of $\mu_2$ are in $G(Y)$. Clearly, we can combine $\mu_1$ and $\mu_2$
+ to obtain a cycle of length greater then 3. Length of cycle is greater than 3, therefore it must contain a chord.
+ Chord cannot join two vertices of $\mu_1$ otherwise it will contradict the fact that $\mu_1$ is a shortest path that connect $u$ and $v$ and
+ all internal vertices of $\mu_1$ are in $G(X)$. Similarly, there is no possibility of chord in $\mu_2$. The only possibility of chord is between 
+ $u$ and $v$. Therefore, $(u,v) \in E$. Similarly we can prove that for every $u,v \in S$, $(u,v) \in E$. Therefore, $S$ is a clique.
+ 
+ For other direction, let $G$ be a graph such that every minimal vertex separator $S$ of $G$ is a clique. Let $[x_1,x_2,\dots,x_k,x_1]$ be a cycle 
+ of length greater than 3 in $G$. If there exists a chord between $x_1$ and $x_3$ then we are done, otherwise there exists a minimal $x_1x_3$-separator $S$.
+ Separator $S$ must contain $x_2$ and $x_i$, $4 \leq i \leq k$. We know that vertices of $S$ forms a clique, therefore $(x_2,x_i) \in E$. Hence any 
+ cycle of length greater then 3 must contain a chord.
+\end{proof}
+
+\subsection{Perfect Elimination Ordering}
+ Perfect Elimination Ordering(PEO) is one of the most important properties of chordal graphs. We introduce the concept
+ of simplicial vertex before defining PEO formally.
+\begin{definition}
+  A vertex $u \in V$ is called as simplicial vertex if $u$ and vertices present in adj($u$) form a clique.
+\end{definition}
+ Let $f = [v_1,v_2,\dots,v_n]$ be an ordering of vertices of $G$. $f$ is $\emph{perfect elimination ordering}$ if every $v_i \in V$ is simplicial 
+ in the graph induced by the vertices $v_i,v_{i+1},\dots,v_n$. Equivalently, $f$ is perfect elimination ordering if, for each $v_i \in V$, $v_i$ and 
+ the neighbors of $v_i$ that occur after $v_i$ in ordering form a clique. 
+\begin{lemma}[\cite{dirac}]\label{simplicial}
+Every chordal graph $G$ has at least one simplicial vertex. If $G$ is not complete then it has two non-adjacent simplicial vertices.
+\end{lemma}
+\begin{proof}
+ If $G$ is complete then trivially every vertex of $G$ is simplicial. 
+ If $G$ is not complete then we use induction on the number of vertices to prove existence of two non adjacent simplicial vertices. 
+ Let $G$ be a chordal graph containing two non adjacent vertices $x$ and $y$.\\
+ $\textbf{Base case}$.  Let $G$ be a graph with $n$ = 2 vertices. This case is trivial with both vertices simplicial as both are isolated.\\
+ $ \textbf{Inductive hypothesis}$. Let for every non-complete chordal graph $G$ having $n < k$ vertices has two non-adjacent simplicial vertices.\\
+ $ \textbf{Inductive step}$. Let $G$ be a chordal graph with $n = k$ vertices. 
+ Let $x$,$y \in V$ be two non-adjacent vertices in $G$ and $S$ be minimal $xy$-separator. 
+ Let $G(X)$ and $G(Y)$ be the components that contains $x$ and $y$ respectively. 
+ Let $G'$ be a subgraph of $G$ induced by vertex set $G(X) \cup S$. 
+ Clearly, $G'$ is an chordal graph with vertices less then $k$. 
+ Hence, by inductive hypothesis either $G'$ has two non adjacent simplicial vertices one of them must be in $G(X)$ as $S$ is minimal 
+ vertex separator so it must be complete. $adj(X) \subset G(X) \cup S$ because $S$ separates $G(X)$ and $G(Y)$, 
+ hence if $x' \in G(X)$ is simplicial in $G'$ it must be simplicial in $G$ also.
+ In the same way we can argue that there must exist a simplicial vertex $y'$ in $G(Y)$. Clearly, $x'$ and $y'$ are non adjacent.
+ Hence the claim. 
+\end{proof}
+\\
+Now we use Lemma \ref{simplicial} to prove the fact that every chordal graph contains Perfect elimination ordering.
+\begin{theorem}[\cite{fulkerson}]
+ A graph $G$ is chordal if and only if it has a perfect elimination ordering.
+\end{theorem}
+\begin{proof}
+ Let $G$ be a graph and $f$ be the perfect elimination ordering of vertices of $G$. 
+ Let $\mu = [v_p,v_{p+1},\dots,v_q,v_p]$ be a cycle of length greater then 3 in $G$. 
+ Let $v_j \in \mu$ such that $v_j$ occur before all vertices of $\mu$ in $f$. 
+ Clearly, $v_{j-1}$ and $v_{j+1}$ are neighbors of $v_j$ and they occur after $v_j$ in $f$. 
+ Therefore, $(v_{j-1},v_{j+1}) \in E$ i.e., every cycle of length greater then 3 has a chord in $G$.
+ \par Let $G$ be a chordal graph. We use induction on number of vertices of graph to prove existence of perfect elimination ordering in $G$.
+ Base case, i.e., $n = 1$ is trivial because any graph with one vertex has perfect elimination ordering. 
+ Let every chordal graph with less then $n$ vertices have perfect elimination ordering. Let $G$ be a chordal graph with $n$ vertices.
+ By Lemma \ref{simplicial} $G$ has a simplicial vertex. Let $u \in V$ be simplicial in $G$. 
+ Clearly, $G \setminus \{u\}$ is a chordal graph with fewer than $n$ vertices. 
+ Therefore, by induction hypothesis, there exist a perfect elimination ordering in $G \setminus \{u\}$. 
+ Perfect elimination ordering for $G$ is $u$ followed by perfect elimination ordering of $G \setminus \{u\}$. Hence the claim.
+\end{proof}
+
+\subsection{Clique Tree Representation}
+ \begin{theorem}[\cite{blair}]
+  Let $G$ be a chordal graph and $T$ is clique tree of $G$, then $T$ respect the clique intersection property.
+ \end{theorem}
+ \begin{proof}
+  Proof is by induction on number of vertices $n$ in $G$. For $n = 1$, $T$ contains only one clique which is only vertex of $G$.
+  Therefore, $T$ trivially satisfies clique intersection property. By $\emph{induction hypothesis}$,
+  If number of vertices in a chordal graph $G$ is less then $n$, then any clique tree $T$ of $G$ satisfies clique intersection property.
+  Let $G$ be a chordal graph with $n$ vertices. If $G$ is complete then $T$ contains a single node and trivially satisfies
+  clique intersection property. If $G$ is not connected i.e., it contains connected components $G_1,G_2,\dots,G_k$, then
+  clique trees of each $G_i$ satisfies clique intersection property by induction hypothesis. Let $T_i$ is a clique tree 
+  of $G$, we join a node of $T_i$ to a node of $T_{i+1}$ ($i = 1,2,\dots,k$) to obtain a clique tree of $G$ that satisfies 
+  clique intersection property. Let $G$ is connected but not complete. Let $v$ is a simplicial vertex of $G$ and 
+  $\mathcal{K}$ be the clique containing $v$. Let $G'$ be the graph induced on vertex set $V \setminus \{v\}$.
+  By induction hypothesis, any clique tree $T'$ of $G'$ satisfies clique intersection property. 
+  Let $\mathcal{K}' = \mathcal{K} \setminus \{v\}$. We need to address two cases to prove the claim. 
+  First, if $\mathcal{K}'$ is a maximal clique. It is easy to see that $\mathcal{K}_{G} = \mathcal{K}_{G'} \cup \mathcal{K} - \mathcal{K}'$. 
+  Therefore, a clique tree $T$ for $G$ can be obtained by replacing node $\mathcal{K}'$ of $T'$ by $\mathcal{K}$. 
+  The only difference between $T$ and $T'$ is the
+  presence of $v$ in node $\mathcal{K}$ of $T$ which is not present in $\mathcal{K}'$ of $T'$. 
+  Since $v$ is simplicial, therefore, $v$ is not present in any clique of $\mathcal{K}_G$ other than $\mathcal{K}$. 
+  From the fact that $T'$ satisfies clique intersection property it is easy to see that  for any pair of cliques 
+  $\mathcal{K}_i$ and $\mathcal{K}_j$ of $T$, $\mathcal{K}_i \cap \mathcal{K}_j$ is present in every clique joining
+  in the path joining $\mathcal{K}_i$ and $\mathcal{K}_j$. Hence, $T$ also satisfies clique intersection property.
+  \par Now, let $\mathcal{K}'$ is not a maximal clique of $G'$. Let $\mathcal{K}''$ be the clique such that 
+  $\mathcal{K}' \subset \mathcal{K}''$. A clique tree $T$ for $G$ can be obtained by adding node $\mathcal{K}$ to
+  $T'$ and making it adjacent to $\mathcal{K}''$. The path joining $\mathcal{K}$ and any other clique $\mathcal{K}_i$ in $T$
+  must contain $\mathcal{K}''$ as $\mathcal{K}''$ is the only neighbor of $\mathcal{K}$.
+  Since, $\mathcal{K} \setminus \{v\} = \mathcal{K}' \subset \mathcal{K}''$ and
+  $v$ belongs to no clique in $\mathcal{K}_G \setminus \mathcal{K}$, it follows that $\mathcal{K}_i \cap \mathcal{K} \subset \mathcal{K}''$.
+  We know that $T'$ satisfies clique intersection property, therefore $\mathcal{K} \cap \mathcal{K}_i = \mathcal{K}'' \cap \mathcal{K}_i$
+  is present in every clique in the path joining $\mathcal{K}$ and $\mathcal{K}''$. Hence, in this case also
+  $T$ satisfies clique intersection property. Hence the claim.
+ \end{proof}
+  
+
+
+
+ 
+
+

@@ -1,0 +1,23 @@
+\chapter{CONCLUSIONS AND FUTURE WORK} \label{ch_concl}
+%Chapter 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusions}
+In this work we studied the \problemfont{Hitting Set} problem on a set of line segments i.e. the Guarding a Set of Segments problem. In doing so, we 
+proposed a framework for solving the hitting set problem on hypergraphs whose vertices can be ordered with a certain property. This allowed us to 
+obtain constant-factor approximation algorithm for Triangle-Free GSS instances. We also showed how GSS instances satisfying the Helly Property are 
+also Triangle-Free GSS instances implying the same constant-factor approximation for them. Both the class of instances are NP-Hard to solve optimally. 
+We also focused on the Outerplanar GSS instances and gave a 2-approximation for those instances. It remains open whether the Outerplanar GSS instances 
+are polynomial-time solvable or not.
+
+We also gave a new exact algorithm for optimally solving the GSS problem on Tree structures. The problem was studied from the Fixed Parameter 
+Tractability aspect and we showed a quadratic kernel for the problem implying that the problem is Fixed Parameter Tractable. It remains open if there
+is a better kernel for the problem or not.
+
+\section{Future Work}  
+
+In Section \ref{sec_epsilon} we saw that $\epsilon$-net lower bound for points and lines does not directly apply to the GSS instances. This leaves 
+the possibility of existence of constant factor approximation for the hitting set on GSS instances open. Otherwise a different technique is necessary 
+to prove the $\epsilon$-net lower bound for GSS instances. The lower bound can only be shown by GSS instances for which the underlying graph has girth 
+3.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

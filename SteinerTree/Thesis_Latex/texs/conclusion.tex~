@@ -1,0 +1,26 @@
+\chapter{CONCLUSION AND FUTURE WORK} \label{ch_concl}
+%Chapter 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+ In this work we designed distance oracle for chordal graphs. We explored the structural properties of underlying clique tree
+ structure of chordal graphs to build a set of data structures that can answer distance queries in constant time.
+ We proved that the hitting set for the path joining cliques $C_i$ and $C_j$ encodes the distance between the pair of vertices present in 
+ $C_i$ and $C_j$ respectively. Lemma \ref{hitsel} and Theorem \ref{the:4} represent an interesting connection between the hitting set for a path of cliques
+ in clique tree and the distance between the vertices present in the end cliques of the path. We also proved that by keeping the size of 
+ the hitting set of cliques on all paths originating from a single vertex in the clique tree, we can compute hitting set for the path joining 
+ any pair of cliques in constant time. This observation is important to answer queries in constant time.
+ We essentially proved that a linear size distance oracle for chordal graphs can be built in $O(n^2)$ time and $O(n^2)$ space. 
+ Subsequent queries for the distance between any pair of vertices of the graph can be answered approximately in constant time. 
+ Finally, by maintaining the approximate hitting sets too, 
+ along with the whole clique tree, we can modify the distance oracle in this paper to use $O(n^2)$ space, 
+ and  respond to distance queries with paths of length at most $2d_G(u,v)+8$.
+ 
+ \section{Future Work}
+ A tree $t$-spanner of a graph can be visualized as a distance oracle of the graph that can answer distance queries with stretch of at most $t$.
+ We know that the hitting set encodes the distance information of the graph.
+ Therefore, the idea of hitting set can be further extended to compute a tree t-spanner for chordal graphs. 
+ The other area of work is to use the idea of hitting set to compute $G^2$ matrix for split graphs without using matrix multiplication.
+ Due to a reduction by Han et al.\cite{han}, we know that, if $G^2$ matrix of a split graph can be computed efficiently then it can be efficiently computed for general graphs as well.
+ Therefore, by using this procedure we can remove the dependency of solving $\textsc{APSP}$ for unweighted general graphs~\cite{seidel} on matrix multiplication. 
+ Hence it will reduce the time complexity to compute $\textsc{APSP}$ matrix for general unweighted graph.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

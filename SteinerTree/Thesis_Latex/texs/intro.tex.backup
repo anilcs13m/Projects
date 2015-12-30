@@ -1,0 +1,199 @@
+\chapter{INTRODUCTION}
+%Chapter 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ This thesis presents a study on two closely related problems, $\emph{distance oracle}$ and $\emph{tree t-spanners}$ for 
+ $\emph{chordal graphs}$ and its subclasses particularly $\emph{interval graphs}$ and $\emph{split graphs}$. 
+ In this chapter we present a brief introduction to both problems. Also, in this chapter, we present preliminaries
+ and basic definitions that are used throughout this thesis. 
+ 
+ \section{Overview and Motivation}
+ \subsection{Distance Oracles}
+ $\emph{All Pairs Shortest Path}$ $(\textsc{APSP})$ is one of the most fundamental and classical problems of graph theory.
+ $\textsc{APSP}$ can be defined as follows:
+ 
+ \begin{tabular}{|ll|}
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{All Pairs Shortest Path ($\textsc{APSP}$)}} \\
+ \emph{Input} & \begin{minipage}[t]{0.8\columnwidth}
+ A graph $G = (V,E)$, where $V$ is the vertex set of graphs and $E$ is set of edges of graph.
+ Also, $|V| = n$ and $|E| = m$.
+ \end{minipage} \\
+ \emph{Output} & \begin{minipage}[t]{0.8\columnwidth}
+ An $n \times n$ matrix $M$ such that $M[i,j] = k$ if shortest distance between $v_i$ and $v_j$ in $G$ is $k$, where
+ $1 \leq i,j \leq n$ and $v_i,v_j \in V$.
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+ 
+ One can imagine that even in primitive societies, finding shortest path between two places is important. It is difficult to
+ trace back the origin of shortest path problem in history. Shortest path problem was also studied in context of the 
+ communication network. In communication network it is important to sent data through a shortest available path. In 
+ twentieth century, development of communication network forced researchers to design more efficient algorithms for 
+ all pairs shortest path problem. 
+ 
+ Consider a network of $n$ nodes and $m$ connections. Usually $m \ll n^2$. We need to extract the distance information of the network such that
+ subsequent distance queries can be answered quickly by using this distance information. This problem can be addressed by solving $\textsc{APSP}$
+ for the network and storing $\textsc{APSP}$ matrix. The size of $\textsc{APSP}$ matrix is $n^2$ which is too large to be stored 
+ efficiently. Also, for networks having $m \ll n^2$, the size of matrix is even larger than the network itself. 
+ Furthermore, despite being one of the oldest problems of graph theory, there does not exist any algorithm that
+ can solve $\textsc{APSP}$ in truly sub-cubic time, i.e., $O(n^{3-\epsilon})$ time for some $\epsilon > 0$.
+ 
+ These issues have motivated researchers to design sub-cubic time algorithms for distance oracles of small size that can 
+ approximately answer distances between every pairs of vertices efficiently.
+ 
+%  For a weighted graph
+%  $G$, $\textsc{APSP}$ can be solved in $O(n^3)$ time by using algorithm proposed by Floyd and Warshall~\cite{cormen}. 
+%  A trivial lower bound on for solving $\textsc{APSP}$ is $\Omega(n^2)$ because even to populate $n \times n$ matrix
+%  $\Omega(n^2)$ time is required.
+ 
+ $\emph{Distance Oracles}$ are closely related to all pairs shortest path problem. Distance oracle is a data structure 
+ that stores the information of distance between vertices of a graph. Time to build up data structure, the size of 
+ data structure, query time and update time are some important parameters of data structure. 
+ 
+ \begin{tabular}{|ll|} 
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Distance Oracle}} \\
+ \emph{Input} & \begin{minipage}[t]{0.8\columnwidth}
+ A graph $G = (V,E)$, where $V$ is the vertex set of graphs and $E$ is set of edges of graph.
+ \end{minipage} \\
+ \emph{Output} & \begin{minipage}[t]{0.8\columnwidth}
+ A set $\mathcal{D}$ of data structures that can efficiently answer queries of the distance between any pair of vertices of the graph.
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+ 
+ To build a distance oracle of a graph $G$, we essentially preprocess the graph $G$ and extract some information from the graph.
+ This information is kept in a data structure $\mathcal{D}$ which is called as distance oracle of $G$. Given distance oracle
+ $\mathcal{D}$, we can efficiently answer queries of distance between any pair of vertices of the graph. 
+ More efficient distance oracles can be designed if we are willing to settle for approximate distance instead of exact distances.
+ The $\emph{stretch}$ of the distance $d_{uv}$ returned by distance oracle is $t$, if and only if $d_{uv} \leq t \cdot d_G(u,v)$,
+ where $d_G(u,v)$ is the actual distance between the vertices $u$ and $v$ in the graph $G$.
+	\begin{figure}
+	    \centering
+		\includegraphics[scale = 1.0]{oracle.pdf}
+	\caption{Overview of Distance Oracle}
+	\end{figure}
+
+ In most of the real world applications we are not interested in queries for all the
+ distances, but we query for distance between some pairs of nodes more frequently than others. 
+ For example, in a big city like Chennai, distance between many pairs of
+ addresses are of no interest to most of the people, we want to access distances between some pairs of nodes 
+ quickly. Also, it require $O(n^2)$ space to store distance between every pair of nodes. 
+ Therefore, if we keep distance between every pair of nodes of the network, then it is not efficient for many real world problems.
+ 
+ A data structure of small size that can answer distance queries efficiently will be useful for these kind of applications.
+ This kind of data structures are called as distance oracle of the graph.
+ Clearly, a data structure of $o(n^2)$ size cannot store distance between all pairs of nodes. 
+ Therefore, the challenge is to extract information from the graph which is useful for answering distance queries and
+ also it can be stored in a small size data structure. Another important parameter for these data structures is their 
+ response time. If we keep the distance between every pair of vertices then we can easily respond to the
+ distance queries in constant time. But if the information kept in the data structure is not enough then response time
+ is more. Therefore there is a trade-off between the size of the data structure and the query response time.
+ Finally, the focus is on the structural properties of the graph which can be explored to build the data structure.
+ For special graph classes these structural properties plays an important role in building distance oracles.
+ 
+ \subsection{Tree Spanners} 
+ Given a graph $G$, a $\emph{t-spanner}$ $H$ is a spanning subgraph of $G$ such that the distance between
+ any pair of vertices in $H$ is at most $t$ times their distance in $G$. The notion of spanners was introduced by
+ Peleg and Ullman~\cite{ullman}, in 1987, in connection with the design of suncronizers. 
+ The idea behind the spanners is to approximate the pairwise distance
+ between each pair of vertices of the graph in a sparse spanning subgraph. 
+ The quality of spanners is measured by two factors. First is the sparseness of the spanner and other is 
+ the $\emph{stretch factor}$ $t$ of the spanner. The sparsest connected spanner of a graph $G$ is its spanning tree
+ $T$. Therefor, a $\emph{tree t-spanner}$ of a graph $G$ is a spanning tree $T$ of $G$ such that distance
+ between any pair of vertices in $T$ is at most $t$ times their distance in $G$.
+ 
+ \begin{tabular}{|ll|} 
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Tree} $\mathbf{\textit{t}}$\problemfontbold{-Spanner}} \\
+ \emph{Input} & \begin{minipage}[t]{0.8\columnwidth}
+ A graph $G = (V,E)$, where $V$ is the vertex set of graphs and $E$ is set of edges of graph.
+ \end{minipage} \\
+ \emph{Output} & \begin{minipage}[t]{0.8\columnwidth}
+ A spanning tree $T$ of $G$, such that for any pair of vertices $u,v \in V(G)$, 
+ \mbox{$d_T(u,v) \leq t \cdot d_G(u,v)$}, where $d_T(u,v)$ is the distance between $u$ and $v$ \mbox{in $T$.}
+ \\	
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+ 
+ Tree $t$-spanner has a variety of applications in distributed systems, motion planning, network design and 
+ communication networks~\cite{spannerbyawerbuch,spannerforweightedgraphs}.
+ Consider a dense communication network of $n$ nodes and $m$ connections. For network of $m = O(n^2)$ connections, 
+ the size of the network is too large to build. This communication network can be substituted by its sparse spanner
+ on expense of some stretch factor in distance between the vertices of the network. Therefore, a sparse spanner of the network with
+ small stretch factor can be used to construct the network which will reduce the cost and size of the network.
+ A sparse spanner of a network can also be used to build a small size routing table for a dense network~\cite{routingtable}. 
+ 
+ \begin{figure}
+ \centering
+ \begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{graph.pdf}
+  \caption{Graph $G$}
+  \label{fig:sub1}
+ \end{subfigure}%
+ \begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.4\linewidth]{spanner.pdf}
+  \caption{Tree 2-spanner of $G$}
+  \label{fig:sub2}
+ \end{subfigure}
+ \caption{Demonstration of tree 2-spanner}
+ \label{fig:test}
+ \end{figure}
+ 
+ 
+ The Decision version of tree $t$-spanner problem consists of a graph $G = (V,E)$ and an integer $t > 0$ and the question is
+ whether there exist a spanning tree $T$ of $G$ such that distance any pair of vertices in $T$ is at most $t$ times their 
+ distance in $G$. Clearly, for $t = 1$ tree $t$-spanner exists if and only if the input graph in a tree. 
+ Cai and Corneil ~\cite{caicorneil} proved that tree t-spanner problem on general unweighted graph is NP-hard for $t \geq 4$ and it is
+ polynomial time solvable for $t = 1,2$ (for $t = 3$ the status of problem is unknown). For general weighted graphs the problem of 
+ computing tree $t$-spanner is NP-hard for $t > 1$.
+ 
+ Tree $t$-spanner has many applications in various areas of computer science. It is particularly useful for designing 
+ approximation algorithms for combinatorial problems concerned with the distance between the vertices in a graph. 
+ A general graph $G$ might not have enough structure to exploit algorithmically. Therefore, it is hard to design algorithms
+ for general graphs. The distance between the vertices of the graph can be approximated by tree $t$-spanner of the graph 
+ with stretch factor of $t$. Efficient algorithms can be designed which can solve the problem on tree spanner of the graph.
+ The solution can be interpreted on the original graph and an approximation algorithm with approximation factor of $t$ can 
+ be designed for the graph. Another important application of tree spanners is in message routing. An efficient and small size
+ routing table can be constructed using tree t-spanner of the given communication network. Clearly, this routing
+ table will have only $O(n)$ entries. Therefore, a linear size routing table can be maintained on expense of a stretch of 
+ at most $t$ in distance between vertices of the graph.
+ 
+ Distance oracles and tree $t$-spanners are closely related problems. One can easily visualize that a tree $t$-spanner $T$ of
+ a graph $G$ can act as a distance oracle for $G$. This distance oracle can answer distance queries with a stretch factor of at most
+ $t$. In this thesis we study both of these problems on some special classes of graph. Also, we present an algorithm to build a distance oracle
+ for chordal graphs.
+ 
+ \section{Graph Theoretic Preliminaries}
+ In this section we introduce some basic graph definitions that are throughout the thesis.
+ 
+ \begin{definition}
+  A graph $G$ is represented by a tuple $(V,E)$ where $V$ is the set of vertices of the graph and $E$ is the set of edges  of the graph.
+  An edge $e =(u,v) \in E$ connects a pair $u,v$ of vertices of the graph.
+ \end{definition}
+ \pagebreak
+ \section{Contribution of the Thesis}
+ In this thesis, we restrict our attention on $\emph{chordal graphs}$ with an intent to explore
+ how the underlying graph structure can play an important role in setting up efficient distance oracles.
+ We explore the structural properties of the clique tree representation of chordal graphs to build our distance oracle. 
+ W
+ 
+ \noindent We prove the following theorem in Chapter \ref{ch_approx}.
+ 
+ \begin{theorem}\label{maintheorem}
+ Given a chordal graph $G$, it can be preprocessed in $O(n^2)$ time and $O(n^2)$ space to build a data structure of size $O(n)$
+ such that for any query pair $u_i,u_j \in V(G)$, a distance response upper bounded by $2d_G(u_i,u_j)+8$ can be given in constant time.
+ \end{theorem}
+
+ 
+ 
+ 

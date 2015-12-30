@@ -1,0 +1,90 @@
+@article{markowsky
+  title={A fast algorithm for Steiner trees},
+  author={Kou, L and Markowsky, George and Berman, Leonard},
+  journal={Acta informatica},
+  volume={15},
+  number={2},
+  pages={141--145},
+  year={1981},
+  publisher={Springer}
+}
+
+@article{seidel,
+  title={On the all-pairs-shortest-path problem in unweighted undirected graphs},
+  author={Seidel, Raimund},
+  journal={Journal of Computer and System Sciences},
+  volume={51},
+  number={3},
+  pages={400--403},
+  year={1995},
+  publisher={Elsevier}
+}
+
+@article{karger,
+  title={Finding the hidden path: Time Bound For All-Pairs Shortest Paths},
+  author={David R. Karger, Daphne Koller, Steven J. Phillips},
+  journal={SIAM Journal on Computing},
+  volume={22},
+  number={6},
+  pages={1199-1217},
+  year={1991},
+  publisher={Full version of paper in FOCS}
+}
+
+
+@article{koch,
+  title={Steinlib testdata library},
+  author={Koch, T and Martin, Alexander and Voss, Stefan},
+  journal={URL: http://elib. zib. de/steinlib/steinlib. php},
+  year={2002}
+}
+
+
+@book{cormen,
+  title={{Introduction to algorithms}},
+  author={Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford and others},
+  volume={2},
+  year={2001},
+  publisher={MIT press Cambridge}
+}
+
+@article{dijktra,
+ title = {{A Note on two problems in connection with graphs}},
+ author = {Dijktra's},
+ journal = {Numerische mathematic},
+ number = {1},
+ pages = {269-271},
+ year = {1959}
+}
+
+@article{shen,
+ title = {{A New Approach to the Rectilinear Steiner problems}},
+ author = {Ho jan-ming, V. Gopalkrishan, C. K. Wong},
+ journal = {26th ACM/IEEE},
+ pages = {161-166},
+ year = {1989}
+}
+
+
+@book{sbook,
+ title={{The Steiner Tree Problem}},
+ author={F.K. Hwang, D.S Richards, P.Winter},
+ year={1992},
+ publisher={Elsevier}
+}
+
+@article{byrka,
+ title = {{An Improved LP - based approximation for Steiner tree}},
+ author = {J.~Byrka, F.~grandoni, R.~Thomas and Laura Sanit\'{a}},
+ journal = {ACM 978-1-4503-0050-6},
+ year = {June 5-8 2010},
+ publisher = {cambridge, massachusetts USA}
+}
+
+@article{hougardy,
+ title = {{A 1.598 Approximation Algorithm for the Steiner Problem in Graphs}},
+ author = {S. Hougardy, H. Pro\"{o}mel},
+ journal = {Preceedings of the tenth Annual ACM-SIAM Symposium on Discrete algorithms},
+ year = {1999},
+ pages = {448-453}
+}

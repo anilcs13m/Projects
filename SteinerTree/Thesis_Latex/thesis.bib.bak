@@ -1,0 +1,394 @@
+@incollection{blair,
+  title={{An introduction to chordal graphs and clique trees}},
+  author={Blair, Jean RS and Peyton, Barry},
+  booktitle={Graph theory and sparse matrix computation},
+  pages={1--29},
+  year={1993},
+  publisher={Springer}
+}
+
+@article{gavril,
+  title={{Algorithms for minimum coloring, maximum clique, minimum covering by cliques, and maximum independent set of a chordal graph}},
+  author={Gavril, Fanica},
+  journal={SIAM Journal on Computing},
+  volume={1},
+  number={2},
+  pages={180--187},
+  year={1972},
+  publisher={SIAM}
+}
+
+@book{jcanny,
+  title={{The complexity of robot motion planning}},
+  author={Canny, John},
+  year={1988},
+  publisher={MIT press}
+}
+
+@article{thorup,
+  title={{Approximate distance oracles}},
+  author={Thorup, Mikkel and Zwick, Uri},
+  journal={Journal of the ACM (JACM)},
+  volume={52},
+  number={1},
+  pages={1--24},
+  year={2005},
+  publisher={ACM}
+}
+
+@article{han,
+  title={{Unified all-pairs shortest path algorithms in the chordal hierarchy}},
+  author={Han, K and Sekharan, Chandra N and Sridhar, R},
+  journal={Discrete Applied Mathematics},
+  volume={77},
+  number={1},
+  pages={59--71},
+  year={1997},
+  publisher={Elsevier}
+}
+
+@article{seidel,
+  title={{On the all-pairs-shortest-path problem in unweighted undirected graphs}},
+  author={Seidel, Raimund},
+  journal={Journal of Computer and System Sciences},
+  volume={51},
+  number={3},
+  pages={400--403},
+  year={1995},
+  publisher={Elsevier}
+}
+
+@book{cormen,
+  title={{Introduction to algorithms}},
+  author={Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford and others},
+  volume={2},
+  year={2001},
+  publisher={MIT press Cambridge}
+}
+
+@article{matrix,
+  title={{Matrix multiplication via arithmetic progressions}},
+  author={Coppersmith, Don and Winograd, Shmuel},
+  journal={Journal of symbolic computation},
+  volume={9},
+  number={3},
+  pages={251--280},
+  year={1990},
+  publisher={Elsevier}
+}
+
+@book{golumbic,
+  title={{Algorithmic graph theory and perfect graphs}},
+  author={Golumbic, Martin Charles},
+  volume={2},
+  year={2004},
+  publisher={Elsevier}
+}
+
+
+@article{cpr,
+  title={{An optimal algorithm to solve the all-pair shortest path problem on interval graphs}},
+  author={Ravi, R and Marathe, Madhav V and Pandu Rangan, C},
+  journal={Networks},
+  volume={22},
+  number={1},
+  pages={21--35},
+  year={1992},
+  publisher={Wiley Online Library}
+}
+
+@inproceedings{stronglychordal,
+  title={{Optimal (parallel) algorithms for the all-to-all vertices distance problem for certain graph classes}},
+  author={Dahlhaus, Elias},
+  booktitle={Graph-Theoretic Concepts in Computer Science},
+  pages={60--69},
+  year={1993},
+  organization={Springer}
+}
+
+@book{ktree,
+  title={{On Solving Systems of Linear Equations and Path Problems for Bounded Treewidth Graphs}},
+  author={Radhakrishnan, Venkatesh and Hunt, HB and Stearns, RE},
+  year={1992},
+  publisher={State University of New York at Albany, Department of Computer Science}
+}
+
+@inproceedings{cohenzwick,
+  title={{All-pairs small-stretch paths}},
+  author={Cohen, Edith and Zwick, Uri},
+  booktitle={Proceedings of the eighth annual ACM-SIAM symposium on Discrete algorithms},
+  pages={93--102},
+  year={1997},
+  organization={Society for Industrial and Applied Mathematics}
+}
+
+@inproceedings{baswana,
+  title={{Faster algorithms for approximate distance oracles and all-pairs small stretch paths}},
+  author={Baswana, Surender and Kavitha, Telikepalli},
+  booktitle={Foundations of Computer Science, 2006. FOCS'06. 47th Annual IEEE Symposium on},
+  pages={591--602},
+  year={2006},
+  organization={IEEE}
+}
+
+@article{cliquetree,
+  title={{On the tree representation of chordal graphs}},
+  author={Shibata, Yukio},
+  journal={Journal of Graph Theory},
+  volume={12},
+  number={3},
+  pages={421--428},
+  year={1988},
+  publisher={Wiley Online Library}
+}
+
+@book{lcabypowell,
+  title={A Further Improved LCA Algorithm},
+  author={Powell, P.},
+  series={Technical report TR90-01},
+  year={1990},
+  publisher={University of Minnesota, Institute of Technology, Computer Science Department}
+}
+
+@article{lcabytarjan,
+  title={Fast algorithms for finding nearest common ancestors},
+  author={Harel, Dov and Tarjan, Robert Endre},
+  journal={SIAM Journal on Computing},
+  volume={13},
+  number={2},
+  pages={338--355},
+  year={1984},
+  publisher={SIAM}
+}
+
+@article{lcabyvishkin,
+  title={On finding lowest common ancestors: simplification and parallelization},
+  author={Schieber, Baruch and Vishkin, Uzi},
+  journal={SIAM Journal on Computing},
+  volume={17},
+  number={6},
+  pages={1253--1262},
+  year={1988},
+  publisher={SIAM}
+}
+
+@inproceedings{dirac,
+  title={{On rigid circuit graphs}},
+  author={Dirac, Gabriel Andrew},
+  booktitle={Abhandlungen aus dem Mathematischen Seminar der Universit{\"a}t Hamburg},
+  volume={25},
+  number={1},
+  pages={71--76},
+  year={1961},
+  organization={Springer}
+}
+
+@article{fulkerson,
+  title={{Incidence matrices and interval graphs}},
+  author={Fulkerson, Delbert and Gross, Oliver},
+  journal={Pacific journal of mathematics},
+  volume={15},
+  number={3},
+  pages={835--855},
+  year={1965}
+}
+
+@inproceedings{zwick,
+  title={{All pairs shortest paths in weighted directed graphs-exact and almost exact algorithms}},
+  author={Zwick, Uri},
+  booktitle={Foundations of Computer Science, 1998. Proceedings. 39th Annual Symposium on},
+  pages={310--319},
+  year={1998},
+  organization={IEEE}
+}
+
+@article{dor,
+  title={{All-pairs almost shortest paths}},
+  author={Dor, Dorit and Halperin, Shay and Zwick, Uri},
+  journal={SIAM Journal on Computing},
+  volume={29},
+  number={5},
+  pages={1740--1759},
+  year={2000},
+  publisher={SIAM}
+}
+
+@article{cohen,
+  title={{Fast algorithms for constructing t-spanners and paths with stretch t}},
+  author={Cohen, Edith},
+  journal={SIAM Journal on Computing},
+  volume={28},
+  number={1},
+  pages={210--236},
+  year={1998},
+  publisher={SIAM}
+}
+
+@article{ullman,
+  title={An optimal synchronizer for the hypercube},
+  author={Peleg, David and Ullman, Jeffrey D},
+  journal={SIAM Journal on computing},
+  volume={18},
+  number={4},
+  pages={740--747},
+  year={1989},
+  publisher={SIAM}
+}
+
+@book{spannerbyawerbuch,
+  title={Efficient broadcast and light-weight spanners},
+  author={Awerbuch, Baruch and Baratz, Alan Edward and Peleg, David},
+  year={1992},
+  publisher={Weizmann Institute of Science, Department of Applied Mathematics and Computer Science}
+}
+
+@article{spannerforweightedgraphs,
+  title={On sparse spanners of weighted graphs},
+  author={Alth{\"o}fer, Ingo and Das, Gautam and Dobkin, David and Joseph, Deborah and Soares, Jos{\'e}},
+  journal={Discrete \& Computational Geometry},
+  volume={9},
+  number={1},
+  pages={81--100},
+  year={1993},
+  publisher={Springer}
+}
+
+@article{routingtable,
+  title={A trade-off between space and efficiency for routing tables},
+  author={Peleg, David and Upfal, Eli},
+  journal={Journal of the ACM (JACM)},
+  volume={36},
+  number={3},
+  pages={510--530},
+  year={1989},
+  publisher={ACM}
+}
+
+@article{ramag,
+  title={A unified approach to domination problems on interval graphs},
+  author={Ramalingam, G and Rangan, C Pandu},
+  journal={Information Processing Letters},
+  volume={27},
+  number={5},
+  pages={271--274},
+  year={1988},
+  publisher={Elsevier}
+}
+
+@article{cai,
+  title={Tree spanners},
+  author={Cai, Leizhen and Corneil, Derek G},
+  journal={SIAM Journal on Discrete Mathematics},
+  volume={8},
+  number={3},
+  pages={359--387},
+  year={1995},
+  publisher={SIAM}
+}
+
+@article{peleg,
+  title={Low complexity variants of the arrow distributed directory},
+  author={Peleg, David and Reshef, Eilon},
+  journal={Journal of Computer and System Sciences},
+  volume={63},
+  number={3},
+  pages={474--485},
+  year={2001},
+  publisher={Elsevier}
+}
+
+@article{liebchen,
+  title={The zoo of tree spanner problems},
+  author={Liebchen, Christian and W{\"u}nsch, Gregor},
+  journal={Discrete Applied Mathematics},
+  volume={156},
+  number={5},
+  pages={569--587},
+  year={2008},
+  publisher={Elsevier}
+}
+
+@article{emek,
+  title={Approximating minimum max-stretch spanning trees on unweighted graphs},
+  author={Emek, Yuval and Peleg, David},
+  journal={SIAM Journal on Computing},
+  volume={38},
+  number={5},
+  pages={1761--1781},
+  year={2008},
+  publisher={SIAM}
+}
+
+@article{dragan,
+  title={An approximation algorithm for the tree t-spanner problem on unweighted graphs via generalized chordal graphs},
+  author={Dragan, Feodor F and K{\"o}hler, Ekkehard},
+  journal={Algorithmica},
+  volume={69},
+  number={4},
+  pages={884--905},
+  year={2014},
+  publisher={Springer}
+}
+
+@article{fekete,
+  title={Tree spanners in planar graphs},
+  author={Fekete, S{\'a}ndor P and Kremer, Jana},
+  journal={Discrete Applied Mathematics},
+  volume={108},
+  number={1},
+  pages={85--103},
+  year={2001},
+  publisher={Elsevier}
+}
+
+@article{outerplaner,
+  title={Low stretch spanning trees for planar graphs},
+  author={Peleg, David and Tendler, Dov},
+  series = {Technical Report}
+  year={2001},
+  publisher={Weizmann Science Press of Israel}
+}
+
+@article{madanlal,
+  title={Tree 3-spanners on interval, permutation and regular bipartite graphs},
+  author={Madanlal, MS and Venkatesan, G and Rangan, C Pandu},
+  journal={Information Processing Letters},
+  volume={59},
+  number={2},
+  pages={97--102},
+  year={1996},
+  publisher={Elsevier}
+}
+
+@article{treespannerNP,
+  title={{Tree spanners on chordal graphs: complexity and algorithms}},
+  author={Brandst{\"a}dt, Andreas and Dragan, Feodor F and Le, Ho{\`a}ng-Oanh and Le, Van Bang},
+  journal={Theoretical Computer Science},
+  volume={310},
+  number={1},
+  pages={329--354},
+  year={2004},
+  publisher={Elsevier}
+}
+
+@article{sf,
+  title={Additive tree spanners},
+  author={Kratsch, Dieter and Le, Ho{\`a}ng-Oanh and M{\"u}ller, Haiko and Prisner, Erich and Wagner, Dorothea},
+  journal={SIAM Journal on Discrete Mathematics},
+  volume={17},
+  number={2},
+  pages={332--340},
+  year={2003},
+  publisher={SIAM}
+}
+
+@article{collective,
+  title={Collective tree spanners of graphs},
+  author={Dragan, Feodor F and Yan, Chenyu and Lomonosov, Irina},
+  journal={SIAM Journal on Discrete Mathematics},
+  volume={20},
+  number={1},
+  pages={240--260},
+  year={2006},
+  publisher={SIAM}
+}

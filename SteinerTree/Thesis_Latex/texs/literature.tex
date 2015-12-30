@@ -1,0 +1,150 @@
+\chapter{A SURVEY OF BEST APPROXIMATION ALGORITHMS} \label{ch_review}
+%Chapter 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{For Approximation Algorithm $algo1$}
+Our previous approximation algorithm $algo1$ is taking a running time of $O(|S||V|^2)$ for computing the minimum Steiner tree for a given graph $G$ and $|S|$, most of the run time is taken by the first step of the algorithm, total running time taken by the algorithm is in the construction of the complete graph by using all the terminals of the graph $G$. After that we are constructing the minimum spanning tree from that complete graph, that is taking total time of running time $O(|S|^2$), and step 3 of this algorithm taking a time of $O(|V|)$, so total run time taken by the algorithm is by the step first only. By using these steps[1,2,3], we are coming at a position, there we can say that every terminals of graph $G$ are connecting by using the shortest path between the terminals only, i.e., we are only connecting the shortest path from one terminal node to the other terminal node~\cite{markowsky}.
+  So, we can say that this problem is some what reduced to the all-pairs shortest-path problem, in that we are required to find the shortest path between each pairs of vertices. So, Now we have to think problem in a different ways, either reduce the running time of step 1, so that the running time of the our algorithm $algo1$ may reduce or we can find a way that directly find the shortest path between the all-pairs of terminals by using one of the best known all-pairs shortest-path algorithm.
+
+  So, now our focus is change, and now we have to think about this so that we can get the shortest path between terminals. 
+  A all-pairs shortest-path problem is graph theory problem for finding the shortest path between pairs of vertices of graph $G$.
+ One of the most interesting ways to approach this problem is to pre-process a graph to set up data structure which are required for storing the edges weights. So, that it can efficiently answer queries of distance between any pair of vertices, this data structure like heap. We can say one thing that, we are finding the distance between the terminals of the graph, that distance is minimum as we are using the shortest path between every pair of vertices, we are retrieving the minimum distance of edges only from the data structure. So now we have to come up with a best known algorithm for finding the shortest path between the terminals, with the help of this algorithm we can skip the step [1,2] of our algorithm $algo1$, and come up directly to the step 3 of heuristic algorithm $algo1$. For this we are using Dijkstra's algorithm to find the shortest path from one terminal vertices to the other terminals.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% ji %%%%%%%%%%%%%%
+ \section{All-Pairs Shortest-Paths} 
+ A classical algorithm for solving $\textsc{APSP}$ in general weighted graphs is given by Floyd and Warshall ~\cite{cormen}.
+ It outputs an $V \times V$ matrix that contains optimal weight of edges for every vertices if edge is present between these two vertices, this problem takes the running by order $\Theta(V^3)$ time.
+
+ Here, we are considering only the problem of weighted graph. For $\textsc{APSP}$ problem ~\cite{seidel}, we have to come up with a best run time algorithm that reduced the running time of our algorithm $algo1$, and find the optimal path between the terminals, we are  thinking about this problem, because in the middle of this algorithm $algo1$, we are at the stage, where, a subgraph constructed using a shortest paths between all-pairs of the terminals present in the graph, this construction is done by the steps from 1 to 3 of the algorithm $algo1$, while other steps only taking a linear or logarithmic time. So we have to think to solve steps [1,2,3] of algorithm $algo1$ more efficiently to get a optimal solution, and some better running time bound. For that we changed our thinking about finding the shortest path between all pairs of terminal vertex, for that we come up with a solution to use the all-pairs shortest-paths algorithm, as in these steps we are constructing the subgraph from a given graph $G$, this subgraph contains only the minimum distance path between terminals, while using some of the Steiner nodes. this shortest path is constructed by using all the terminals as a source, i.e., a shortest path from one terminal as a source, and find the shortest path from the terminal to other terminals by using the single source shortest path algorithm. 
+
+ We run the single source shortest path algorithm for every terminal vertices by taking as a source vertices, and a shortest path between every pair of terminal vertices is found, as we choosing the optimal edges every time in the cover path from one vertices to the other, so weight of the path is increase whenever a new edge is chosen in the path. as only non-negative edge weights are present in the graph. A edge is optimal in the path from one vertex $V_i$ to other $V_j$ in $G$, if there is no other shortest path between vertices $V_i$ and $V_j$~\cite{karger}, which, is less than that path. A classical algorithm for solving $\textsc{APSP}$ in general weighted graphs is given by Floyd and Warshall ~\cite{cormen}.
+ It outputs an $V \times V$ matrix that contains shortest distance between every pair of vertices, in $\Theta(V^3)$ time.
+
+ So, we are using ($\textsc{APSP}$) algorithm for establishing the minimum path connection between all the pair of terminals of given graph $G$. In this algorithm we are running a single source shortest path algorithm dijkstra's on each and every pairs of terminals whenever, other than terminal node is encounter, we just skip that node, we are considering only terminal nodes as a source vertex of our algorithm ~\cite{cormen}.
+
+ For our algorithm we need some of the preliminary, that we are going to be used in our algorithm. A path is a sequence of vertices, $(v_1,v_2,v_3 \dots, v_n)$, a path from a vertex $v_1$ to $v_n$ going through the vertices $(v_2,v_3 \dots, v_{n-1})$ ~\cite{karger}. A symbol ($u$ $\leadsto$ $v$) is used for path representation from $u$ to $v$ (if there exits a edge between ($u$,$v$)). A path concatenation symbol is denoted like ($u$ $\leadsto$ $w$ $\leadsto$ $v$) is the path concatenation of two paths ($u$ $\leadsto$ $w$) and ($w$ $\leadsto$ $v$)~\cite{karger}, and the symbol use to concatenation of edges in path is like ($u$,$v$ $\leadsto$ $w$) this is what we called edge adding ($u$,$v$) to the path ($u$ $\leadsto$ $w$). Length of the path $(v_1,v_2,v_3 \dots, v_n)$ is ~\cite{seidel}.
+
+\begin{center}
+$|(v_1,v_2,v_3 \dots, v_n)|$  = $n-1$
+\end{center} 
+Edge ($v$,$u$) cost is denoted as ||($v$,$u$)||. So total weight of the path $(v_1,v_2,v_3 \dots, v_n)$ is the weighted's sum for it's constituent edges ~\cite{karger}.
+\begin{center}
+$||(v_1,v_2,v_3 \dots, v_n)||$ = $\sum_{i=1}^{n-1} ||(v_i, v_{i+1})||$
+\end{center}
+\textbf{Lemma 3.1.} An edge is called optimal if it is present in the optimal path.\\
+\textbf{Lemma 3.2.} A path ($v$ $\leadsto$ $u$) is called optimal if no other path ($v$ $\leadsto$'$u$) is optimal, in between $(v,u)$ is called optimal path.
+\begin{center}
+$||v\leadsto' u||$ $\leq$ $||v\leadsto u||$ 
+\end{center}
+\textbf{Lemma 3.3.} As we are covering only the optimal edges in the path, so subpath of the optimal path also optimal.\\
+\textbf{Lemma 3.4.} If there is a optimal path from $(v \leadsto u)$ then there is also optimal path from $(u \leadsto v)$ in undirected graph~\cite{karger}.\\
+here we can say that, if there is a optimal path from vertices $v_i$ to $v_j$, then all the edges which are path of the optimal path form a minimum path between the two end points, because it is present in the optimal path.
+\subsection{Dijkstra's Algorithm}
+
+\subsection{Description of Dijkstra's Algorithm}
+Dijkstra's Algorithm is one of the single source shortest path algorithm, that take one vertex (source) as a input and find a path of minimum distance till destination is found, means we can say that it find a minimum weight path from a given vertex as a source to all other vertices of the graph $G$. We are using this algorithm in our implementation, because the good implementation of this algorithm is lower then run time of Bellman-Ford algorithm~\cite{cormen} ~\cite{dijktra}.
+
+ \begin{tabular}{|ll|}
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Dijkstra's Algorithm}} \\
+ \emph{INPUT} & \begin{minipage}[t]{0.8\columnwidth}
+ Given a connected graph $G$ = $(V,E)$, with edges weight $c$:$E$ $\rightarrow$ $\mathbb{R}_{\geq 0}$, and one vertex as a source is given as $v$ $\in$ $V$.
+ \end{minipage} \\
+ \emph{OUTPUT} & \begin{minipage}[t]{0.82\columnwidth}
+ The minimum lenght path from a source vertex to all other remaining vertices.
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+
+\begin{tabular}{|ll|} 
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Data Structure for Dijkstra's Algorithm}} \\
+ \emph{} & \begin{minipage}[t]{0.82\columnwidth}
+ DijkstraAlgorithm($G$, w ,s)
+ \end{minipage}
+ \\
+ \emph{-} & \begin{minipage}[t]{0.82\columnwidth}
+ Distance of all the source as zero, dist[s]<-0.
+ \end{minipage}
+ \\
+ \emph{-} & \begin{minipage}[t]{0.9\columnwidth}
+ For all the vertices other then source store distance as dist[v-s]<-infinity
+ \end{minipage}
+ \\
+ \emph{} & \begin{minipage}[t]{0.9\columnwidth}
+ \hspace*{1cm} $\bullet$  S, set for holding all the visited vertices initialize as empty\\
+ \hspace*{1cm} $\bullet$  $Q$, initially all vertices are present in the queue.\\
+ \hspace*{1cm} $\bullet$  prev[s] <- undefined
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+
+ \begin{tabular}{|ll|} 
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Dijkstra's Algorithm}} \\
+ 
+ \emph{} & \begin{minipage}[t]{0.9\columnwidth}
+ while ($Q$ $\neq$ empty) do\\ 
+ \hspace*{2cm} $u$ <- minimumDistance($Q$,dist)\\
+ \hspace*{2cm} S = S $\cup$ \{$u$\}\\
+ \hspace*{1cm} for all vertex $v$ $\in$ neighbour[$u$].\\
+ \hspace*{2cm} $Update(u,v,w)$ 
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+
+ \begin{tabular}{|ll|} 
+ \hline
+ \multicolumn{ 2}{|l|}{\problemfontbold{Update(u,v,w)}} \\
+ 
+ \emph{} & \begin{minipage}[t]{0.9\columnwidth}
+ \hspace*{1cm} if dist[u] + w[u,v] $<$ dist[v] \\
+ \hspace*{2cm} set dist[v] =  dist[u] + w[u,v] \\
+ \hspace*{2cm} set prev[v] = u\\
+ % \hspace*{2cm} return prev[],dist[]\\
+ \end{minipage}
+ \\
+ \hline
+ \end{tabular}
+ \\
+
+ The following algorithm is suffices to find the minimum weight path between vertices pair, the running time of this algorithm is $O(|E| + |V|log|V|)$ as we are using the Fibonacci heap in the implementation for the priority queue.
+ \begin{theorem}
+  The Dijkstra's algorithm finds the optimal path between the vertices of the graph. Futhermore, it discovers path in the increasing order of weight~\cite{dijktra} ~\cite{cormen}.
+ \end{theorem}
+ \textbf{Proof.} This theorem can be proofed by inductive hypothesis, let OPT be the optimal path found by the algorithm. Inductive hypothesis is that at the beginning of the each step we are taking previous distance and comparing that distance with new calculated distance, if it is optimal add up this distance in the optimal path.
+ At the beginning of the iteration we are taking the optimal path, and in each iteration we are keeping the minimum weight edge in the path of the heap, we are taking that path only so we can say that, we are getting path between a pair of vertices, that path is optimal. By this theorem, we can say that each and every time we are choosing minimum weight edge, and appending this chosen edge to path previously covered by one of the shortest path.
+ \begin{lemma}
+  Triangle inequality, \hspace*{0.2cm} dist[u,v] $\leq$ dist[u,w] + dist[w,v].
+ \end{lemma}
+ \textbf{Proof.} Let there is a minimum weight path between source $u$ and $v$. Then, there is no other path between $u$ and $v$ having weight less then that.
+
+ \begin{theorem}
+  The Dijkstra's algorithm finds the optimal path between the vertices of the graph. Furthermore it discovers path in the increasing order of weight ~\cite{dijktra}.
+ \end{theorem}
+ \textbf{Proof.} As we are considering only the weighted graph with non-negative edge weight, whenever we are finding the path from one vertex to the other vertex, then we are adding some weight in our path. i.e., so we can say that, we are increasing the weight of the path as we discovered new edge, because we are considering only the non-negative weight edges in the graph, whichever edges we discover we add up this edge to the previous optimal path, so we can say that Dijkstra's algorithm discovering the path in the increasing order of weight.
+\begin{lemma}
+A subpath of a optimal path is also a optimal.
+\end{lemma}
+\textbf{Proof.} For a path sequence $(v_1,v_2,v_3 \dots v_k)$, subpath will be $(v_2,v_3 \dots v_{k-1})$, which have weight less then the path, because it only considering only subset of edges cover by the path.
+ \subsection{Run Time of Dijkstra's Algorithm}
+ Running time of Dijkstra's algorithm totally depends on, how we implemented the min-priority queue. suppose we are implementing the min-priority queue by simply by storing the vertices from 1 to $|V|$. Removing the minimum element from this will take time of 
+ $O(|V|)$, because we have to cover the entire array for finding the minimum element. So total running time for Dijkstra's algorithm will be $O(|V|^2)$. We can achieve a better running time of this algorithm $O(|V|log|V| + |E|)$ by implement this by using fibonacci heap ~\cite{cormen}.    
+
+\textbf{Graph Terminology 1:-} Number of edges $E$ in a complete undirected graph with $V$ vertices.
+\begin{center}
+ E = V$*$(V $-$ 1)$/$2\\
+ E = $O(|V|^2)$
+\end{center} 
+\textbf{Graph Terminology 2:-} Number of edges $E$ in a undirected sparse graph with $V$ vertices.
+\begin{center}
+ $|V|$ $\leq$ E $<$ $|V|$*$log|V|$
+\end{center} 
+ \section{Conclusion}
+ In this chapter we presented, how to get better running time of some of the steps of the $algo1$, our focus was only those steps which are taking more running time. For that we come up with a solution, which provided better running time for our approximation algorithm $algo1$ but this method of reducing running time only applicable for those graphs which have edges of order $|E|$ $\leq$ $|V|log|V|$, i.e,. for sparse graph this algorithm works fine and for other graphs running time will be same. As we are using the complete graph formation algorithm from a given graph $G$ which is taking a running time of order $O(|S||V|^2)$, rest of the steps are taking the less running time, so overall running time of $algo1$ will be $O(|S||V|^2)$~\cite{markowsky}. 
+
+ We are reducing some running time complexity of heuristic algorithm $algo1$, which was taking running time of $O(|S||V|^2)$~\cite{markowsky}, and our new heuristic algorithm is taking running time complexity of $O(|S||V|log|V|)$ for the sparse graph and $O(|S||V|log|V| + |E||S|)$, i.e., same as the previous heuristic for other than the sparse graph, even running time is same for other graph but we are reducing some of the steps of algorithm $algo1$. As $algo1$ is taking 5 steps for getting the Steiner tree while our is taking 3 steps for getting Steiner tree. This is achieved by running Dijkstra's algorithm from every terminal as source. We are now able to skipping some of the steps of our heuristic algorithm $algo1$. So in this with help of Dijkstra's algorithm a new running bound is achieved that we will study a new algorithm $algo2$ in next chapter that reduce the running time of previous algorithm $algo1$~\cite{markowsky}. 

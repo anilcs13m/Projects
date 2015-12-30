@@ -1,0 +1,174 @@
+@incollection{blair,
+  title={{An introduction to chordal graphs and clique trees}},
+  author={Blair, Jean RS and Peyton, Barry},
+  booktitle={Graph theory and sparse matrix computation},
+  pages={1--29},
+  year={1993},
+  publisher={Springer}
+}
+
+@article{gavril,
+  title={{Algorithms for minimum coloring, maximum clique, minimum covering by cliques, and maximum independent set of a chordal graph}},
+  author={Gavril, Fanica},
+  journal={SIAM Journal on Computing},
+  volume={1},
+  number={2},
+  pages={180--187},
+  year={1972},
+  publisher={SIAM}
+}
+
+@book{jcanny,
+  title={{The complexity of robot motion planning}},
+  author={Canny, John},
+  year={1988},
+  publisher={MIT press}
+}
+
+@article{thorup,
+  title={{Approximate distance oracles}},
+  author={Thorup, Mikkel and Zwick, Uri},
+  journal={Journal of the ACM (JACM)},
+  volume={52},
+  number={1},
+  pages={1--24},
+  year={2005},
+  publisher={ACM}
+}
+
+@article{han,
+  title={{Unified all-pairs shortest path algorithms in the chordal hierarchy}},
+  author={Han, K and Sekharan, Chandra N and Sridhar, R},
+  journal={Discrete Applied Mathematics},
+  volume={77},
+  number={1},
+  pages={59--71},
+  year={1997},
+  publisher={Elsevier}
+}
+
+@article{seidel,
+  title={{On the all-pairs-shortest-path problem in unweighted undirected graphs}},
+  author={Seidel, Raimund},
+  journal={Journal of Computer and System Sciences},
+  volume={51},
+  number={3},
+  pages={400--403},
+  year={1995},
+  publisher={Elsevier}
+}
+
+@book{cormen,
+  title={{Introduction to algorithms}},
+  author={Cormen, Thomas H and Leiserson, Charles E and Rivest, Ronald L and Stein, Clifford and others},
+  volume={2},
+  year={2001},
+  publisher={MIT press Cambridge}
+}
+
+@article{matrix,
+  title={{Matrix multiplication via arithmetic progressions}},
+  author={Coppersmith, Don and Winograd, Shmuel},
+  journal={Journal of symbolic computation},
+  volume={9},
+  number={3},
+  pages={251--280},
+  year={1990},
+  publisher={Elsevier}
+}
+
+@book{golumbic,
+  title={{Algorithmic graph theory and perfect graphs}},
+  author={Golumbic, Martin Charles},
+  volume={57},
+  year={2004},
+  publisher={Elsevier}
+}
+
+
+@article{cpr,
+  title={{An optimal algorithm to solve the all-pair shortest path problem on interval graphs}},
+  author={Ravi, R and Marathe, Madhav V and Pandu Rangan, C},
+  journal={Networks},
+  volume={22},
+  number={1},
+  pages={21--35},
+  year={1992},
+  publisher={Wiley Online Library}
+}
+
+@inproceedings{stronglychordal,
+  title={{Optimal (parallel) algorithms for the all-to-all vertices distance problem for certain graph classes}},
+  author={Dahlhaus, Elias},
+  booktitle={Graph-Theoretic Concepts in Computer Science},
+  pages={60--69},
+  year={1993},
+  organization={Springer}
+}
+
+@book{ktree,
+  title={{On Solving Systems of Linear Equations and Path Problems for Bounded Treewidth Graphs}},
+  author={Radhakrishnan, Venkatesh and Hunt, HB and Stearns, RE},
+  year={1992},
+  publisher={State University of New York at Albany, Department of Computer Science}
+}
+
+@inproceedings{cohen,
+  title={{All-pairs small-stretch paths}},
+  author={Cohen, Edith and Zwick, Uri},
+  booktitle={Proceedings of the eighth annual ACM-SIAM symposium on Discrete algorithms},
+  pages={93--102},
+  year={1997},
+  organization={Society for Industrial and Applied Mathematics}
+}
+
+@inproceedings{baswana,
+  title={{Faster algorithms for approximate distance oracles and all-pairs small stretch paths}},
+  author={Baswana, Surender and Kavitha, Telikepalli},
+  booktitle={Foundations of Computer Science, 2006. FOCS'06. 47th Annual IEEE Symposium on},
+  pages={591--602},
+  year={2006},
+  organization={IEEE}
+}
+
+@article{cliquetree,
+  title={{On the tree representation of chordal graphs}},
+  author={Shibata, Yukio},
+  journal={Journal of Graph Theory},
+  volume={12},
+  number={3},
+  pages={421--428},
+  year={1988},
+  publisher={Wiley Online Library}
+}
+
+@article{lcabypowell,
+  title={{further improved LCA algorithm}},
+  author={Powell, Patrick},
+  journal={Plant Genome Data and Information Center collection on computational molecular biology and genetics},
+  year={1990}
+}
+
+@article{lcabytarjan,
+  title={Fast algorithms for finding nearest common ancestors},
+  author={Harel, Dov and Tarjan, Robert Endre},
+  journal={siam Journal on Computing},
+  volume={13},
+  number={2},
+  pages={338--355},
+  year={1984},
+  publisher={SIAM}
+}
+
+@article{lcabyvishkin,
+  title={On finding lowest common ancestors: simplification and parallelization},
+  author={Schieber, Baruch and Vishkin, Uzi},
+  journal={SIAM Journal on Computing},
+  volume={17},
+  number={6},
+  pages={1253--1262},
+  year={1988},
+  publisher={SIAM}
+}
+
+

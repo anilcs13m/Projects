@@ -1,0 +1,29 @@
+\abstract
+
+\noindent KEYWORDS: \hspace*{0.5em} \parbox[t]{4.4in}{Chordal Graphs, Distance Oracle, Hitting Set, Clique Tree, 
+All Pairs Shortest Path, Tree Spanners}
+
+\vspace*{24pt}
+\noindent
+ All Pairs Shortest Path ($\textsc{APSP}$) problem is one of the most fundamental problems in graph theory. 
+ The $\emph{all pairs shortest path}$ problem on $G$ is to compute shortest path between all pairs of vertices of $G$.
+ One of the most interesting ways to approach this problem is to preprocess a graph to setup data structure that 
+ can efficiently answer queries of distance between any pair of vertices. 
+ This data structure is referred as $\emph{distance oracle}$ of the graph.
+ 
+ We preprocess a given chordal graph $G = (V,E)$ as an adjacency matrix on $n$ vertices in $O(n^2)$
+ time and space to build a data structure of size $O(n)$ such that any subsequent distance
+ query can be answered in constant time with a bounded constant factor error. 
+ In particular, for each pair of vertices $u_i,u_j\in V(G), 1 \leq i,j \leq n$, we output a distance value $d_{ij} \leq 2d_G(u_i,u_j)+8$, 
+ where $d_G$ is the distance in $G$. Our improvement comes from a relationship that we discover between the graph distance and
+ minimum hitting sets of cliques on certain paths in a clique tree associated with a chordal graph.
+ In particular we prove that, for a clique tree $T$ of $G$, let $u_i,u_j \in V$ and cliques $C_i$, $C_j \in T$, such that $u_i \in C_i$ and $u_j \in C_j$.
+ Then, the size of any minimum hitting set that hits all the cliques in the path joining $C_i$ and $C_j$ is upper bounded by 
+ the number of vertices in any shortest path between $u_i$ and $u_j$ in $G$.
+ By exploring this structural property of the clique trees, we show that \mbox{$d_{ij} \leq 2d_G(u_i,u_j)+8$}.
+ 
+ Furthermore, one of the most interesting features of our data structure is its constant query time in spite of the fact that it
+ store only $O(n)$ size data, i.e., it does not store distances between all the pairs explicitly.
+ 
+
+\pagebreak

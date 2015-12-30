@@ -1,0 +1,37 @@
+\abstract
+
+\noindent KEYWORDS: \hspace*{0.5em} \parbox[t]{4.4in}{Chordal Graphs, Distance Oracle, Hitting Set, Clique Tree, 
+\mbox{All Pairs Shortest Path}}
+
+\vspace*{24pt}
+\noindent
+ \emph{All Pairs Shortest Path} ($\textsc{APSP}$) problem is one of the most fundamental problems in graph theory. 
+ The all pairs shortest path problem on a graph $G$ is to compute shortest path between all the pairs of vertices of $G$.
+ One of the most interesting ways to approach this problem is by preprocesssing the graph and setup a data structure that 
+ can efficiently answer queries of distance between any pair of vertices. 
+ This data structure is referred as $\emph{distance oracle}$ of the graph.
+ 
+ We preprocess a given undirected chordal graph $G = (V,E)$ on $n$ vertices in $O(n^2)$
+ time and space to build a data structure of size $O(n)$ such that any subsequent distance
+ query can be answered in constant time with a bounded constant factor error. 
+ In particular, for each pair of vertices $u_i,u_j\in V(G), 1 \leq i,j \leq n$, we output a distance value $d_{ij} \leq 2d_G(u_i,u_j)+8$, 
+ where $d_G$ is the distance between $u_i$ and $u_j$ in $G$. Our improvement comes from a relationship that we discover between the graph distance and
+ minimum hitting sets of cliques on certain paths in a clique tree associated with a chordal graph.
+ For a clique tree $T$ of $G$, let $u_i,u_j \in V$ and cliques $C_i$, $C_j \in T$, such that $u_i \in C_i$ and $u_j \in C_j$.
+ We prove that the size of any minimum hitting set that hits all the cliques in the path joining $C_i$ and $C_j$ is upper bounded by 
+ the number of vertices in any shortest path between $u_i$ and $u_j$ in $G$.
+ By using this structural property of the clique trees, we show that \mbox{$d_{ij} \leq 2d_G(u_i,u_j)+8$}.
+ We also prove that by keeping the size of 
+ the hitting set of cliques on all paths originating from a single vertex in the clique tree, we can compute hitting set for the path joining 
+ any pair of cliques in constant time. This observation helps us to design an efficient data structure to additively approximate (error of +3) these minimum
+ hitting sets of cliques for all paths in the clique tree. This observation is important to answer distance queries in constant time.
+ The most interesting features of our data structure is its constant query time in spite of the fact that it
+ stores only $O(n)$ size data, i.e., it does not store distances between all the pairs explicitly.
+ 
+ We will also present a survey of \emph{tree} $t$-\emph{spanner} for different classes of graphs. 
+ In this thesis we will mostly concentrate on chordal graphs for both the problems, i.e., distance oracles and tree $t$-spanners.
+ We will study the previous results in the area of spanners. We will also study previous research about the computational 
+ complexity of the tree $t$-spanner. 
+ 
+
+\pagebreak

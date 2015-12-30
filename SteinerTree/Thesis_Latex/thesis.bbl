@@ -1,0 +1,55 @@
+\begin{thebibliography}{10}
+
+\bibitem{cormen}
+Thomas~H Cormen, Charles~E Leiserson, Ronald~L Rivest, Clifford Stein, et~al.
+\newblock {\em {Introduction to algorithms}}, volume~2.
+\newblock MIT press Cambridge, 2001.
+
+\bibitem{karger}
+Steven J.~Phillips David R.~Karger, Daphne~Koller.
+\newblock Finding the hidden path: Time bound for all-pairs shortest paths.
+\newblock {\em SIAM Journal on Computing}, 22(6):1199--1217, 1991.
+
+\bibitem{dijktra}
+Dijkstra's.
+\newblock {A Note on two problems in connection with graphs}.
+\newblock {\em Numerische Mathematic}, 1(1):269--271, 1959.
+
+\bibitem{sbook}
+P.~Winter F.K.~Hwang, D.S~Richards.
+\newblock {\em {The Steiner Tree Problem}}.
+\newblock Elsevier, 1992.
+
+\bibitem{shen}
+C.~K.~Wong Ho~jan ming, V.~Gopalkrishan.
+\newblock {A New Approach to the Rectilinear Steiner problems}.
+\newblock {\em 26th ACM/IEEE}, pages 161--166, 1989.
+
+\bibitem{byrka}
+R.~Thomas J.~Byrka, F.~grandoni and Laura Sanit\'{a}.
+\newblock {An Improved LP - based approximation for Steiner tree}.
+\newblock {\em ACM 978-1-4503-0050-6}, June 5-8 2010.
+
+\bibitem{koch}
+T~Koch, Alexander Martin, and Stefan Voss.
+\newblock Steinlib testdata library.
+\newblock {\em URL: http://elib. zib. de/steinlib/steinlib. php}, 2002.
+
+\bibitem{markowsky}
+George Kou, L.~Markowsky and Leonard Berman.
+\newblock A fast algorithm for steiner trees.
+\newblock {\em Acta informatica}, 15(2):141--145, 1981.
+
+\bibitem{hougardy}
+H.~Pr\"{o}mel S.~Hougardy.
+\newblock {A 1.598 Approximation Algorithm for the Steiner Problem in Graphs}.
+\newblock {\em Preceedings of the tenth Annual ACM-SIAM Symposium on Discrete
+  algorithms}, pages 448--453, 1999.
+
+\bibitem{seidel}
+Raimund Seidel.
+\newblock On the all-pairs-shortest-path problem in unweighted undirected
+  graphs.
+\newblock {\em Journal of Computer and System Sciences}, 51(3):400--403, 1995.
+
+\end{thebibliography}

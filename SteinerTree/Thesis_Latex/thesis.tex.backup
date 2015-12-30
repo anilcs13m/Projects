@@ -1,0 +1,305 @@
+\documentclass[MS,thesis]{iitmdiss}
+\usepackage{etex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[dvips]{graphicx}
+\usepackage{amsmath,amssymb} % easier math formulae, align, subequation
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{times,algorithmic,algorithm}
+\usepackage{t1enc}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{pstricks,pst-node,pst-tree,pstricks-add}
+\usepackage{tikz}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage{bold-extra}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{clrscode3e}
+\usetikzlibrary{intersections,decorations, positioning,
+arrows,backgrounds,patterns,matrix,shapes,fit,calc,shadows,plotmarks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+                   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\qed}{\rule{7pt}{7pt}}
+\newenvironment{proof}{\noindent{\bf Proof}\hspace*{1em}}{\hfill\qed\bigskip}
+
+\captionsetup{labelfont=bf}
+
+\lstset{
+  %backgroundcolor = \color{lightgray},
+  frame=single,
+  numbers=left,
+  numbersep=5pt,
+  xleftmargin=2em,
+  framexleftmargin=1.5em,
+  stepnumber=1,
+  firstnumber=1,
+  numberfirstline=true,
+  basicstyle=\fontsize{10.2pt}{12pt}\ttfamily
+}
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+    citecolor=black,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%			AUTHOR DEFINED COMMANDS AND MACROS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\LPlhbox}
+\newcommand\problemfont[1]{{\scshape #1}}
+\newcommand\problemfontbold[1]{\large {\textbf{\textsc{#1}}}}
+\renewcommand*\lstlistingname{Algorithm}
+
+
+\newcommand\segment[4]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] (#4);
+}
+
+\newcommand\lblsegment[5]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] node[above] {#5} (#4) ;
+}
+
+\newcommand\lblsegmenttwo[5]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] node[at start, above] {#5} (#4) ;
+}
+
+\newcommand\lblsegmentthree[5]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] node[left] {#5} (#4) ;
+}
+
+\newcommand\lblsegmentfour[5]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] node[right] {#5} (#4) ;
+}
+
+\newcommand\dashsegment[4]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|,dashed] (#4);
+}
+
+\newcommand\lblsegmentdir[6]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[|-|] node[#6] {#5} (#4) ;
+}
+
+\newcommand\segmenttwo[4]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path (#3) edge[-] (#4);
+}
+
+\newcommand\invsegment[4]{
+\coordinate (#3) at (#1);
+\coordinate (#4) at (#2);
+\path [opacity = 0] (#3) edge (#4);
+}
+
+\newsavebox{\tempbox}
+\newcommand{\cbox}[2]{%
+  \fcolorbox{black}{#1}{\texttt{#2\strut}}\kern-\fboxrule}% Coloured box
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{tocdepth}{4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\thesistitle{A LINEAR SIZE APPROXIMATE DISTANCE ORACLE FOR CHORDAL GRAPHS}
+\def\thesisauthor{Gaurav Singh}
+
+\begin{document}
+%\bibliographystyle{plain}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+
+\title{\thesistitle}
+\author{\thesisauthor}
+\date{July 2014}
+\department{COMPUTER SCIENCE AND ENGINEERING}
+%\nocite{*}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Certificate
+\certificate
+
+\vspace*{0.5in}
+
+\noindent This is to certify that the thesis titled {\bf {\thesistitle}}, submitted by {\bf {\thesisauthor}}, to the Indian Institute of Technology,
+Madras, for the award of the degree of {\bf Master of Science (by Research)}, is a bonafide record of the research work done by him under my
+supervision. The contents of this thesis, in full or in parts, have not been submitted to any other Institute or University for the award of any
+degree or diploma.
+
+\vspace*{1in}
+\hspace*{-0.25in}
+\begin{singlespace}
+\noindent {\bf Dr. N. S. Narayanswamy}\\
+\noindent Research Guide\\ 
+\noindent Associate Professor\\
+\noindent Dept. of Computer Science and Engineering\\
+\noindent IIT-Madras, 600 036 \\
+\end{singlespace}
+\vspace*{0.20in}
+\noindent Place: Chennai\\ 
+Date:\hspace{1cm}June, 2014
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgements
+\acknowledgements
+The work presented in the thesis was done under the guidance of Dr. N. S. Narayanaswamy. I would like to thank Dr. N. S. Narayanaswamy for his
+guidance throughout the course of the research.
+
+I would like to thank my mother and my father for their constant support and encouragement.
+
+Lastly I would like to thank the Ministry of Human Resource and Development, Government of India for the financial aid provided.
+
+\hfill Gaurav Singh
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+\input{texs/abstract.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of contents etc.
+
+\begin{singlespace}
+\tableofcontents
+\thispagestyle{empty}
+
+%\listoftables
+%\addcontentsline{toc}{chapter}{LIST OF TABLES}
+\listoffigures
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+\end{singlespace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abbreviations
+\input{texs/abbreviations.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Notation
+\input{texs/notations.tex}
+
+\pagenumbering{arabic}
+\input{texs/intro.tex}
+\input{texs/prelims.tex}
+\input{texs/literature.tex}
+\input{texs/distOracle.tex}
+%\input{texs/treeSpanner.tex}
+\input{texs/conclusion.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of papers
+
+\listofpapers
+
+\begin{enumerate}  
+ \item Gaurav Singh, N. S. Narayanswamy and G. Ramakrishna \newblock
+  "Approximate Distance Oracle in $O(n^2)$ Time and $O(n)$ Space for Chordal Graphs", \newblock {\em
+  The 25th International Symposium on Algorithms and Computation, 2014}, Jeonju, Korea (under review).
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography.
+\pagebreak
+\nocite{*}
+\begin{singlespace}
+  \begin{small}
+	\bibliographystyle{plain}
+	\bibliography{thesis}
+%	\bibliography{iccad}
+  \end{small}
+\end{singlespace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\CV
+\begin{tabbing}
+ \hspace{8cm} \= \hspace{1cm} \=  \\
+ \textbf{1.} \textbf{NAME} \> : \> Gaurav Singh \\
+ \textbf{2.} \textbf{DATE OF BIRTH} \> : \> 5 January, 1991 \\
+ \textbf{3.} \textbf{EDUCATIONAL QUALIFICATIONS} \\ \\
+ \hspace{1cm} \begin{minipage}{.8\textwidth}
+     \begin{description}
+      \item[2012] \textbf{Bachelor of Technology} \\
+      \hspace{5cm} \begin{minipage}{.9\textwidth}
+                    \begin{tabbing}
+                    Institute \hspace{2cm} \= : \hspace{2cm}\= Guru Gobind Singh Indraprastha University, Delhi \\
+                    Specialization \> : \> Computer Science and Engineering
+                    \end{tabbing}
+                   \end{minipage}
+      \item \textbf{M.S. by Research} \\
+      \hspace{5cm} \begin{minipage}{.9\textwidth}
+                    \begin{tabbing}
+                    Institute \hspace{2cm} \= : \hspace{2cm}\= Indian Institute of Technology, Madras \\
+                    Registration Date \> : \> 16-07-2012
+                    \end{tabbing}
+                   \end{minipage}
+     \end{description}
+
+    \end{minipage}
+
+\end{tabbing}
+
+\committee
+\begin{tabular}[t]{l c r}
+ 
+ \textbf{CHAIRPERSON} & : & \begin{minipage}[t]{.9\textwidth}
+                               Dr. Sukhendu Das \\
+                               Professor \\
+                               Department of Computer Science and Engineering \\
+                              \end{minipage}
+ \\
+ \textbf{GUIDE} & : & \begin{minipage}[t]{.9\textwidth}
+                               Dr. N. S. Narayanaswamy \\
+                               Associate Professor \\
+                               Department of Computer Science and Engineering \\
+                              \end{minipage}
+ \\
+ \textbf{MEMBERS} & : & \begin{minipage}[t]{.9\textwidth}
+                               Dr.John Augustine \\
+                               Assistant Professor \\
+                               Department of Computer Science and Engineering \\
+                              \end{minipage}
+ \\
+  &  & \begin{minipage}{.9\textwidth}
+                               Dr. Andrew Thangaraj \\
+                               Associate Professor \\
+                               Department of Electrical Engineering \\
+                              \end{minipage}
+ \\
+\end{tabular}
+
+\end{document}

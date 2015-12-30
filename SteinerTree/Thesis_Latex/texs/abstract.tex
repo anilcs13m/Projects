@@ -1,0 +1,12 @@
+\abstract
+
+\noindent KEYWORDS: \hspace*{0.5em} \parbox[t]{4.4in}{Graphs, Minimum Spanning Tree, Terminal Steiner Tree, All-pairs Shortest-Path, 
+\mbox{Steiner Tree Problem}}
+
+\vspace*{24pt}
+\noindent
+ \emph{Steiner Tree Problem} ($\textsc{STP}$) Steiner tree problem (named after Jacob Steiner) one of the NP-Complete Problems. If we apply restriction on the problem than we can solved some of the problems in polynomial time. This problem is some what similar to the minimum spanning tree problem. In mst problem, we are required construct a tree that cover all the vertices of a graph with minimum cost. while in the Steiner tree problem, we are given some vertices, which we called as the terminals(required vertices) and some other points which are the optional points(Steiner Point), we are required to connect all the terminal vertices with minimum cost and in this connection, we may use some optional points(Steiner Point) to cover all the terminal vertices with minimum cost.
+
+Given a graph G = $(V,E)$ with edge weights as c:E$\rightarrow$ $\mathbb{R}_{\geq 0}$ i.e, and subset of nodes $S$ $\subseteq$ $V$, $S$ is call required vertices (terminals), formed a tree $T_s$ that cover every required vertices(S) with optimal cost $c(T_s):= \sum_{e\in T_s} c(e)$. This constructed tree $T_s$, we called as the Steiner tree, it might contain some other vertices which are optional(Steiner nodes). Terminal Steiner tree is a tree that having all required vertices as leaves i.e, all the vertices which having degree one are the required vertices. The cost of tree is define as the sum of all the edges cover the path in the construction of tree, this cost is minimum than the other tree, we called such a tree as the minimum cost and there is no other tree, which have cost less then that tree.Even for unit weighted graph this problem is NP-Hard.
+
+\pagebreak

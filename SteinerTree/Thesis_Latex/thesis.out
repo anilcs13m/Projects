@@ -1,0 +1,41 @@
+\BOOKMARK [0][-]{chapter*.1}{ACKNOWLEDGEMENTS}{}
+\BOOKMARK [0][-]{chapter*.2}{ABSTRACT}{}
+\BOOKMARK [0][-]{chapter*.5}{LIST OF FIGURES}{}
+\BOOKMARK [0][-]{chapter*.6}{ABBREVIATIONS}{}
+\BOOKMARK [0][-]{chapter*.7}{NOTATIONS}{}
+\BOOKMARK [0][-]{chapter.1}{INTRODUCTION}{}
+\BOOKMARK [1][-]{section.1.1}{Overview and Motivation}{chapter.1}
+\BOOKMARK [2][-]{subsection.1.1.1}{Steiner Tree Problem}{section.1.1}
+\BOOKMARK [2][-]{subsection.1.1.2}{Terminal Steiner Tree}{section.1.1}
+\BOOKMARK [1][-]{section.1.2}{Applications of Steiner Tree}{chapter.1}
+\BOOKMARK [1][-]{section.1.3}{Existing Approximation Algorithms}{chapter.1}
+\BOOKMARK [1][-]{section.1.4}{All-Pairs Shortest-Paths Algorithm}{chapter.1}
+\BOOKMARK [1][-]{section.1.5}{Preliminaries}{chapter.1}
+\BOOKMARK [1][-]{section.1.6}{Contribution of the Thesis}{chapter.1}
+\BOOKMARK [1][-]{section.1.7}{Organization of the Thesis}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{ALL ABOUT STEINER TREE}{}
+\BOOKMARK [1][-]{section.2.1}{Steiner Tree}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Types of Steiner Trees problems}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.2.1}{Euclidean Steiner Tree}{section.2.2}
+\BOOKMARK [2][-]{subsection.2.2.2}{Rectilinear Steiner Problem}{section.2.2}
+\BOOKMARK [2][-]{subsection.2.2.3}{Steiner Tree Problems in Network}{section.2.2}
+\BOOKMARK [2][-]{subsection.2.2.4}{Prize-Collecting Steiner Tree\(PCST\)}{section.2.2}
+\BOOKMARK [1][-]{section.2.3}{Approximation Algorithm for Steiner Tree}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.3.1}{Heuristic Algorithm :-}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.2}{Analysis of Approximation Ratio}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.3}{Tight Analysis of Approximation Ratio}{section.2.3}
+\BOOKMARK [0][-]{chapter.3}{A SURVEY OF BEST APPROXIMATION ALGORITHMS}{}
+\BOOKMARK [1][-]{section.3.1}{For Approximation Algorithm algo1}{chapter.3}
+\BOOKMARK [1][-]{section.3.2}{All-Pairs Shortest-Paths}{chapter.3}
+\BOOKMARK [2][-]{subsection.3.2.1}{Dijkstra's Algorithm}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.2}{Description of Dijkstra's Algorithm}{section.3.2}
+\BOOKMARK [2][-]{subsection.3.2.3}{Run Time of Dijkstra's Algorithm}{section.3.2}
+\BOOKMARK [1][-]{section.3.3}{Conclusion}{chapter.3}
+\BOOKMARK [0][-]{chapter.4}{PROPOSED HEURISTIC ALGORITHM}{}
+\BOOKMARK [1][-]{section.4.1}{Overview}{chapter.4}
+\BOOKMARK [2][-]{subsection.4.1.1}{Modification in The All-pairs Shortest-Path Algorithm}{section.4.1}
+\BOOKMARK [2][-]{subsection.4.1.2}{Approximation Algorithm for Steiner Tree}{section.4.1}
+\BOOKMARK [1][-]{section.4.2}{Input Dataset Description}{chapter.4}
+\BOOKMARK [1][-]{section.4.3}{Computational Results}{chapter.4}
+\BOOKMARK [0][-]{chapter.5}{CONCLUSION AND FUTURE WORK}{}
+\BOOKMARK [1][-]{section.5.1}{Conclusion and Future Work}{chapter.5}

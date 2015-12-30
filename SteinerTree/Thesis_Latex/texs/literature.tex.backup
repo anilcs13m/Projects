@@ -1,0 +1,187 @@
+\chapter{A Survey of Distance Oracle and Tree Spanners} \label{ch_review}
+%Chapter 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distance Oracle}
+ All Pairs Shortest Path ($\textsc{APSP}$) problem is one of the most fundamental problems in graph theory. 
+ The $\emph{all pairs shortest path}$ problem on $G$ is to compute shortest path between all pairs of vertices of $G$.
+ One of the most interesting ways to approach this problem is to preprocess a graph to setup data structure that 
+ can efficiently answer queries of distance between any pair of vertices. 
+ This data structure is referred as $\emph{distance oracle}$ of the graph. 
+ Distance oracle essentially stores the information about the distance between vertices of graph.
+ In most of the real world applications we are not interested in queries for all the
+ distances, but we query for distance between some pairs of nodes more frequently than others. 
+ For example, in a big city like Chennai, distance between many pairs of
+ addresses are of no interest to most of the people. we want to access distances between some pairs of nodes 
+ quickly. Distance oracle of small size suits best for these kind of applications. 
+ \par A distance oracle can be exact or approximate. An exact distance oracle returns exact distance
+ when queried for distance between any pair of vertices. An approximate distance oracle returns
+ approximate distance between the pair of vertices. Distance return by an approximate distance 
+ oracle has stretch $t$ if the distance $d_{uv}$ return by the distance oracle is upper bounded by 
+ $t \cdot d_G(u,v)$ i.e., $d_{uv} \leq t \cdot d_G(u,v)$.
+ \subsection{Distance Oracle for General Graphs}
+ A classical algorithm for solving $\textsc{APSP}$ in general weighted graphs is given by Floyd and Warshall ~\cite{cormen}.
+ It outputs an $n \times n$ matrix, that contains shortest distance between every pair of vertices, in $\Theta(n^3)$ time.
+ Later, Seidel~\cite{seidel} devised an algorithm to compute $\textsc{APSP}$ matrix for unweighted, undirected general graphs in 
+ $O(M(n)$ log $n)$ time, where $M(n)$ is the time to multiply two $n \times n$ matrix.
+ $M(n)$ is currently known to be $O(n^{2.376})$~\cite{matrix}. Theorem proved by Seidel is as follows,
+ \begin{theorem}[\cite{seidel}]
+  Given the adjacency matrix of an unweighted, undirected graph $G$. We can compute distance matrix $D$ of $G$ in 
+  $O(M(n)$ log $n)$ time, where $M(n)$ is the time to multiply two matrices of small integers.
+ \end{theorem}
+ 
+ Absence of sub-cubic time algorithm for solving $\textsc{APSP}$ inspired researchers to design approximate distance oracles.
+ Zwick~\cite{zwick} designed an algorithm that can compute matrix of approximate distance between vertices of graph
+ in \~{O}$(n^{\omega}/\epsilon)$ time, where $\epsilon > 0$ and $\omega < 2.376$. The stretch of the distances
+ computed by the algorithm presented by Zwick is at most $\epsilon$. Theorem presented by Zwick is as follows,
+ \begin{theorem}[\cite{zwick}]
+  For every weighted graph $G$ we can compute a matrix of estimated distance of relative error at most $\epsilon$
+  in \~{O}$(n^{\omega}/\epsilon)$ time.
+ \end{theorem}
+ 
+ Cohen et al.~\cite{cohenzwick} designed three algorithms to solve $\textsc{APSP}$ approximately for weighted graphs.
+ Details of running time and stretch of algorithms are as follows,
+ \begin{enumerate}
+  \item Fist algorithm runs in \~{O}$(n^{3/2}m^{1/2})$ and compute $\emph{all pairs approximate shortest path}$ ($\textsc{APSP}$)
+  matrix within an approximation factor of 2.
+  \item Second algorithm runs in \~{O}$(n^{7/3})$ time and compute $\textsc{APASP}$ matrix
+  within an approximation factor of 7/3.
+  \item Third algorithm runs in \~{O}$(n^2)$ time and compute $\textsc{APASP}$ matrix
+  within an approximation factor of 3.
+ \end{enumerate}
+
+ Algorithm designed by Zwick~\cite{zwick} and Cohen et al.~\cite{cohenzwick} computes an $n \times n$ matrix
+ that contains approximate distance between every pair of vertices of graph. Keeping distance between all pairs of vertices
+ will surely require $O(n^2)$ space. Can we do something better in terms of the space used to keep the distance information?
+ Is it possible to answer distance queries in constant time without keeping all the distances explicitly? Researchers, later 
+ addressed these questions by designing distance oracles of size strictly less then $O(n^2)$, i.e., these oracles do not
+ store all the distances explicitly but are able to answer distance queries in constant time. 
+ 
+ Thorup et al.~\cite{thorup} designed a distance oracle for general weighted weighted graph that can answer
+ distance queries in constant time without keeping distance between all the pairs explicitly.
+ Thorup et al.~\cite{thorup} showed that for any integer $k \geq 1$, a general graph can be preprocessed in $O(kmn^{1/k})$ time
+ to produce a distance oracle that will occupy $O(n^{1+1/k})$ space. Subsequent distance queries can be answered approximately 
+ in $O(k)$ time with approximation factor $2k - 1$. They are essentially extracting some distance information of size 
+ $O(kn^{1+1/k})$ from graph and with the help of this information they are able to answer any distance query in $O(k)$ time.
+ Query response time of $O(k)$ can be considered as constant considering the fact that $k$ is typically a small constant.
+ Main theorem of the paper presented by Thorup et al.~\cite{thorup} is as follows,
+ \begin{theorem}[\cite{thorup}]
+  Let $G = (V,E)$ be a weighted undirected graph with non-negative edge weights. Let $k > 1$. Then, the graph $G$ can be
+  preprocessed in $O(kmn^{1/k})$ expected time, producing a data structure of size $O(kn^{1+1/k})$, such that subsequent
+  distance queries can be answered approximately in $O(k)$ time. The stretch of the produced estimates is at most $2k - 1$.
+ \end{theorem}
+ The space requirement of this oracle is essentially optimal. Thorup et al.~\cite{thorup} showed that 1963 girth conjuncture
+ by Erd\H{o}s, and others, implies that, the size of any distance oracle that answers distance queries with stretch strictly
+ less then $2k + 1$ is $\Omega(n^{1+1/k})$. This is one of the remarkable results in the field of the data structures that stores
+ distance information of graphs.
+ 
+ We are interested in distance oracles that can answer distance queries within small stretch. Algorithm presented
+ by Thorup et al. require $O(mn^{1/2})$ time to build a distance oracle that can answer distance queries
+ with stretch factor of 3. The size of the oracle is $O(n^{1.5})$. For dense graphs with $m = O(n^2)$, the time to
+ set up oracle is $O(n^{2.5})$ which is rather high for a distance oracle of stretch 3. In fact the algorithm
+ presented by Cohen et al.~\cite{cohenzwick} require only \~{O}$(n^2)$ time to build a distance oracle that can
+ answer distance queries with stretch of 3. However, the algorithm presented in~\cite{cohenzwick} outputs an $n \times n$
+ matrix of approximate distances, therefore it require $n^2$ space to store the oracle. Thus, one should prefer Thorup et al's
+ algorithm to optimize time and Cohen et al's algorithm to optimize size of the oracle. But is this possible to design a distance oracle 
+ that can combine the attractive features of these two distance oracles?
+ 
+ Baswana et al.~\cite{baswana} almost answered the question posed in the last paragraph by presenting a distance
+ oracle that combines some features of two distance oracles~\cite{thorup,cohen}. They essentially presented two 
+ algorithms for constructing distance oracles, details of running time and stretch and size of oracle are as following,
+ \begin{enumerate}
+  \item A general graph $G$ can be preprocessed in $O(min(n^2 \log n,mn^{1/2}))$ time to build a data structure
+  of size $O(n^{3/2})$. This data structure can be used to answer distance queries with stretch factor of 3.
+  The disadvantage of this data structure is its query response time, it takes $O(\log n)$ time to answer distance queries.
+  \item For integers $k > 2$, they presented an algorithm to construct an approximate distance oracle of size $O(n^{1+1/k})$ in
+  $O(min(n^2,kmn^{1/k}))$. Subsequent distance queries can be answered in $O(k)$ time within stretch of $2k - 1$.
+ \end{enumerate}
+ Clearly, for distance oracles of stretch greater than equal to 5, the algorithm presented by Baswana et al. combines
+ the desirable features of oracles presented by Cohen et al. and Thorup et al. In Table \ref{weighted} we have compiled
+ all major results on distance oracle for weighted general graph.
+ 
+ \begin{table}[ht]
+ \caption{Exact and approximate distance oracles for general weighted graphs}
+ \label{weighted}
+ \centering
+ \begin{tabular}{|c|c|c|c|c|} 
+ \hline 
+ Stretch & Processing time & Size & Query time & Reference\\
+ \hline  
+ 1 & $O(n^3$) & $O(n^2)$ & $O(1)$ & Floyd and Warshall \cite{cormen} \\
+ \hline
+ $1+\epsilon$ & $O(n^{\omega}/\epsilon)$ & $O(n^2)$ & $O(1)$ & Zwick \cite{zwick} \\
+ \hline
+  2 & \~{O}$(n^{3/2}m^{1/2})$ & $O(n^2)$ & $O(1)$ & Cohen et al. \cite{cohenzwick} \\
+ \hline
+  7/3 & \~{O}$(n^{7/3})$ & $O(n^2)$ & $O(1)$ & Cohen et al. \cite{cohenzwick}  \\
+ \hline
+    & $O(mn^{1/2})$ & $O(n^{3/2})$ & $O(1)$ & Thorup et al. \cite{thorup}\\
+  3 & \~{O}$(n^2)$ & $O(n^2)$ & $O(1)$  & Cohen et al. \cite{cohenzwick} \\
+    & $O(min(n^2\log n,mn^{1/2}))$ & $O(n^{3/2})$ & $O(\log n)$ & Baswana et al. \cite{baswana} \\
+ \hline
+  $2k -1$ (for $k > 2$) & $O(kmn^{1/k})$ & $O(kn^{1+1/k})$ & $O(1)$ & Thorup et al. \cite{thorup}  \\
+  & $Omin(n^2,kmn^{1/k})$ & $O(kn^{1+1/k})$ & $O(1)$ & Baswana et al. \cite{baswana}  \\
+ \hline
+ \end{tabular}
+ \end{table}
+ 
+ \subsection{Distance Oracle for Chordal Graph Family}
+ In this thesis we present an approximate distance oracle for chordal graphs. 
+ With this regard it is important to study the existing results for $\textsc{APSP}$ on chordal graphs and its subclasses.
+ 
+ Han et al.$\cite{han}$ presented an algorithm to compute $\textsc{APSP}$ matrix for a chordal graph $G$. 
+ They divides the pairs of vertices into two sets. First set contains the pairs of vertices having distance at most two.
+ The other set contains the pairs having distance three or more. They solved $\textsc{APSP}$ separately on these two disjoint sets.
+ Finally, they combined the two solutions to get an $\textsc{APSP}$ matrix for chordal graphs. 
+ 
+ First part of the problem, i.e., determining the pairs of vertices having distance at most two, is solved by computing square of the graph.
+ Given a graph $G = (V,E)$, the square of the graph is defined as $G^2 = (V',E')$, where $V' = V$ and $(x,y) \in E$ if and only if $1 \leq d_G(x,y) \leq 2$.
+ Square of a graph can be computed by squaring the adjacency matrix of the graph. If $M^2$ is the square of the adjacency matrix of the graph,
+ then for any $v_i,v_j \in V$ if $M^2[v_i,v_j] = 1$ then $1 \leq d_G(v_i,v_j) \leq 2$. 
+ The time complexity of multiplication of two $n \times n$ matrices is known to be $O(n^{2.376})$~\cite{matrix}.
+ Therefore, it require $O(n^2)$ time to compute $G^2$ by using matrix multiplication.
+ 
+ The other part of the solution, i.e., solving $\textsc{APSP}$ for the pairs of vertices having distance at least three,
+ is solved by exploring structural properties of chordal graphs. Given a $\emph{perfect elimination ordering}$ of the graph $G$,
+ $H(u)$ for a vertex $u \in V$ can be defined as the neighbor of $u$ having highest label with respect to the perfect elimination ordering.
+ Han et al. proved the following two important theorems about the structural properties of the chordal graph. 
+ 
+ \begin{theorem}[\cite{han}]
+ Given a chordal graph $G = (V,E)$, let $u,v \in V$ such that $d_G(u,v) \geq 3$. Then there exists a shortest path between $u$ and $v$ 
+ which contains either $H(u)$ or $H(v)$.
+ \end{theorem}
+
+ \begin{theorem}[\cite{han}]
+  Given a chordal graph $G = (V,E)$, let $u,v \in V$ such that $d_G(u,v) \geq 3$. Then $d(u,v) =$ min($d(H(u),v)+1,d(u,H(v)+1)$, where 
+  $d(u,v)$ is the length of a shortest path between $u$ and $v$.
+ \end{theorem}
+ 
+ Han et al. also proved that their algorithm require $O(n^2)$ time, if $G^2$ is known. If $G^2$ is not known, then we also need to consider
+ the running time of computing $G^2$ which is $O(n^{2.376})$. Therefore, given a chordal graph $G$, the algorithm given by
+ Han et al.~\cite{han} can compute $\textsc{APSP}$ matrix for the graph in $O(n^{2.376})$ time.
+ 
+ From the above discussion it is clear that matrix multiplication act as a bottleneck for solving $\textsc{APSP}$ on chordal graph.
+ Even the algorithm proposed by Seidel~\cite{seidel}, to compute $\textsc{APSP}$ matrix for general unweighted graph, also uses 
+ matrix multiplication as a subroutine. Therefore, matrix multiplication is the bottleneck in solving $\textsc{APSP}$ on chordal
+ as well as general unweighted graph. 
+ 
+ Han et al.~\cite{han} presented an algorithm to transform a general graph $G$ into a split graph $G_s$ such that
+ given square of the split graph $G_s$ the square of $G$ can be computed efficiently without using matrix multiplication.
+ This transformation essentially prove that computing square of a split graph is as hard as computing square of a general graph.
+  \begin{theorem}[\cite{han}]
+  Let $G = (V,E)$ be a general unweighted graph. Then we can construct a split graph $G_s$ such that if square of $G_s$ 
+  is known then we can compute square of $G$ in $O(n^2)$ time without using matrix multiplication.
+  \end{theorem}
+  \begin{proof}
+   Let $G_s = (V',E')$ such that $V' = C \cup I$, $C$ is a clique on $|V|$ vertices and $I$ is an independent set on $|V|$. 
+   Let $f_{I}: V \rightarrow I$ and $f_{C}: V \rightarrow C$ be the bijective functions. 
+   Also, $(f_I(x),f_C(y)) \in E'$ if and only if $(x,y) \in E$. Clearly, $G_s$ is a split graph. Also, $d_G(x,y) = 2$ if and only if
+   $d_{G_s}(f_I(x),f_C(y)) = 2$. Therefor, given square of $G_s$ we can construct square of $G$.
+   Construction of split graph require only $O(n^2)$ time. Also, if $G_s^2$ matrix for $G_s$ is given then we can populate $G^2$ matrix for
+   general graph as well. Hence the claim.
+  \end{proof}
+
+
+ 
+ 
+ 
+ 

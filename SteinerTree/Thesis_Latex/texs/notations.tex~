@@ -1,0 +1,15 @@
+\chapter*{\centerline{NOTATIONS}}
+\addcontentsline{toc}{chapter}{NOTATIONS}
+\begin{singlespace}
+\begin{tabbing}
+xxxxxxxxxxxxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \kill
+\textbf{$V(G)$}		\> Vertex set of graph $G$  \\
+\textbf{$E(G)$}		\> Edge set of graph $G$  \\
+\textbf{$|A|$}		\> Cardinality of set $|A|$  \\
+\textbf{$A\setminus B$}	\> Set of elements of $A$ not in $B$ \\
+\textbf{$adj(v)$}	\> Set of adjacent vertices of vertex $v$ in the given graph $G$ \\
+\textbf{$deg_G(v)$}	\> Cardinality of $adj(v)$ \\
+\end{tabbing}
+\end{singlespace}
+\pagebreak
+\clearpage

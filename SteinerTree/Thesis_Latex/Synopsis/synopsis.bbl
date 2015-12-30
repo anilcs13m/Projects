@@ -1,0 +1,89 @@
+\begin{thebibliography}{10}
+
+\bibitem{baswana}
+Surender Baswana and Telikepalli Kavitha.
+\newblock {Faster algorithms for approximate distance oracles and all-pairs
+  small stretch paths}.
+\newblock In {\em Foundations of Computer Science, 2006. FOCS'06. 47th Annual
+  IEEE Symposium on}, pages 591--602. IEEE, 2006.
+
+\bibitem{blair}
+Jean~RS Blair and Barry Peyton.
+\newblock {An introduction to chordal graphs and clique trees}.
+\newblock In {\em Graph theory and sparse matrix computation}, pages 1--29.
+  Springer, 1993.
+
+\bibitem{cohen}
+Edith Cohen and Uri Zwick.
+\newblock {All-pairs small-stretch paths}.
+\newblock In {\em Proceedings of the eighth annual ACM-SIAM symposium on
+  Discrete algorithms}, pages 93--102. Society for Industrial and Applied
+  Mathematics, 1997.
+
+\bibitem{matrix}
+Don Coppersmith and Shmuel Winograd.
+\newblock {Matrix multiplication via arithmetic progressions}.
+\newblock {\em Journal of symbolic computation}, 9(3):251--280, 1990.
+
+\bibitem{cormen}
+Thomas~H Cormen, Charles~E Leiserson, Ronald~L Rivest, Clifford Stein, et~al.
+\newblock {\em {Introduction to algorithms}}, volume~2.
+\newblock MIT press Cambridge, 2001.
+
+\bibitem{gavril}
+Fanica Gavril.
+\newblock {Algorithms for minimum coloring, maximum clique, minimum covering by
+  cliques, and maximum independent set of a chordal graph}.
+\newblock {\em SIAM Journal on Computing}, 1(2):180--187, 1972.
+
+\bibitem{golumbic}
+Martin~Charles Golumbic.
+\newblock {\em {Algorithmic graph theory and perfect graphs}}, volume~57.
+\newblock Elsevier, 2004.
+
+\bibitem{han}
+K~Han, Chandra~N Sekharan, and R~Sridhar.
+\newblock {Unified all-pairs shortest path algorithms in the chordal
+  hierarchy}.
+\newblock {\em Discrete Applied Mathematics}, 77(1):59--71, 1997.
+
+\bibitem{lcabytarjan}
+Dov Harel and Robert~Endre Tarjan.
+\newblock Fast algorithms for finding nearest common ancestors.
+\newblock {\em siam Journal on Computing}, 13(2):338--355, 1984.
+
+\bibitem{lcabypowell}
+Patrick Powell.
+\newblock {further improved LCA algorithm}.
+\newblock {\em Plant Genome Data and Information Center collection on
+  computational molecular biology and genetics}, 1990.
+
+\bibitem{cpr}
+R~Ravi, Madhav~V Marathe, and C~Pandu~Rangan.
+\newblock {An optimal algorithm to solve the all-pair shortest path problem on
+  interval graphs}.
+\newblock {\em Networks}, 22(1):21--35, 1992.
+
+\bibitem{lcabyvishkin}
+Baruch Schieber and Uzi Vishkin.
+\newblock On finding lowest common ancestors: simplification and
+  parallelization.
+\newblock {\em SIAM Journal on Computing}, 17(6):1253--1262, 1988.
+
+\bibitem{seidel}
+Raimund Seidel.
+\newblock {On the all-pairs-shortest-path problem in unweighted undirected
+  graphs}.
+\newblock {\em Journal of Computer and System Sciences}, 51(3):400--403, 1995.
+
+\bibitem{cliquetree}
+Yukio Shibata.
+\newblock {On the tree representation of chordal graphs}.
+\newblock {\em Journal of Graph Theory}, 12(3):421--428, 1988.
+
+\bibitem{thorup}
+Mikkel Thorup and Uri Zwick.
+\newblock {Approximate distance oracles}.
+\newblock {\em Journal of the ACM (JACM)}, 52(1):1--24, 2005.
+
+\end{thebibliography}

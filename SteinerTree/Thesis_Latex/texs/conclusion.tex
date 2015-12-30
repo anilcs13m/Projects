@@ -1,0 +1,9 @@
+\chapter{CONCLUSION AND FUTURE WORK} \label{ch_concl}
+%Chapter 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion and Future Work}
+ In this work, we have designed a heuristic approximation algorithm for Steiner tree by using all-pairs shortest-path algorithm, with the help of this algorithm, we have came to a some better algorithm whose running time is better then previous heuristic algorithm presented by L.~Kou, G. Markowsky, and L, $A$ $Fast$ $Algorithm$ $for$ $Steiner$ $Tree$ ~\cite{markowsky}, running time of this algorithm was $O(|S||V|^2)$. where $|S|$ is the number of terminals and $|V|$ is the number of vertices in the graph $G$. In this algorithm running time mainly taken by the first step, rest of the step are taking a running time of some what smaller then that, so our thinking were how to reduce the running time for this step 1 only, and get a some better running time complexity. For that think we used all-pairs shortest-path problem, and we come up with a better running time complexity i.e., $O(|S||V|log|V|)$ for the graph the graph which have order of edges $O(E)$ $\leq$ $|V|log|V|$ and $O(|S||V|log|V| + |E||S|)$ for the other graph this running time is depend on the order of edges present in the graphs. Computational results presented by our heuristic algorithm is competitive with the previous heuristic algorithm for the Steiner tree. For some instances our algorithm fail to get better running time, where the order of edges is more than the $|V|log|V|$. In the implementation of algorithms, we used C++ as language for implementation. One can participate in the DIMACS implementation challenge with good implementations.
+  
+ % \section{Future Work} 
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

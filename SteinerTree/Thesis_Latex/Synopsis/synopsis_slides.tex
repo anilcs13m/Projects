@@ -1,0 +1,1411 @@
+\documentclass{beamer}
+\usetheme{Madrid}  
+
+%%%%%%%-Packages-%%%%%%%%%%%
+\usepackage{complexity}
+\usepackage{amsmath,amssymb}    
+\usepackage{graphicx,graphics}        
+\usepackage{pstricks,pst-node,pst-tree,pstricks-add}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Bibliography tweak !
+%\setbeamertemplate{bibliography item}[text]
+
+%%%%%%%%-Macros-%%%%%%%%%%%%%
+\newcommand{\calA}{{\cal A}}
+\newcommand{\calB}{{\cal B}}
+\newcommand{\calC}{{\cal C}}
+\newcommand{\calD}{{\cal D}}
+\newcommand{\calE}{{\cal E}}
+\newcommand{\calF}{{\cal F}}
+\newcommand{\calG}{{\cal G}}  
+\newcommand{\calH}{{\cal H}}
+\newcommand{\calI}{{\cal I}}
+\newcommand{\calJ}{{\cal J}}
+\newcommand{\calK}{{\cal K}}
+\newcommand{\calL}{{\cal L}}
+\newcommand{\calM}{{\cal M}}
+\newcommand{\calN}{{\cal N}}
+\newcommand{\calO}{{\cal O}}
+\newcommand{\calP}{{\cal P}}
+\newcommand{\calQ}{{\cal Q}} 
+\newcommand{\calR}{{\cal R}} 
+\newcommand{\calS}{{\cal S}}
+\newcommand{\calT}{{\cal T}} 
+\newcommand{\calU}{{\cal U}}
+\newcommand{\calV}{{\cal V}}
+\newcommand{\calW}{{\cal W}}
+\newcommand{\calX}{{\cal X}}
+\newcommand{\calY}{{\cal Y}}
+\newcommand{\calZ}{{\cal Z}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DO NOT EDIT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% at section start %%%%%%
+\begin{document}
+
+\title[Degree Set: Realizability and Extension]{Degree Sets: Realizability and Extension Problems}
+\date[\today]{\today}
+\author[Prasun]{Prasun Kumar\\\vspace{1mm}CS11S005\\\vspace{2mm}Advisor : Jayalal Sarma M.N.\\\vspace{4mm}Department of Computer Science and Engineering\\\vspace{1.5mm}Indian Institute of Technology, Madras}
+\institute[IIT-Madras]{}
+\frame{\maketitle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Talk Plan}
+  \begin{itemize}
+    \item Degree Set Basics\vspace{1mm}
+    \item Extension Problem for Trees\vspace{1mm}
+    \item Extension Problems for Undirected Graphs\vspace{1mm}
+    \item Tree Realizability under Multiplicity Constraints\vspace{1mm}
+    \item Degree Set Variants for Directed Graphs\vspace{1mm}
+    \item Asymmetric Directed Graph Realization of Degree Set\vspace{1mm}
+    \item Directed Tree Realization of Degree Set\vspace{1mm}
+    \item Conclusion and Future Work \vspace{1mm}
+   % \item Publication
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Degree Set : Definition}
+ \begin{block}{}
+Let $G(V,E)$ be a graph then degree set of $G$ is $S$ = $\{${\em deg(v)}$:v\in V\}$
+ \end{block}
+ \pause\vspace{2mm}
+  \begin{minipage}{0.45\linewidth}
+  %\begin{columns}
+   % \begin{column}{3cm}  
+      $
+       \psmatrix[colsep=1cm,rowsep=1cm,mnode=circle]
+         [fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]3\\
+         [fillstyle=solid,fillcolor=yellow]3&[fillstyle=solid,fillcolor=yellow]2
+         \ncline{1,1}{1,2}
+         \ncline{1,1}{2,1}
+         \ncline{2,1}{2,2}
+         \ncline{2,1}{1,2}
+         \ncline{1,2}{2,2}
+        \endpsmatrix
+        $
+    \end{minipage}
+  \pause
+   \begin{minipage}{0.45\linewidth}  
+    For this graph \\
+      \vspace{1mm}
+         \hspace{.5cm} $S=\{2,3\}$\\
+         \pause
+         \hspace{.5cm} $D=(3,3,2,2)$
+    \end{minipage}
+  %\end{columns}    
+    \pause
+    \\
+    \vspace{5mm}
+    \begin{itemize}
+      \item \underline{{\em Convention}} : elements in $S$ are written in increasing order.\vspace{1.5mm}\pause
+      \item $S$ is {\em realizable} if there is a graph respecting $S$.\vspace{1.5mm}\pause
+      \item Interested in {\em Simple graph} realizations only.
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Degree Set}
+ For a given set $S= \{a_1 < a_2 < \ldots < a_n\}$,$a_i\in\mathbb{Z}^+$, there arise two questions
+ of interest -\pause
+  \begin{itemize}
+    \item Is $S$ realizable?\pause
+    \item What is the minimum order possible if $S$ is realizable? 
+  \end{itemize}\pause
+  \vspace{2mm}
+  {\em If $S$ is realizable then} 
+ \begin{itemize}
+   \item  ${\blue \Gamma(S)}$ : {\magenta family of simple graphs realizing $S$}\pause\vspace{1.5mm}
+   \item  ${\blue \mu(S)}$ : {\magenta minimum order of a graph $\in\Gamma(S)$}\pause\vspace{1.5mm}
+ \end{itemize}
+  $$
+  \begin{tabular}{|c|}
+  \hline
+  ${\blue \mu(S)\ge a_n+1}$\\
+  \hline
+  \end{tabular}
+  $$
+\\
+\pause\vspace{3mm}
+ When $S$ - realized by a tree then we use $\mu_T(S)$ instead of $\mu(S)$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{}
+
+\hspace{4.5cm}{\em eg.} $S=\{1,2,3\}$\\
+ \pause\vspace{4mm}
+  \begin{minipage}{0.30\linewidth}  
+      $
+       \psmatrix[colsep=.5cm,rowsep=.5cm,mnode=circle]
+         &[fillstyle=solid,fillcolor=yellow]2\\
+         &[fillstyle=solid,fillcolor=yellow]1\\
+         [fillstyle=solid,fillcolor=yellow]3&&[fillstyle=solid,fillcolor=yellow]2
+         \ncline{3,1}{1,2}
+         \ncline{1,2}{3,3}
+         \ncline{3,1}{2,2}
+         \ncline{3,1}{3,3}
+        \endpsmatrix
+        $
+    \end{minipage}
+    \begin{minipage}{0.30\linewidth}  
+      $
+       \psmatrix[colsep=.5cm,rowsep=.5cm,mnode=circle]
+         &[fillstyle=solid,fillcolor=yellow]1\\
+         [fillstyle=solid,fillcolor=yellow]3&&[fillstyle=solid,fillcolor=yellow]2\\
+         [fillstyle=solid,fillcolor=yellow]2&&[fillstyle=solid,fillcolor=yellow]2
+         \ncline{2,1}{1,2}
+         \ncline{2,1}{2,3}
+         \ncline{3,1}{2,1}
+         \ncline{3,1}{3,3}
+         \ncline{2,3}{3,3}
+        \endpsmatrix
+        $
+    \end{minipage}
+     \begin{minipage}{0.30\linewidth}  
+      $
+       \psmatrix[colsep=.5cm,rowsep=.5cm,mnode=circle]
+         &[fillstyle=solid,fillcolor=yellow]3\\
+         [fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]1&[fillstyle=solid,fillcolor=yellow]1\\
+         [fillstyle=solid,fillcolor=yellow]1
+         \ncline{2,1}{1,2}
+         \ncline{2,1}{3,1}
+         \ncline{1,2}{2,2}
+         \ncline{1,2}{2,3}
+        \endpsmatrix
+        $
+    \end{minipage}
+     \\
+   \vspace{2mm}
+  \hspace{.65cm}$|V|=4$\hspace{2.5cm}$|V|=5$\hspace{2.5cm}$|V|=5$\\
+  \pause\vspace{6mm}
+  \begin{minipage}{0.50\linewidth} 
+      $
+       \psmatrix[colsep=.5cm,rowsep=.5cm,mnode=circle]
+         [fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]3&[fillstyle=solid,fillcolor=yellow]1\\
+         [fillstyle=solid,fillcolor=yellow]3&[fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]1
+         \ncline{1,1}{1,2}
+         \ncline{1,1}{2,1}
+         \ncline{2,1}{2,2}
+         \ncline{2,1}{1,2}
+         \ncline{1,2}{2,2}
+         \ncline{1,3}{2,3}
+        \endpsmatrix
+        $
+    \end{minipage}
+   \begin{minipage}{0.45\linewidth}
+     ${\red G}\colon {\blue \mathbb{K}_4\cup \mathbb{K}_3\cup \mathbb{K}_2}$ 
+   \end{minipage}
+  \\
+  \vspace{2mm}
+  \hspace{.8cm}$|V|=6$\hspace{5.2cm}$|V|=9$\\
+  \pause\vspace{3mm}
+  $$
+  \begin{tabular}{|c|}
+  \hline
+  ${\red \mu(S)=4}$\\
+  \hline
+  \end{tabular}
+  $$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Integer Set Realization}
+  \begin{block}{Theorem - Kapoor, Polimeni, Wall(1977)}
+   Any finite set $S= \{a_1 < a_2 < \ldots < a_n\}$,$a_i\in\mathbb{Z}^+$ is always realizable and $\mu(S)=a_n+1$.
+\end{block}
+ \pause
+ \vspace{1.5mm}
+ \underline{{\em Proof}} : by induction on $|S|(=n)$\\
+\pause\vspace{3mm}
+Another {\blue Computational Question} that we are asking \\
+\vspace{1mm}
+\begin{block}{Extension Problem}
+ \hspace{1cm}{\em\magenta Is there a graph $G'(V',E')\in\Gamma(S)$ such that $|V'|=t$ ??}
+\end{block}
+\pause
+\vspace{2mm}
+   \begin{itemize}
+     \item $t<\mu(S)$ - no realization exists\pause
+     \item $t\ge\mu(S)$ then $t=\mu(S)+r$ where $r\in\mathbb{Z}\bigcup\{0\}$
+   \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Integer Set Realization of Trees and TEP}
+\begin{block}{Theorem - Kapoor, Polimeni, Wall(1977)}
+Any finite set $S= \{a_1 < a_2 < \ldots < a_n\}$,$a_i\in\mathbb{Z}^+$ is realized by a tree {\em if and only if} $a_1=1$ and $\mu_T(S)=\sum_{i=1}^{n}(a_i-1)+2$
+\end{block}
+\pause
+\vspace{1mm}
+Minimum order tree construction
+ $
+\psmatrix[colsep=.25cm,rowsep=.5cm]
+&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_3&[fillstyle=solid,fillcolor=yellow].&\cdots\cdots&[fillstyle=solid,fillcolor=yellow].&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_{n-1}&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n\\
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1
+\ncline{1,2}{2,1}
+\ncline{1,2}{2,3}
+\ncline{1,2}{1,5}
+\ncline{1,5}{2,4}
+\ncline{1,5}{2,6}
+\ncline{1,9}{2,8}
+\ncline{1,9}{2,10}
+\ncline{1,12}{2,11}
+\ncline{1,12}{2,13}
+\ncline{1,9}{1,12}
+\ncline{1,5}{1,6}
+\ncline{1,9}{1,8}
+\endpsmatrix
+$
+\\
+\pause\vspace{1mm}
+Let $m_i$ be the {\em multiplicity} of $a_i\in S$ then in this tree\\
+ \begin{itemize}
+   \item $m_1 >>1$ and $m_i=1,\forall2\le i\le n$.
+ \end{itemize}
+\pause\vspace{1.8mm}
+\begin{block}{Tree Extension Problem(TEP)}
+{\em Given a degree set $S$ with $a_1=1$, and an integer $r$, check if there is a tree $T'(V',E')\in\Gamma(S)$ such that $|V'|=\mu_T(S)+r$.}
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Extension Characterization}
+ \begin{block}{Characterization}
+  If the degree set $S=\{1=a_1 < a_2 < \cdots < a_n\}$ is realized by a tree $T(V,E)$ then there is another tree   realization $T'=(V',E')$ where $|V'|=|V|+r$,$r\in\mathbb{Z^+}$, {\em if and only if} \\
+ \vspace{1mm}
+  ${\blue r=k_2(a_2-1)+k_3(a_3-1)+\cdots+k_n(a_n-1)\hspace{1cm}\forall i, k_i\in \mathbb{Z}^+\bigcup\{0\}}$
+ \end{block}
+\vspace{1mm}
+\pause
+ {\em Result due to Gupta, Joshi, Tripathi (2004)}.\\
+ \pause
+ \vspace{2mm}
+ \underline{{\em Proof}} (Aliter): ($\Rightarrow$) W.l.o.g. assume $T(V,E)$ is a minimum order tree realizing $S$ and let out of $r$ vertices, $k_i$ vertices are there with degree $a_i\in S$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Extension Characterization}
+Hence $$({\red 1}^{\blue \sum_{i=1}^{n}a_i-2n+3+k_1}{\red ,a_2}^{\blue 1+k_2}{\red ,\ldots,a_i}^{\blue 1+k_i}{\red ,\ldots,a_n}^{\blue 1+k_n})$$ is the degree sequence of $T'$ and $r=\sum_{i=1}^{n}k_i$.\\ 
+\vspace{1mm}
+\pause
+\begin{block}{}
+\underline{{\em lemma}}(AM96): For the sequence $d=(d_1\ge d_2\ge \cdots \ge d_n)$, if $\sum_{i=1}^nd_i=2(n-1)$ then the {\blue number of pendant vertices in any tree realization} of $d$ is ${\blue \sum_{i=1}^{k}(d_i-2) +2}$ where ${\red k=max\{i | d_i\ge3\}}$\\
+\end{block}
+\pause\vspace{1.5mm}
+ Since $a_2 \ge 2$
+ \begin{itemize}
+   \item $\sum_{i=1}^{n}a_i-2n+3+k_1 = \sum_{i=2}^{n}(k_i+1)(a_i-2)$\pause\vspace{1mm}
+   \item $r=\sum_{i=1}^{n}k_i$
+ \end{itemize}
+\vspace{3mm}
+Solving these we get $r=\sum_{i=2}^{n}k_i(a_i-1)$.
+\end{frame} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Complexity Results on TEP}
+ \begin{block}{}
+    {\sc Tree Extension Problem}(TEP) is equivalent to {\sc Integer Knapsack Problem}(IKP).
+ \end{block}
+ \pause
+ \underline{IKP} : Given non-negative integers $c_1, \ldots, c_k$, and a value $d$. Does there exist non-negative integers 
+$d_1, d_2, \ldots, d_k$ such that $\sum_i c_id_i = d$.\\ 
+ \pause
+ \vspace{1mm}
+ {\red Given a degree set $S$, corresponding IKP instance}
+ \begin{itemize}
+  \item {\blue $k=|S|-1$, $c_i = a_{i+1}-1$ for all $1 \le i \le k$, and $d=r$}.
+ \end{itemize}
+\begin{block}{}
+$$
+\begin{array}{cccccc}
+\red r=&k_2\red(a_2-1)+&\ldots+&k_{i+1}\red(a_{i+1}-1)+&\ldots+&k_n\red(a_n-1)\\
+\blue\updownarrow&\blue\updownarrow&\hspace{1mm}&\blue\updownarrow&\hspace{1mm}&\blue\updownarrow\\
+\red d=&d_1\red c_1+&\ldots+&d_i\red c_i+&\ldots+&d_k\red c_k\\
+\end{array}
+$$
+\end{block}
+\pause
+{\red Given non-negative integers $c_1,\ldots, c_k$, and a value $d$ (an IKP instance), consider the degree set}
+ \begin{itemize}
+   \item {\blue $S = \{1, c_1+1,\ldots, c_k+1 \}$ and $r=d$}.
+ \end{itemize}
+\pause
+ %\begin{block}{}
+ \hspace{4cm}{\em\red (TEP is NP-Complete.)}
+ %\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Unary Version of TEP}
+  \begin{block}{Unary Tree Extension Problem(UTEP)}
+    Given a tree $T$ on $\ell$ vertices and a string $1^r$, test if there is another tree $T'$ having exactly
+    $\ell+r$ vertices and the degree set same as that of $T$.
+  \end{block}
+\pause
+\vspace{2mm}
+{\em UTEP can be solved in log-space.}\\
+ \pause
+\vspace{1mm}
+\underline{{\em Proof:}} By reducing the problem to Unary Subset Sum Problem which can be solved in log-space (Ref- Kane2010). 
+\pause
+\vspace{2mm}
+ \begin{block}{UNARY SUBSET SUM PROBLEM}
+    Given a multiset $A$ of $m$ integers $b_1, b_2, \ldots, b_m$ and a value $c$ (all inputs in unary), test if 
+   there is a subset $A'$ of these integers such that $\sum_{i \in A'} b_i = c$
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Reduction from UTEP to UNARY SUBSET SUM}
+ \underline{{\em Reduction}}: Given a tree $T$ and $r$ in unary
+  \begin{itemize}
+   \item write down the set $A = {\red \bigcup_{i=2, j=1}^{i=n,j=t_i}} {\blue \{ (a_i-1)j \}}$ where $t_i = \lceil \frac{r}{a_i-1} \rceil$ and $r$ in unary, choose $c=r$.
+  \end{itemize}
+\pause
+\begin{block}{}
+${\blue  r= k_2(a_2-1)+\cdots+k_i(a_i-1)+\cdots+k_n(a_n-1)}$, $k_i\le \lceil \frac{r}{a_i-1} \rceil$
+\end{block}
+\pause
+\vspace{2mm}
+ If $\exists$ $A'\subseteq A$ that sums up to $r$, then corresponding choice of the $j$'s satisfies equation 
+ $r = \sum_{i=2}^{n}k_i(a_i-1)$ and for any solution $k_i \le t_i$ for all $i$.\\
+\vspace{3.5mm}
+\pause
+ Hence the corresponding terms $k_i(a_i-1)$ will appear in the set $A$ as well. Choosing these terms in $A'$ ensures 
+ $\sum_{i \in A'} b_i = r = c$.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Parametrizations of TEP ($r$ given in {\em unary})}
+Two natural parametrizations of TEP (when $r$ is given in {\em unary})-
+\pause
+\begin{itemize}
+  \item with $|S|$ as the parameter\vspace{2mm}
+        \begin{itemize}
+          \item TEP $\le_P$ {\sc Variety Subset Sum Problem}\vspace{1.5mm}
+          \item {\em Ref-} Fellows, Gaspers, Rosamond(2010)\vspace{2mm}\pause
+        \end{itemize}
+  \item with $r$ as parameter\vspace{2mm}
+        \begin{itemize}
+          \item TEP $\le_P$ {\sc Maximum Knapsack Problem}\vspace{1.5mm} 
+          \item {\em Ref-} Fernau(2005)
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem for Undirected Graphs}
+\begin{block}{}
+ Is there a graph $G'(V',E')\in\Gamma(S)$ such that $|V'|=\mu(S)+r$ ?
+\end{block}
+\pause
+\vspace{2mm}
+{\em {\blue Since $|V'|$ is given} $\Rightarrow$ {\blue Degree sequence approach might be useful}}\\
+\pause
+\vspace{2mm}
+Let $D$ be the {\em degree sequence} of a graph $G(V,E)$ realizing $S$, $|V|=\mu(S)$.\\
+\pause
+\vspace{2mm}
+$$\boldsymbol{D'} \longleftarrow ({\blue D},{\magenta a_{i_1},a_{i_1},a_{i_2},\cdots,a_{i_r}})\hspace{.4cm}\mbox{such that}\hspace{.1cm} \forall q\in[r], a_{i_q}\in S$$ 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem for Undirected Graphs}
+\begin{block}{}
+ Is there a graph $G'(V',E')\in\Gamma(S)$ such that $|V'|=\mu(S)+r$ ?
+\end{block}
+\vspace{2mm}
+{\em {\blue Since $|V'|$ is given} $\Rightarrow$ {\blue Degree sequence approach might be useful}}\\
+\vspace{2mm}
+Let $D$ be the {\em degree sequence} of a graph $G(V,E)$ realizing $S$, $|V|=\mu(S)$.\\
+\vspace{2mm}
+$$\pscirclebox{\boldsymbol{D'}} \longleftarrow (\pscirclebox{\blue {D}},{\magenta a_{i_1},a_{i_1},a_{i_2},\cdots,a_{i_r}})\hspace{.4cm}\mbox{such that}\hspace{.1cm} \forall q\in[r], a_{i_q}\in S$$
+\hspace{.5cm}$\nearrow {\red graphic??}$\hspace{.5cm} $\nwarrow {\blue graphic}$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Integer Sequence Realization}
+\begin{block}{Erd$\ddot{o}$s - Gallai Theorem (1960)}
+The positive integer sequence $d=(d_1\ge d_2\ge\cdots\ge d_i\ge\cdots\ge d_n)$, where $d_1\le n-1,$ is realized by a simple graph if
+\begin{itemize}
+\item $\sum_{i=1}^nd_i$ is even, and
+\item $\sum_{i=1}^{k}d_i\le k(k-1)+\sum_{i=k+1}^{n}min\{d_i,k\}$ for $1\le k\le n$
+\end{itemize}
+\end{block}
+\pause
+\vspace{2mm}
+ZZ92 : suffices to check the inequalities for $1\le k\le m$ where\\
+\hspace{3.5cm} ${\blue m=max\{i|d_i\ge i,d_i\in d\}}$.\\
+\pause
+\vspace{2mm}
+\hspace{6cm}$\Downarrow$\\
+\vspace{1mm}
+\hspace{1.4cm} indices :  $\hspace{.5cm}\underline{1}\hspace{.5cm}\underline{2}\hspace{.5cm}\cdots\hspace{.5cm}\underline{\bf m}\hspace{.5cm}\underline{m+1}\hspace{.5cm}\cdots\hspace{.5cm}\underline{n}$\\
+\vspace{1.5mm}
+\hspace{2cm}$d$\hspace{.4cm} : $\hspace{.4cm}\underbrace{{\red d_1}\hspace{.35cm}{\red d_2}\hspace{.4cm}\cdots\hspace{.5cm}{\red\bf d_m}}_{{\magenta d_j\ge\hspace{1.5mm}j}}\hspace{.4cm}\underbrace{{\blue d_{m+1}}\hspace{.5cm}\cdots\hspace{.5cm}{\blue d_n}}_{{\magenta d_j<\hspace{1.5mm}j}}$\\
+\pause
+\hspace{7.7cm}$\Downarrow$\\
+\underline{{\magenta Idea}} :\hspace{2cm}{\em (can add ${\red d_{j'}< j'}$ to get another graphic sequence ${\blue d'}$)}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem for Undirected Graphs}
+\begin{itemize}
+\item $G(V,E)$ realizes $S=\{a_1<a_2<\cdots<a_n\}$, where $|V|=a_n+1$.\vspace{1.5mm}
+\item Multiplicity$(m_i)$ of different $a_i(\in S)$s in $G$ are as follows \vspace{1.5mm}
+  \pause
+  \begin{itemize}
+    \item for ${\red i\ne n,\lceil\frac{n}{2}\rceil}$ : ${\blue m_i}= {\magenta a_{n-i+1}-a_{n-i}}$\vspace{1.5mm}
+    \item for ${\red i= n}$ : ${\blue m_n}= {\magenta a_1}$\vspace{1.5mm}
+    \item for ${\red i=\lceil\frac{n}{2}\rceil}$ : ${\blue m_{\lceil\frac{n}{2}\rceil}}={\magenta a_{n-\lceil\frac{n}{2}\rceil+1}-a_{n-\lceil \frac{n}{2}\rceil}+1}$ 
+  \end{itemize}
+\end{itemize}
+\pause
+\vspace{2mm}
+The corresponding degree sequence of $G$ will be\\
+\hspace{2cm} $\boldsymbol{D}=(d_1\ge d_2\ge\cdots \ge d_j\ge\cdots \ge d_{a_n+1})$  where
+   $$ 
+        \boldsymbol{d_j} =
+        \left \{
+        \begin{array}{ll} 
+        {\blue a_n} & \mbox{if ${\magenta 1}\le{\blue j}\le{\magenta a_1}$}\\
+        {\blue a_{n-i}} & \mbox{if ${\magenta 1+a_i}\le{\blue j}\le{\magenta a_{i+1}}$,  for ${\magenta 1}\le{\blue i} \le {\magenta \lfloor\frac{n}{2}\rfloor-1}$} \\
+        {\blue a_{\lceil\frac{n}{2}\rceil}} & \mbox{if ${\magenta 1+a_{\lfloor\frac{n}{2}\rfloor}}\le{\blue j}\le{\magenta 1+a_{\lfloor\frac{n}{2}\rfloor+1}}$}\\
+        {\blue a_{n-i}} & \mbox{if ${\magenta 2+a_i}\le{\blue j}\le{\magenta 1+a_{i+1}}$,  for ${\magenta \lfloor\frac{n}{2}\rfloor+1}\le{\blue i} \le {\magenta n-1}$} \\
+        \end{array}
+        \right.
+    $$ 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem for Undirected Graphs}
+\begin{block}{Theorem}
+For every $r\in \mathbb{Z^+}$, there exists an undirected simple graph with $\mu(S)+r$ vertices having degree set $S=\{a_1<a_2<\cdots<a_n\}$ except the case when $a_1=1$, $r$ is odd and only $a_n$ is even. 
+\end{block}
+\pause
+\vspace{1mm}
+\underline{{\em Proof}} (informal): Sequence $D$ for $G(V,E)$ realizing $S$ is\\
+\begin{align*}
+D=({\red a_n}^{\blue a_1}>{\red a_{n-1}}^{\blue a_2-a_1}>\dots>{\red a_i}&^{\blue a_{n-i+1}-a_{n-i}}>\dots>{\red a_{\lceil\frac{n}{2}\rceil}}^{\blue a_{1+\lfloor\frac{n}{2}\rfloor}-a_{\lfloor\frac{n}{2}\rfloor}+1}>\\
+&\dots>{\red a_j}^{\blue a_{n-j+1}-a_{n-j}}>\dots>{\red a_1}^{\blue a_n-a_{n-1}})\\
+\end{align*} 
+\pause 
+\underline{{\red {\em $n$ is even}}} :  $D=(a_n\ge\cdots\ge a_{\lceil\frac{n}{2}\rceil+1}\ge\cdots\ge {\blue a_{\lceil\frac{n}{2}\rceil+1}}\ge a_{\lceil\frac{n}{2}\rceil}\ge\cdots\ge a_1)$\\
+\hspace{7.8cm}$\uparrow$\hspace{.8cm} $\uparrow$\\
+Here ${\magenta m=a_{\lceil\frac{n}{2}\rceil}= a_{\lfloor\frac{n}{2}\rfloor}}$\hspace{4cm}${\blue d_{a_{\lfloor\frac{n}{2}\rfloor}}}$\hspace{.5cm}$d_{a_{\lfloor\frac{n}{2}\rfloor+1}}$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem for Undirected Graphs}
+\begin{block}{Theorem}
+For every $r\in \mathbb{Z^+}$, there exists an undirected simple graph with $\mu(S)+r$ vertices having degree set $S=\{a_1<a_2<\cdots<a_n\}$ except the case when $a_1=1$, $r$ is odd and only $a_n$ is even. 
+\end{block}
+\vspace{1mm}
+\underline{{\em Proof}} (informal): Sequence $D$ for $G(V,E)$ realizing $S$ is\\
+\begin{align*}
+D=({\red a_n}^{\blue a_1}>{\red a_{n-1}}^{\blue a_2-a_1}>\dots>{\red a_i}&^{\blue a_{n-i+1}-a_{n-i}}>\dots>{\red a_{\lceil\frac{n}{2}\rceil}}^{\blue a_{1+\lfloor\frac{n}{2}\rfloor}-a_{\lfloor\frac{n}{2}\rfloor}+1}>\\
+&\dots>{\red a_j}^{\blue a_{n-j+1}-a_{n-j}}>\dots>{\red a_1}^{\blue a_n-a_{n-1}})\\
+\end{align*} 
+\underline{{\red {\em $n$ is odd}}} :  $D=(a_n\ge\cdots\ge a_{\lceil\frac{n}{2}\rceil}\ge\cdots\ge {\blue a_{\lceil\frac{n}{2}\rceil}}\ge a_{\lceil\frac{n}{2}\rceil}\ge\cdots\ge a_1)$\\
+\hspace{7cm}$\uparrow$\hspace{.8cm} $\uparrow$\\
+Here ${\magenta m=a_{\lceil\frac{n}{2}\rceil}=a_{\lfloor\frac{n}{2}\rfloor+1}}$\hspace{3cm}${\blue d_{a_{\lfloor\frac{n}{2}\rfloor+1}}}$\hspace{.2cm}$d_{a_{\lfloor\frac{n}{2}\rfloor+1}+1}$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Extension Problem proof continued...}
+Consider the following exhaustive cases(except one)\\
+\pause
+\vspace{2mm}
+\begin{itemize}
+  \item At least one of ${\blue r}$ OR ${\blue a_1}$ is even : ${\blue D'=(D,a_1^r)}$\vspace{1.5mm}\pause
+     \begin{itemize}
+      \item ${\magenta d_j(\in D)=a_1} \Rightarrow {\magenta j> m=a_{\lceil\frac{n}{2}\rceil}}$. Hence $D'$ is graphic.
+       \vspace{1.5mm}\pause
+     \end{itemize}
+  \item Both ${\blue r}$ AND ${\blue a_1}$ is odd :  Let ${\blue a_k=min\{a_i\in S|a_i=2I\}}$\vspace{1.5mm}\pause
+     \begin{itemize}
+      \item $1\le k\le \lceil\frac{n}{2}\rceil$ : ${\blue D'=(D,a_k,a_1^{r-1})}$ \vspace{1.5mm}\pause
+         \begin{itemize}
+          \item ${\magenta d_j(\in D)=a_k} \Rightarrow {\magenta j\ge 1+a_{\lfloor\frac{n}{2}\rfloor+1}} \Rightarrow 
+               {\magenta j>m}$. Hence $D'$ is graphic.\vspace{1.5mm}\pause 
+         \end{itemize}
+      \item $k> \lceil\frac{n}{2}\rceil$ : do not add $a_k$, instead {\blue add two $a_{\lceil\frac{n}{2}\rceil}$} 
+         and then {\blue delete $a_k$(first occurence)} from $D$ to get $D'$. \vspace{1.5mm}\pause
+         \begin{itemize}
+           \item $D'$ is graphic if :\hspace{.2cm} {\em for}\hspace{.2cm} ${\magenta a_{n-k}+1\le t\le m(=a_{\lceil\frac{n}{2}\rceil})}$,\\ 
+               \vspace{2mm}
+                $$
+                   \begin{tabular}{|c|}
+                    \hline
+                    ${\blue min\{d_{t+1},t\}\le 2 min\{a_{\lceil\frac{n}{2}\rceil},t\}+a_k-d_{t+1}}$\\
+                    \hline
+                   \end{tabular}
+                $$
+               \vspace{1.5mm}\pause
+           \item condition always satisfied. Hence $D'$ is graphic.
+         \end{itemize}
+      \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Realizability under Multiplicity Constraints}
+\begin{block}{}
+$S= \{a_1 < a_2 < \ldots < a_n\}$,$a_i\in\mathbb{Z}^+$ is realized by a tree $\Leftrightarrow$ $a_1=1$. 
+\end{block}
+\pause
+\vspace{1mm}
+\hspace{3cm}$\mu_T(S)=\sum_{i=1}^{n}(a_i-1)+2$\\
+\vspace{1.5mm}\pause
+Minimum order tree construction
+ $
+\psmatrix[colsep=.25cm,rowsep=.5cm]
+&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_3&[fillstyle=solid,fillcolor=yellow].&\cdots\cdots&[fillstyle=solid,fillcolor=yellow].&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_{n-1}&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n\\
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1
+\ncline{1,2}{2,1}
+\ncline{1,2}{2,3}
+\ncline{1,2}{1,5}
+\ncline{1,5}{2,4}
+\ncline{1,5}{2,6}
+\ncline{1,9}{2,8}
+\ncline{1,9}{2,10}
+\ncline{1,12}{2,11}
+\ncline{1,12}{2,13}
+\ncline{1,9}{1,12}
+\ncline{1,5}{1,6}
+\ncline{1,9}{1,8}
+\endpsmatrix
+$
+\\
+\pause\vspace{1mm}
+Let $m_i$ be the {\em multiplicity} of $a_i\in S$ then in this tree\\
+ \begin{itemize}
+   \item $m_1 >>1$ and $m_i=1,\forall2\le i\le n$.
+   \item<5-> degree distribution is highly skewed.
+ \end{itemize}
+\uncover<6->{
+\begin{block}{}
+   {\em Q.} Can we have another tree realization with smaller no of pendant vertices?
+\end{block}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Realizability under Multiplicity Constraints}
+  \begin{block}{Lemma}
+   {\em The minimum multiplicity of pendant vertices in any tree realization for the degree set 
+        $S=\{1=a_1 < a_2 < \cdots < a_n\}$ is $\sum_{i=1}^{n}a_i-2n+3$}
+  \end{block}
+\pause\vspace{1.5mm}
+\underline{{\em Proof}}: Let $m_i$ be the multiplicity of $a_i\in S$. Then, the corresponding degree sequence is
+$S=({\red 1}^{{\blue m_1}},{\red a_2}^{{\blue m_2}},\cdots,{\red a_n}^{{\blue m_n}})$.\\
+\pause
+\vspace{2mm}
+ Since $a_2\ge2$ hence using previous lemma(AM96)\pause
+$${\blue m_1=2+(a_2-2)m_2+(a_3-2)m_3+\cdots+(a_n-2)m_n\hspace{1cm}\forall i, m_i\ge1}$$
+$m_1$ will be minimum if $m_i=1$ for each $i=2,3,\ldots,n$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Realizability under Multiplicity Constraints}
+ Minimum order tree described earlier meets exactly this requirement.\\
+\vspace{2.5mm}
+So minimum value of
+  \begin{eqnarray*}
+    m_1 &=& 2+(a_2-2)+(a_3-2)+\cdots+(a_n-2) \\
+        &=&\sum_{i=1}^{n}a_i-2n+3 \\
+  \end{eqnarray*}
+ \pause\vspace{2mm}
+ \begin{block}{}
+  This result can be generalized in case of {\em \blue Degree Multiset}.
+ \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Degree Set Variants for Digraphs}
+In case of directed graphs, from degree set we mean
+ \begin{itemize}
+   \item {\em indegree set} or {\em outdegree set} or both
+ \end{itemize}
+\pause 
+Depending on the variation we call the realization $G(V,E)$ an 
+ \begin{block}{$\lor$(OR) - Realization}
+         if $\forall v \in V, d^+(v)\in S$ or $d^-(v)\in S$, and for each $a_i\in S$ there is a vertex $u\in V$ such that
+         $d^+(u)=a_i$ or $d^-(u)=a_i$.
+ \end{block}
+\pause
+ \begin{block}{$\land$(AND) - Realization}
+     if $\forall v \in V, d^+(v)\in S$ and $d^-(v)\in S$, and for each $a_i\in S$ there is a vertex $v_p$ and $v_q\in V$ 
+     such that $d^+(v_p)=a_i$ and $d^-(v_q)=a_i$.
+ \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{}
+\begin{minipage}{0.3\linewidth}
+\hspace{.2cm}$S=\{2,3\}$${\red \checkmark}$\\
+\\
+\vspace{5mm}
+\\
+     $
+       \psmatrix[colsep=1cm,rowsep=1.5cm,mnode=circle]
+         [fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]3\\
+         [fillstyle=solid,fillcolor=yellow]3&[fillstyle=solid,fillcolor=yellow]2
+         \ncline{1,1}{1,2}
+         \ncline{1,1}{2,1}
+         \ncline{2,1}{2,2}
+         \ncline{2,1}{1,2}
+         \ncline{1,2}{2,2}
+         \uncover<3->{
+         \ncline{<-}{1,1}{1,2}
+         \ncline{<-}{1,1}{2,1}
+         \ncline{->}{2,1}{2,2}
+         \ncline{->}{2,1}{1,2}
+         \ncline{->}{1,2}{2,2}}
+        \endpsmatrix
+        $
+     \\
+\vspace{3mm}
+\\
+\uncover<3->{
+\begin{itemize}
+  \item {\blue $\lor$-realized}\vspace{1.5mm}
+  \item {\red not $\land$-realized}
+\end{itemize}}
+\end{minipage}
+\pause
+\begin{minipage}{0.3\linewidth}
+\uncover<5->{
+\hspace{.2cm}$S=\{1,2\}$\\
+\\
+\vspace{5mm}
+\\
+     $
+       \psmatrix[colsep=1cm,rowsep=1.5cm,mnode=circle]
+         [fillstyle=solid,fillcolor=magenta]2&[fillstyle=solid,fillcolor=magenta]3\\
+         [fillstyle=solid,fillcolor=magenta]3&[fillstyle=solid,fillcolor=magenta]2
+         \ncline{<-}{1,1}{1,2}
+         \ncline{->}{1,1}{2,1}
+         \ncline{<-}{2,1}{2,2}
+         \ncline{->}{2,1}{1,2}
+         \ncline{->}{1,2}{2,2}
+        \endpsmatrix
+        $
+     \\
+\vspace{3mm}
+\\
+\begin{itemize}
+  \item {\blue $\lor$-realized}\vspace{1.5mm}
+  \item {\blue $\land$-realized}
+\end{itemize}}
+\end{minipage}
+\begin{minipage}{0.35\linewidth}
+ $S=\{2,3\}$ ${\red \times}$\\
+\\
+ \vspace{5mm}
+\\
+     $
+       \psmatrix[colsep=1cm,rowsep=.5cm,mnode=circle]
+         [fillstyle=solid,fillcolor=yellow]2&[fillstyle=solid,fillcolor=yellow]4\\
+         &&[fillstyle=solid,fillcolor=blue]2\\
+         [fillstyle=solid,fillcolor=yellow]3&[fillstyle=solid,fillcolor=yellow]3
+         \ncline{1,1}{1,2}
+         \ncline{1,1}{3,1}
+         \ncline{3,1}{3,2}
+         \ncline{3,1}{1,2}
+         \ncline{1,2}{3,2}
+         \ncline[linestyle=dashed]{1,2}{2,3}
+         \ncline[linestyle=dashed]{3,2}{2,3}
+         \uncover<4->{
+          \ncline{<-}{1,1}{1,2}
+         \ncline{->}{1,1}{3,1}
+         \ncline{->}{3,1}{3,2}
+         \ncline{<-}{3,1}{1,2}
+         \ncline{->}{1,2}{3,2}
+         \ncline{<-}{1,2}{2,3}
+         \ncline{<-}{3,2}{2,3}}
+        \endpsmatrix
+        $
+     \\
+\vspace{3mm}
+\\
+\uncover<4->{
+\begin{itemize}
+  \item {\red not $\lor$-realized}\vspace{1.5mm}
+  \item {\red not $\land$-realized}
+\end{itemize}}
+\end{minipage}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Digraph Realization for Degree Set}
+\begin{block}{}
+A finite set $S=\{a_1<a_2<\cdots<a_n\}$ of non-negative integers is always realizable by a directed graph with $a_n+1$ vertices, under both, $\land$ and $\lor$, notions of realizability.
+\end{block}
+\pause\vspace{1.5mm}
+\underline{{\em Proof}} :  Construct the undirected graph $G(V,E)$ with $a_n+1$ vertices for $S$, and then replace each undirected edge by two way symmetric edges.
+\pause\vspace{2mm}
+\begin{itemize}
+  \item digraphs with $a_n+1$ vertices : {\em symmetric}, easy to construct\pause\vspace{1.5mm}
+  \item from realizibility point of view 
+      \begin{itemize}
+        \item $\lor$-realization : seems to be very relaxed  
+      \end{itemize}  
+\end{itemize}
+\pause\vspace{1.5mm}
+{\blue {\em More feasible to study an asymmetric realization under $\land$-realizability constraints}}.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+ \begin{block}{}
+ If $\mu_A(S)$ denotes the minimum order of any asymmetric directed graph $\land$-realizing $S=\{a_1<a_2<\ldots<a_n\}
+ ,n\ge2,a_i\in\mathbb{Z}^+$ then 
+ $$a_{1}+a_{n}+1 \le \mu_{A}(S) \le a_{n-1}+a_{n}+1$$
+ \end{block}
+ There exists some sufficient conditions which achieves the minimum order, $(a_{1}+a_{n}+1)$- vertices realization.\\
+\pause
+ \vspace{2mm}
+ {\em Proof:} \underline{lower bound}- there is least one vertex $v$ of $G$ such that 
+ {\blue$d^+(v) + d^-(v) \ge a_{n}+a_{1}$} and since $G$ is asymmetric, hence $\mu_{A}(S)\ge a_{1}+a_{n}+1$.\\
+ \pause
+ \vspace{2mm}
+ \underline{upper bound}- By giving an inductive construction for $G$.\\
+ \pause
+ \vspace{3.5mm}
+ \underline{{\blue {\em Extension}}} : Always possible if ${\magenta r\ge a_n+a_{n-1}+1}$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Minimum Order $\lor$ - Realizability of Directed Trees}
+ \begin{block}{Theorem}
+  {\em For the degree set $S=\{1=a_1 < a_2 < \ldots < a_n\}$, the minimum order of a
+         directed tree which $\lor$-realizes the degree set $S$, is $\sum_{i=1}^{n}(a_i-1)+2$.}
+ \end{block}
+\pause
+ {\em Proof:} \underline{upper bound}- $\mu_{\lor}(S) \le \mu(S)=\sum_{i=1}^{n}(a_i-1)+2$\\
+ \vspace{2mm}\pause
+ Get the bipartite graph corresponding to minimum order undirected tree for $S$, assign same directions to all edges going
+ across the partition.\\
+ \vspace{3mm}\pause
+  \underline{lower bound}- $\mu_{\lor}(S) \ge \sum_{i=1}^{n}(a_i-1)+2$\\
+ \vspace{2mm}\pause
+ For each $i$, $a_i \in S$ will appear as $(a_i,b_j)$ or $(b_k,a_i)$ at least once, where $b_j,b_k \in\mathbb{Z}^+\bigcup\{0\}$. Thus
+ $$\sum_{v\in V}^{}(d^-(v)+d^+(v))=2|E|=2(V-1)\ge\sum_{i=1}^{n}a_i+(V-n)$$
+ This implies the lower bound $|V| \ge 2+\sum_{i=1}^{n}(a_i-1)$ 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Minimum Order $\land$ - Realizability of Directed Trees}
+ \begin{block}{Theorem}
+  {\em For the degree set $S=\{0< 1 < a_2 < \ldots < a_n\}$, the minimum order of a
+         directed tree which $\land$-realizes the degree set $s$, is $2\left(\sum_{i=1}^{n}(a_i-1)\right)+2$.}
+ \end{block}
+\pause
+\underline{{\em Proof:}} Each $a_i\in S$ will appear at least twice so we get minimum order tree for multiset 
+    $\{ 1,a_2^2,a_3^2,\ldots,a_n^2 \}$ with all edges being assigned directions in alternate way.
+\pause
+%\item<2>
+$
+\psmatrix[colsep=.02cm,rowsep=2cm]
+&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_i&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_i&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n&&&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n\\
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1
+\ncline{1,2}{2,1}
+\ncline{1,2}{2,3}
+\ncline{1,2}{1,5}
+\ncline{1,5}{2,4}
+\ncline{1,5}{2,6}
+\ncline{1,5}{1,6}
+\ncline{1,9}{2,8}
+\ncline{1,9}{2,10}
+\ncline{1,9}{1,12}
+\ncline{1,9}{1,8}
+\ncline{1,12}{2,11}
+\ncline{1,12}{2,13}
+\ncline{1,12}{1,13}
+\ncline{1,16}{1,15}
+\ncline{1,16}{2,15}
+\ncline{1,16}{2,17}
+\ncline{1,16}{1,19}
+\ncline{1,19}{2,18}
+\ncline{1,19}{2,20}
+\pause
+\ncline{<-}{1,2}{2,1}
+\ncline{<-}{1,2}{2,3}
+\ncline{<-}{1,2}{1,5}
+\ncline{->}{1,5}{2,4}
+\ncline{->}{1,5}{2,6}
+\ncline{->}{1,5}{1,6}
+\ncline{<-}{1,9}{2,8}
+\ncline{<-}{1,9}{2,10}
+\ncline{<-}{1,9}{1,12}
+\ncline{<-}{1,9}{1,8}
+\ncline{->}{1,12}{2,11}
+\ncline{->}{1,12}{2,13}
+\ncline{->}{1,12}{1,13}
+\ncline{<-}{1,16}{1,15}
+\ncline{<-}{1,16}{2,15}
+\ncline{<-}{1,16}{2,17}
+\ncline{<-}{1,16}{1,19}
+\ncline{->}{1,19}{2,18}
+\ncline{->}{1,19}{2,20}
+\endpsmatrix
+$    
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Tree Extension Problem for Directed Trees}
+\begin{itemize}
+ \item for undirected trees, TEP is NP-Complete.\pause
+ \item for directed trees, the task becomes easier,i.e.
+\end{itemize}
+\vspace{2mm}
+\begin{block}{}
+ For every non-negative integer $r$, there are directed trees with $\mu_T(S)+r$ vertices $\land$-realizing and $\lor$-realizing the given degree set $S$.
+\end{block}
+\pause
+ Minimum order Directed tree $\land$-realizing($\lor$-realizing) the degree set $S=\{0 < 1 < a_2 < \ldots < a_n\}$ 
+ \vspace{2.5mm}
+ $
+\psmatrix[colsep=.1cm,rowsep=1cm]
+&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_i&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_j&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n\\
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1
+\ncline{<-}{1,2}{2,1}
+\ncline{<-}{1,2}{2,3}
+\ncline{<-}{1,2}{1,3}
+\ncline{<-}{1,5}{1,6}
+\ncline{<-}{2,5}{1,6}
+\ncline{<-}{2,7}{1,6}
+\ncline{<-}{1,7}{1,6}
+\ncline{->}{2,9}{1,10}
+\ncline{->}{2,11}{1,10}
+\ncline{->}{1,9}{1,10}
+\ncline{<-}{1,10}{1,11}
+\ncline{<-}{1,13}{1,14}
+\ncline{<-}{2,13}{1,14}
+\ncline{->}{1,14}{2,15}
+\endpsmatrix
+$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Directed Tree Extension}
+ Every vertex to be added is added to the pendant vertex by an incoming or outgoing edge depending on whether the pendant vertex is a sink or source vertex respectively.
+\vspace{6mm}
+$
+\psmatrix[colsep=.1cm,rowsep=1cm]
+&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_2&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_i&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_j&.&\cdots&.&[mnode=circle,fillstyle=solid,fillcolor=yellow]a_n\\
+[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1&&[mnode=circle,fillstyle=solid,fillcolor=green]1&\cdots&[mnode=circle,fillstyle=solid,fillcolor=green]1\\
+&&&[mnode=circle,fillstyle=solid,fillcolor=blue]u&&&&&&[mnode=circle,fillstyle=solid,fillcolor=blue]v\\
+\ncline{<-}{1,2}{2,1}
+\ncline{<-}{1,2}{2,3}
+\ncline{<-}{1,2}{1,3}
+\ncline{<-}{1,5}{1,6}
+\ncline{<-}{2,5}{1,6}
+\ncline{<-}{2,7}{1,6}
+\ncline{<-}{1,7}{1,6}
+\ncline{->}{2,9}{1,10}
+\ncline{->}{2,11}{1,10}
+\ncline{->}{1,9}{1,10}
+\ncline{<-}{1,10}{1,11}
+\ncline{<-}{1,13}{1,14}
+\ncline{<-}{2,13}{1,14}
+\ncline{->}{1,14}{2,15}\pause
+\ncline{->}{2,5}{3,4}\pause
+\ncline{->}{3,10}{2,9}
+\endpsmatrix
+$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Conclusion and Future Work}
+\begin{itemize}
+\item Conclusion\vspace{2mm}\pause
+   \begin{itemize}
+     \item Extension problem for General Graphs (undirected) and Trees\vspace{1.5mm}\pause
+     \item Complexity aspects of Tree Extension Problem\vspace{1.5mm}\pause
+     \item Multiplicity lower bound for pendant vertices in Tree Realization\vspace{1.5mm}\pause
+     \item Asymmetric Digraph $\land$-Realization\vspace{1.5mm}\pause
+     \item Lower bound on order for Directed Trees under $\land(\lor)$-Realizability\vspace{1.5mm}\pause
+     \item Extension problem for Asymmetric Graphs and Directed Trees\vspace{1.5mm}\pause  
+    \end{itemize}
+\item Future Work\vspace{2mm}\pause
+   \begin{itemize}
+         \item Bridging the gap between bounds for Asymmetric Graphs\vspace{1.5mm}\pause
+         \item Minimum order graph realization for degree multiset
+   \end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \begin{center}
+    \vspace{30 mm}
+      {\red{\LARGE Questions..??}}
+    \vspace{30 mm}
+  \end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \begin{center}
+    \vspace{30 mm}
+      {\blue{\LARGE Thank You.}}
+    \vspace{30 mm}
+  \end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}{Asymmetric Digraph $\land$-realization}  
+   For $D=\{a_1\}$, $\mu_{A}(S)=2a_1+1$ (Chartrand {\em et al}, 1976)\\
+     \begin{itemize}
+       \item In every realization $G_1(V_1,E_1)$ of $D$, {\blue$\forall v\in V_1$ $d^-(v)+d^+(v)=2a_1$} and since $G$ is asymmetric, hence $\mu_{A}(S)\ge2a_1+1$.\vspace{1.5mm}\pause
+      \item To prove the upper bound we construct an asymmetric graph $G_1$ with $2a_1+1$ vertices.
+     % \item {\blue $E_1=\{(v_{i},v_{j})| 1\le i\le 2a+1$ and $i+1\le j\le i+a\}$(where subscripts are modulo $2a_1+1$)}.
+     \end{itemize}
+  \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+ \begin{frame}{Asymmetric Digraph $\land$-realization}  
+   For $S=\{a_1\}$, $\mu_{A}(S)=2a_1+1$ (Chartrand {\em et al}, 1976)\\
+  \begin{block}{}
+  {\blue $E_1=\{(v_{i},v_{j})| 1\le i\le 2a+1$ and $i+1\le j\le i+a\}$, where subscripts are modulo $2a_1+1$}
+  \end{block}
+  \vspace{2mm} 
+    \pause
+     $
+       \psmatrix[colsep=.18cm,rowsep=.3cm]
+         [fillstyle=solid,fillcolor=blue,mnode=circle]1&.&\cdots&.&[fillstyle=solid,fillcolor=yellow,mnode=circle]i-1&[fillstyle=solid,fillcolor=blue,mnode=circle]i&.&\cdots&[fillstyle=solid,fillcolor=yellow,mnode=circle]a_1&[fillstyle=solid,fillcolor=blue,mnode=circle]a_1+1&.&\cdots&[fillstyle=solid,fillcolor=blue,mnode=circle]a_1+i&.&\cdots&.&[fillstyle=solid,fillcolor=blue,mnode=circle]2a_1+1     
+      \ncline{->}{1,1}{1,2}
+      \ncarc[arcangle=-30]{->}{1,1}{1,3}
+      \ncarc[arcangle=-32]{->}{1,1}{1,5}
+      \ncarc[arcangle=-39]{->}{1,1}{1,6}
+      \ncarc[arcangle=-39]{->}{1,1}{1,8}
+      \ncarc[arcangle=-40]{->}{1,1}{1,10}
+      \ncarc[arcangle=40]{->}{1,1}{1,9}\pause
+      \ncline{->}{1,4}{1,5}
+      \ncline{->}{1,5}{1,6}
+      \ncline{->}{1,6}{1,7}
+      \ncarc[arcangle=55]{->}{1,3}{1,6}
+      \ncarc[arcangle=53]{->}{1,6}{1,8}
+      \ncarc[arcangle=54]{->}{1,6}{1,9}
+      \ncarc[arcangle=55]{->}{1,6}{1,10}
+      \ncarc[arcangle=58]{->}{1,6}{1,13}\pause
+      \ncarc[arcangle=15]{->}{1,8}{1,9}
+      \ncline{->}{1,9}{1,10}
+      \ncline{->}{1,10}{1,11}
+      \ncarc[arcangle=30]{->}{1,10}{1,12}
+      \ncarc[arcangle=34]{->}{1,10}{1,13}
+      \ncarc[arcangle=45]{->}{1,10}{1,17}\pause
+      \ncline{->}{1,13}{1,14}
+      \ncarc[arcangle=10]{->}{1,12}{1,13}
+      \ncarc[arcangle=30]{->}{1,13}{1,15}
+      \ncarc[arcangle=40]{->}{1,13}{1,17}\pause
+      \ncarc[arcangle=50]{->}{1,13}{1,1}
+      \ncarc[arcangle=45]{->}{1,13}{1,3}
+      \ncarc[arcangle=40]{->}{1,13}{1,5}\pause
+      \ncarc[arcangle=60]{->}{1,17}{1,1}
+      \ncarc[arcangle=57]{->}{1,17}{1,3}
+      \ncarc[arcangle=54]{->}{1,17}{1,5}
+      \ncarc[arcangle=53]{->}{1,17}{1,6}
+      \ncarc[arcangle=50]{->}{1,17}{1,8}
+      \ncarc[arcangle=50]{->}{1,17}{1,9} 
+        \endpsmatrix
+        $
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}{Asymmetric Digraph $\land$-realization}   
+     Divide the vertices of $G_1$ in $3$ components - $C_x, C_y, C_z$\\
+     \vspace{5mm}
+     \pause 
+     $
+       \psmatrix[colsep=.001cm,rowsep=.3cm]
+         \red C_x&\red C_y&\red C_z\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]1\hspace{1mm}2\cdots a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval](a_1+1)\hspace{1mm}(a_1+2)\cdots2a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]2a_1+1\\ 
+         d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1
+        \endpsmatrix
+     $
+\pause
+\begin{block}{} 
+Now add one component {\red $C_1$} containing {\blue $(a_2-a_1)$} isolated vertices and the edge set
+$$E=\{(v_x,v_1)|v_x\in C_x \land v_1\in C_1 \}\cup\{(v_1,v_y)|v_1\in C_1 \land v_y\in C_y\}$$
+to $G_1$ to get $G_2$.
+\end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}   
+    \underline{\em Base Case}(for $|S|=2$): $G_2$ for $\{a_1<a_2\}$ is constructed from $G_1$ as below \\ 
+    \vspace{1mm}
+     $
+       \psmatrix[colsep=.001cm,rowsep=.3cm]
+         \red C_x&\red C_y&\red C_z\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]1\hspace{1mm}2\cdots a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval](a_1+1)\hspace{1mm}(a_1+2)\cdots2a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]2a_1+1\\ 
+         d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1\\ \pause
+         &&\\
+         &[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         &d^-(v)=d^+(v)=0&        
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}{Asymmetric Digraph $\land$-realization}  
+    \underline{\em Base Case}(for $|S|=2$): $G_2$ for $\{a_1<a_2\}$ is constructed from $G_1$ as below \\
+    \vspace{1mm} 
+     $
+       \psmatrix[colsep=.0001cm,rowsep=.3cm]
+         \red C_x&\red C_y&\red C_z\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]1\hspace{1mm}2\cdots a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval](a_1+1)\hspace{1mm}(a_1+2)\cdots2a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]2a_1+1\\ 
+         \magenta d^-(v)=a_1,d^+(v)=a_2&d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=\\
+         &&a_1\\ 
+         &&\\
+         &[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         &\magenta d^-(v)=a_1,d^+(v)=0&
+         \ncline{->}{2,1}{6,2}         
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}   
+   \underline{\em Base Case}(for $|S|=2$): $G_2$ for $\{a_1<a_2\}$ is constructed from $G_1$ as below \\
+    \vspace{1mm} 
+     $
+       \psmatrix[colsep=.0001cm,rowsep=.3cm]
+         \red C_x&\red C_y&\red C_z\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]1\hspace{1mm}2\cdots a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval](a_1+1)\hspace{1mm}(a_1+2)\cdots2a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]2a_1+1\\ 
+         \magenta d^-(v)=a_1,d^+(v)=a_2&\magenta d^-(v)=a_2,d^+(v)=a_1&d^-(v)=d^+(v)=\\
+         &&a_1\\ 
+         &&\\
+         &[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         &\magenta d^-(v)=d^+(v)=a_1&
+         \ncline{->}{2,1}{6,2} 
+         \ncline{->}{6,2}{2,2}        
+        \endpsmatrix
+        $
+     \pause
+     \vspace{1.5mm}
+     {\red $|V|=a_2+a_1+1$, {\em no of components = $4$}}\\ \pause
+     \underline{{\blue{\em Hypothesis :}}} Consider there exists an asymmetric directed graph $G_{n_{0}}$ with degree set $\{a_1<a_2<\ldots< a_{n_0}\}$,$n_o<n$ with {\red $a_{n_0}+a_{n_0-1}+1$ vertices and $2n_0$ components}.\\
+    \pause
+     \hspace{3cm}\underline{{\magenta{\em Need to construct $G_{n_o+1}$ from $G_{n_o}$.}}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%.....editing......%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+$G_{n_{0}}$ with degree set $\{a_1<a_2<\ldots< a_{n_0}\}$,$n_o<n$ and $a_{n_0}+a_{n_0-1}+1$ vertices has the following $2n_0$ components :
+\begin{itemize}
+\item {\red $C_{n_0-1}$} : {\blue $|V|=a_{n_0}-a_{n_0-1}$}, {\magenta $d^-(v)=d^+(v)=a_1$}
+\item {\red $C_i$}($\forall1\le i\le n_{0}-2$) : {\blue $|V_i|=a_{i+1}-a_i$}, {\magenta $d^-(v)=a_{n_0-1-i},d^+(v)=a_1$}
+\item {\red $C_i'$}($\forall1\le i'\le n_{0}-2$): {\blue $|V_i|=a_{i+1}-a_i$}, {\magenta $d^-(v)=a_1,d^+(v)=a_{n_0-1-i}$}\end{itemize}
+\pause
+\begin{itemize}
+\item Components from base graph $G_1$ 
+   \begin{itemize}
+     \item {\red $C_{x}$} : {\blue $|V|=a_1$}, {\magenta $d^-(v)=a_{n_0-1},d^+(v)=a_{n_0}$}
+     \item {\red $C_{y}$} : {\blue $|V|=a_1$}, {\magenta $d^-(v)=a_{n_0},d^+(v)=a_{n_0-1}$}
+     \item {\red $C_{z}$} : {\blue $|V|=1$}, {\magenta $d^-(v)=d^+(v)=a_1$} 
+   \end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}   
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_1 \ldots \red C_i \ldots \red C_{n_o-2}\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i\le n_o-2 \\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_{n_o-1-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         &\red C_1' \ldots \red C_i' \ldots \red C_{n_o-2}'\\ 
+         &[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i'\le n_o-2 \\
+        &d^-(v)=a_1,d^+(v)=a_{n_o-1-i}
+       \endpsmatrix
+    $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}  
+
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_1 \ldots \red C_i \ldots \red C_{n_o-2}\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i\le n_o-2 \\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_{n_o-1-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         \red C_z&\red C_1' \ldots \red C_i' \ldots \red C_{n_o-2}'\\ 
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i'\le n_o-2 \\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_1,d^+(v)=a_{n_o-1-i}\\
+        \red C_x&\red C_y\\
+        [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1\\
+        d^-(v)=a_{n_o-1},d^+(v)=a_{n_o}&d^-(v)=a_{n_o},d^+(v)=a_{n_o-1}\\
+       \endpsmatrix
+    $
+ \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+To obtain $G_{n_0+1}$  from $G_{n_0}$, we add two new components - {\red $C_{n_0}$}({\blue $|V|=a_{n_0+1}-a_{n_0}$}),{\red $C_{n_0-1}'$}({\blue $|V|=a_{n_0}-a_{n_0-1}$}) 
+%and the edge set $E=E_1 \cup E_2 \cup E_3$, where
+%\begin{itemize}
+%\item $E_1=\{(v_x,v_{n_0})|v_x\in C_x \land v_{n_0}\in C_{n_0} \}\cup\{(v_{n_0},v_y)|v_{n_0}\in C_{n_0} \land v_y\in C_y
+ %\}$
+
+%\item $E_2=\{(v_y,v_{n_0-1})|v_y\in C_y \land v_{n_0-1}\in C_{n_0-1}' \}\cup\{(v_{n_0-1},v_x)|v_{n_0-1}\in C_{n_0-1}' 
+%\land v_x\in C_x \}$
+
+%\item $E_3=\{(v_i,v_i')|v_i\in C_i \land v_i'\in C_{n_0-1-i}' \}$, where $i\in\{1,2,\ldots,n_{0}-2\}$
+%\end{itemize}
+
+%We can observe that $G_{n_{0}+1}$
+%resembles $G_{n_{0}}$ if $n_{0}$ is replaced with $n_{0}+1$. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}  
+
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_1 \ldots \red C_i \ldots \red C_{n_o-2}\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i\le n_o-2 \\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_{n_o-1-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         \red C_z&\red C_1' \ldots \red C_i' \ldots \red C_{n_o-2}'\\ 
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i,\forall 1\le i'\le n_o-2 \\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_1,d^+(v)=a_{n_o-1-i}\\
+        \red C_x&\red C_y\\
+        [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1\\
+        d^-(v)=a_{n_o-1},d^+(v)=a_{n_o}&d^-(v)=a_{n_o},d^+(v)=a_{n_o-1}\\
+        &&\\
+        \red C_{n_o}&\red C_{n_o-1}'\\
+        [fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o+1}-a_{n_o}&[fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o}-a_{n_o-1}\\
+         d^-(v)=d^+(v)=0&d^-(v)=d^+(v)=0
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+To obtain $G_{n_0+1}$  from $G_{n_0}$, we add two new components - {\red $C_{n_0}$}({\blue $|V|=a_{n_0+1}-a_{n_0}$}),{\red $C_{n_0-1}'$}({\blue $|V|=a_{n_0}-a_{n_0-1}$}) and the edge set $E=E_1 \cup E_2 \cup E_3$, where
+\begin{itemize}
+\item $E_1=\{{\red(v_x,v_{n_0})}|{\blue v_x\in C_x} \land {\blue v_{n_0}\in C_{n_0}} \}\cup\{{\red(v_{n_0},v_y)}|{\blue v_{n_0}\in C_{n_0}} \land {\blue v_y\in C_y} \}$\vspace{1.5mm}
+
+%\item $E_2=\{(v_y,v_{n_0-1})|v_y\in C_y \land v_{n_0-1}\in C_{n_0-1}' \}\cup\{(v_{n_0-1},v_x)|v_{n_0-1}\in C_{n_0-1}' 
+%\land v_x\in C_x \}$
+
+%\item $E_3=\{(v_i,v_i')|v_i\in C_i \land v_i'\in C_{n_0-1-i}' \}$, where $i\in\{1,2,\ldots,n_{0}-2\}$
+\end{itemize}
+
+%We can observe that $G_{n_{0}+1}$
+%resembles $G_{n_{0}}$ if $n_{0}$ is replaced with $n_{0}+1$. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}  
+
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_i\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i\\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_{n_o-1-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         \red C_z&\red C_{n_o-1-i}'\\ 
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_o-i}-a_{n_o-1-i}\\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_1,d^+(v)=a_i\\
+        \red C_x&\red C_y\\
+        [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1\\
+        \magenta d^-(v)=a_{n_o-1},d^+(v)=a_{n_o+1}&\magenta d^-(v)=a_{n_o+1},d^+(v)=a_{n_o-1}\\ 
+        &&\\
+        \red C_{n_o}&\red C_{n_o-1}'\\
+        [fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o+1}-a_{n_o}&[fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o}-a_{n_o-1}\\
+         \magenta d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=0
+        %d^-(v)=a_{n_o+1},d^+(v)=a_{n_o}&d^-(v)=a_{n_o},d^+(v)=a_{n_o-1}\\
+         %&[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         %&\magenta d^-(v)=d^+(v)=a_1&
+         \ncline{->}{10,1}{14,1} 
+         \ncline{->}{14,1}{10,2}        
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+To obtain $G_{n_0+1}$  from $G_{n_0}$, we add two new components - {\red $C_{n_0}$}({\blue $|V|=a_{n_0+1}-a_{n_0}$}),{\red $C_{n_0-1}'$}({\blue $|V|=a_{n_0}-a_{n_0-1}$}) and the edge set $E=E_1 \cup E_2 \cup E_3$, where
+\begin{itemize}
+\item $E_1=\{{\red(v_x,v_{n_0})}|{\blue v_x\in C_x} \land {\blue v_{n_0}\in C_{n_0}} \}\cup\{{\red(v_{n_0},v_y)}|{\blue v_{n_0}\in C_{n_0}} \land {\blue v_y\in C_y} \}$\vspace{1.5mm}
+
+\item $E_2=\{{\red(v_y,v_{n_0-1})}|{\blue v_y\in C_y} \land {\blue v_{n_0-1}\in C_{n_0-1}'} \}\cup\{{\red (v_{n_0-1},v_x)}|{\blue v_{n_0-1}\in C_{n_0-1}'} \land {\blue v_x\in C_x} \}$\vspace{1.5mm}
+
+%\item $E_3=\{(v_i,v_i')|v_i\in C_i \land v_i'\in C_{n_0-1-i}' \}$, where $i\in\{1,2,\ldots,n_{0}-2\}$
+\end{itemize}
+
+%We can observe that $G_{n_{0}+1}$
+%resembles $G_{n_{0}}$ if $n_{0}$ is replaced with $n_{0}+1$. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}  
+
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_i\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i\\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_{n_o-1-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         \red C_z&\red C_{n_o-1-i}'\\ 
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_o-i}-a_{n_o-1-i}\\
+        d^-(v)=d^+(v)=a_1&d^-(v)=a_1,d^+(v)=a_i\\
+        \red C_x&\red C_y\\
+        [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1\\
+        \magenta d^-(v)=a_{n_o},d^+(v)=a_{n_o+1}&\magenta d^-(v)=a_{n_o+1},d^+(v)=a_{n_o}\\ 
+        &&\\
+        \red C_{n_o}&\red C_{n_o-1}'\\
+        [fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o+1}-a_{n_o}&[fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o}-a_{n_o-1}\\
+         \magenta d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1
+        %d^-(v)=a_{n_o+1},d^+(v)=a_{n_o}&d^-(v)=a_{n_o},d^+(v)=a_{n_o-1}\\
+         %&[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         %&\magenta d^-(v)=d^+(v)=a_1&
+         \ncline{->}{10,1}{14,1} 
+         \ncline{->}{14,1}{10,2}
+         \ncline{->}{10,2}{14,2}
+         \ncline{->}{14,2}{10,1}        
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+To obtain $G_{n_0+1}$  from $G_{n_0}$, we add two new components - {\red $C_{n_0}$}({\blue $|V|=a_{n_0+1}-a_{n_0}$}),{\red $C_{n_0-1}'$}({\blue $|V|=a_{n_0}-a_{n_0-1}$}) and the edge set $E=E_1 \cup E_2 \cup E_3$, where
+\begin{itemize}
+\item $E_1=\{{\red(v_x,v_{n_0})}|{\blue v_x\in C_x} \land {\blue v_{n_0}\in C_{n_0}} \}\cup\{{\red(v_{n_0},v_y)}|{\blue v_{n_0}\in C_{n_0}} \land {\blue v_y\in C_y} \}$\vspace{1.5mm}
+
+\item $E_2=\{{\red(v_y,v_{n_0-1})}|{\blue v_y\in C_y} \land {\blue v_{n_0-1}\in C_{n_0-1}'} \}\cup\{{\red (v_{n_0-1},v_x)}|{\blue v_{n_0-1}\in C_{n_0-1}'} \land {\blue v_x\in C_x} \}$\vspace{1.5mm}
+
+\item $E_3=\{{\red(v_i,v_i')}|{\blue v_i\in C_i} \land {\blue v_i'\in C_{n_0-1-i}'} \}$, where $i\in\{1,2,\ldots,n_{0}-2\}$
+\end{itemize}
+
+%We can observe that $G_{n_{0}+1}$
+%resembles $G_{n_{0}}$ if $n_{0}$ is replaced with $n_{0}+1$. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \begin{frame}  
+
+     $
+       \psmatrix[colsep=.005cm,rowsep=.05cm]
+         \red C_{n_o-1}&\red C_i\\
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{n_0}-a_{n_o-1}&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i\\
+        d^-(v)=d^+(v)=a_1&\magenta d^-(v)=a_{n_o-i},d^+(v)=a_1\\
+         &&\\
+         &&\\
+         \red C_z&\red C_{n_o-1-i}'\\ 
+         [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_{i+1}-a_i\\
+        d^-(v)=d^+(v)=a_1&\magenta d^-(v)=a_1,d^+(v)=a_{i+1}\\
+        \red C_x&\red C_y\\
+        [fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1&[fillstyle=solid,fillcolor=yellow,mnode=oval]|V|=a_1\\
+        \magenta d^-(v)=a_{n_o},d^+(v)=a_{n_o+1}&\magenta d^-(v)=a_{n_o+1},d^+(v)=a_{n_o}\\ 
+        &&\\
+        \red C_{n_o}&\red C_{n_o-1}'\\
+        [fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o+1}-a_{n_o}&[fillstyle=solid,fillcolor=blue,mnode=oval]|V|=a_{n_o}-a_{n_o-1}\\
+         \magenta d^-(v)=d^+(v)=a_1&d^-(v)=d^+(v)=a_1
+        %d^-(v)=a_{n_o+1},d^+(v)=a_{n_o}&d^-(v)=a_{n_o},d^+(v)=a_{n_o-1}\\
+         %&[fillstyle=solid,fillcolor=blue,mnode=oval]1\hspace{1mm}2\cdots (a_2-a_1)&\\
+         %&\magenta d^-(v)=d^+(v)=a_1&
+         \ncline{->}{10,1}{14,1} 
+         \ncline{->}{14,1}{10,2}
+         \ncline{->}{10,2}{14,2}
+         \ncline{->}{14,2}{10,1}
+         \ncline{->}{7,2}{2,2}       
+        \endpsmatrix
+        $
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Asymmetric Digraph $\land$-realization}
+To obtain $G_{n_0+1}$  from $G_{n_0}$, we add two new components - {\red $C_{n_0}$}({\blue $|V|=a_{n_0+1}-a_{n_0}$}),{\red $C_{n_0-1}'$}({\blue $|V|=a_{n_0}-a_{n_0-1}$}) and the edge set $E=E_1 \cup E_2 \cup E_3$, where
+\begin{itemize}
+\item $E_1=\{{\red(v_x,v_{n_0})}|{\blue v_x\in C_x} \land {\blue v_{n_0}\in C_{n_0}} \}\cup\{{\red(v_{n_0},v_y)}|{\blue v_{n_0}\in C_{n_0}} \land {\blue v_y\in C_y} \}$ \vspace{1.5mm}
+
+\item $E_2=\{{\red(v_y,v_{n_0-1})}|{\blue v_y\in C_y} \land {\blue v_{n_0-1}\in C_{n_0-1}'} \}\cup\hspace{2cm}\{{\red (v_{n_0-1},v_x)}|{\blue v_{n_0-1}\in C_{n_0-1}'} \land {\blue v_x\in C_x} \}$\vspace{1.5mm}
+
+\item $E_3=\{{\red(v_i,v_i')}|{\blue v_i\in C_i} \land {\blue v_i'\in C_{n_0-1-i}'} \}$, where $i\in\{1,2,\ldots,n_{0}-2\}$
+\end{itemize}
+\vspace{4mm}
+$G_{n_0+1}$ resembles $G_{n_0}$ if $n_{0}$ is replaced with $n_{0}+1$.\\
+\hspace{6cm}Hence, ${\blue \mu_A(S)\le a_n+a_{n-1}+1}$\\
+\pause\vspace{4mm}
+\underline{{\blue {\em Extension}}} : Always possible if ${\magenta r\ge a_n+a_{n-1}+1}$, by costructing $G_1$ for $\{a_1\}$ with${\magenta (2a_1+1)+r-(a_n+a_{n-1}+1)}$ vertices and then construct the graph using same inductive approach.  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+

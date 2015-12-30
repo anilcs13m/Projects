@@ -1,0 +1,412 @@
+\chapter{DISTANCE ORACLE FOR CHORDAL GRAPHS} \label{ch_approx}
+%Chapter 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overview}
+ The All Pairs Shortest Path (APSP) problem is one of the most fundamental problems in graph theory.
+ For a given graph $G = (V,E)$, where $V$ is the set of vertices and $E$ is the set of edges with $|V| = n$ and $|E| = m$,
+ the $\emph{all pairs shortest path}$ problem on $G$ is to compute shortest path between all pairs of vertices of $G$.
+ A {\em distance oracle} is a data structure that stores the APSP information and can respond to queries efficiently. 
+ The time to set up the oracle,  the amount of space it uses,  the query response time, and 
+ update times are among the most well-studied problems in the area of Data Structures. 
+ Many questions still remain open and such data structures are also of immense practical relevance.  
+ Surprisingly, despite the fact that $\textsc{APSP}$ is one of the oldest and fundamental problems in 
+ computer science, there does not exist any algorithm that can solve $\textsc{APSP}$ in truly sub cubic time, i.e., 
+ $O(n^{3-\epsilon})$ time for some $\epsilon > 0$. This has motivated researchers to design sub cubic time algorithms that
+ can approximately answer distances between every pairs of vertices.   
+ 
+ In this chapter, we restrict our attention on $\emph{chordal graphs}$
+ with an intent to explore how the underlying graph structure can play an important role in setting up efficient distance oracles.
+ We show that a chordal graph $G$ can be preprocessed in $O(n^2)$ time to setup an approximate
+ distance oracle that occupies $O(n)$ space. Subsequently a distance query between $u$ and $v$ is answered in constant time,
+ and the given answer is at most $d_G(u,v) + 11$, where can $d_G$ is the distance function on vertex pairs in the graph $G$.
+
+  \noindent
+ {\bf Relevance of our results.}  In Table \ref{comp-table} we contrast our results with the existing results. 
+ The most important feature of our distance oracle is its constant query time despite the fact that it uses only linear space.
+ Clearly, linear space is not enough to store distance between every pair of vertices. Indeed, we keep some distance 
+ information of the graph which is derived from the structural properties of the graph. We use this information to compute
+ distance between any pair of vertices in constant time while answering a distance query.
+ Secondly, Thorup et al.~\cite{thorup} have proved that any 
+ distance oracle for general graphs, which gives distances with stretch factor strictly less then $2k+1$,
+ require $\Omega(n^{1+1/k})$ space. In particular, if stretch is strictly less than 3, then size of oracle must be $\Omega(n^2)$. 
+ However, for  chordal graphs with diameter at least ten, our stretch is strictly less than 3 and the size of data structure is $O(n)$.
+ Finally, algorithms designed by both Seidel~\cite{seidel} and Han et al.~\cite{han} compute the square of the input graph $G$ as a subroutine.
+ Methods known for computing $G^2$ for a general graph or a chordal graph are as hard as matrix multiplication,
+ hence have time complexity of $O(n^{2.376})$. Also, we already discussed in chapter \ref{ch_review} that computation of 
+ $G^2$ acts as a bottleneck for solving $\textsc{APSP}$ on chordal and general graphs. In this chapter we exploit structural properties of chordal graphs
+ to bypass matrix multiplication and achieve an $O(n^2)$ running time. 
+ \begin{table}[ht]
+ \caption{Exact and approximate distance oracles for different classes of graphs}
+  \label{comp-table}
+ \centering
+ \begin{tabular}{|c|c|c|c|c|c|} 
+ \hline \hline
+ Graphs & Processing time & Size& Stretch & Query time \\
+ \hline \hline
+ General unweighted graphs & & & &\\ 
+ (Seidel~\cite{seidel})  & $O$($n^{2.376}$ log$n$) & $O(n^2)$ & 1 & $O(1)$ \\
+ \hline
+ General weighted graphs & & & &\\
+  (Thorup et al.~\cite{thorup}) & $O(kmn^{1/k})$ & $O(n^{1+1/k})$ & $2k - 1$ & $O(k)$ \\
+ \hline
+  General weighted graphs & & & &\\
+  (Baswana et al.~\cite{baswana}) & $O($min$(n^2,kmn^{1+1/k}))$ & $O(n^{1+1/k})$ & $2k - 1$ & $O(k)$  \\
+ \hline
+ Chordal graphs & & & &\\
+  (Han et al.~\cite{han}) & $O(n^{2.376})$ & $O(n^2)$ & 1 & $O(1)$ \\
+ \hline
+ \textbf{Chordal graphs} & & & &\\
+ \textbf{(this thesis)} & $\mathbf{O(n^2)}$ & $\mathbf{O(n)}$ & \textbf{(2,8)} & $\mathbf{O(1)}$  \\
+ \hline
+ Interval graphs & & & &\\
+ (Ravi et al.~\cite{cpr}) & $O(n^{2})$ & $O(n^2)$ & 1 & $O(1)$ \\
+ \hline
+ Strongly chordal graphs & & & &\\
+ ( Dahlhaus~\cite{stronglychordal}) & $O(n^{2})$ & $O(n^2)$ & 1 & $O(1)$ \\
+ \hline
+ $k$ trees & & & &\\
+ (Radhakrishnan et al.~\cite{ktree}) & $O(k n^{2})$ & $O(n^2)$ & 1 & $O(1)$ \\
+ \hline
+ \end{tabular}
+ \end{table}
+
+\noindent
+ \textbf{Outline of our Algorithm.}  Given a chordal graph $G$, 
+ we first construct a clique tree $T$ of $G$ in linear time~\cite{cliquetree}. 
+ For each vertex $u_i \in V(G)$, we identify a maximal clique $C_i$ in the clique tree $T$ such that $u_i \in C_i$.
+ To estimate distance between $u_i$ and $u_j$ in $G$, 
+ we compute the size of a hitting set $S$ which hits all cliques in the path joining $C_i$ and $C_j$ in the clique tree $T$.
+ The distance that is output is then twice the value of $|S|$. 
+ We prove that size of $S$ is upper bounded by the number of vertices in any shortest path between $u$ and $v$.
+ Also, we prove that $d_G(u,v) \leq 2|S|$. Therefore, we construct a linear size data structure that can compute size of
+ hitting set $S$ for any pair of cliques in $\mathcal{C}$ in constant time.  Our main result is the following theorem.
+ \begin{theorem}\label{maintheorem}
+ Given a chordal graph $G$, it can be preprocessed in $O(n^2)$ time and $O(n^2)$ space to build a data structure of size $O(n)$
+ such that for any query pair $u_i,u_j \in V(G)$, a distance response upper bounded by $d_G(u_i,u_j)+11$ can be given in constant time.
+ \end{theorem}
+
+ \noindent
+ \textbf{Outline of the chapter.} In Section \ref{prelims}, we present preliminaries and basic notations used throughout this paper. 
+ In Section \ref{pathinfo}, we prove the  results relating to shortest paths in the graph and hitting sets of certain maximal cliques in the associated clique tree.
+ The distance oracle and the constant time query response algorithm is presented in Section \ref{preprocessing}.
+
+ \section{Preliminaries}\label{prelims}
+ \begin{definition}
+  Given a graph $G$ and a set $\mathcal{K}$ of maximal cliques of $G$, the hitting set $S$ of the set of $\mathcal{K}$ is a subset of vertices 
+  such that for each clique $C \in \mathcal{K}$, $S \cap C \neq \phi$.
+ \end{definition}
+ Let $G$ be a chordal graph and $T$ be a clique tree of $G$. Let $C_i$ and $C_j$ be two cliques in the clique tree $T$. 
+ Then, hitting $S$ for the path joining $C_i$ and $C_j$ can be defined similarly as a subset of vertices such that
+ for each clique $C$ in the path joining $C_i$ and $C_j$, $S \cap C \neq \phi$. 
+
+ \noindent
+{\bf Least Common Ancestors.} Let $T'$ be a rooted tree on $n$ vertices. Harel et al.~\cite{lcabytarjan}, 
+Scheiber et al.~\cite{lcabyvishkin} and Powell~\cite{lcabypowell} have given
+ three different algorithms to preprocess $T'$ in $O(n)$ time to build a data structure $D$ of $O(n)$ size. Subsequent queries of the least common ancestor
+ of two vertices an be answered in constant time. We will use the algorithm presented in~\cite{lcabyvishkin} as a subroutine in our paper.
+ 
+ 
+ Throughout, we assume that $G = (V,E)$ is a connected, unweighted chordal graph with $|V| = n$ and $|E| = m$ and $T$ is a 
+ clique tree of $G$.   When we use the word clique, we always mean maximal clique in $G$, and both these are used throughout this paper. 
+ Further, when we refer to a clique of a clique tree $T$, we actually mean the clique in $G$ that a node in $T$ corresponds to. 
+ For a $u \in V(G)$, we use $T_u$ to refer to the set of cliques in $T$ that contain $u$.  In other words, $T_u$ is the subtree of $T$ whose nodes correspond to $K_G(u)$.
+ This notational abuse makes the writing, and we believe the reading, of the paper easier. 
+ Finally, when we refer to a vertex $u_i \in V(G)$, we mean that the subscript $i$ satisfies $1 \leq i \leq n$.  
+ This is crucial because the index $i$ uniquely identifies the vertex in the algorithm and it is only in the presentation that $u_i$ is important.
+ 
+  \section{Distance information from clique trees}\label{pathinfo}
+ We first show the connection between the distance in the graph between $u$ and $v$ and the hitting set of the cliques on the path connecting
+ $T_u$ and $T_v$ in $T$.
+ 
+\begin{lemma} \label{hitsel}
+Let $u,v \in V$ such that $d_G(u,v) > 1$, and let $S \subseteq V$ be a minimum
+set of  vertices that hits  all the cliques in the path in $T$ joining $T_u$ and $T_v$.
+Then $|S| \leq d_G(u,v)-1$, i.e., $|S|$ is upper bounded by the number of internal vertices
+in any shortest path joining $u$ and $v$ in $G$. 
+\end{lemma}
+
+\begin{proof}
+Let $P_{uv}$ be a shortest path between $u$ and $v$ in $G$. 
+Clearly, no two edges of $P_{uv}$ can be elements of one maximal clique, 
+as this would contradict the premise that $P_{uv}$ is the shortest path. 
+Further, each edge of $P_{uv}$ is in a maximal clique. 
+Let $\sigma$ be the path joining $T_u$ and $T_v$ in $T$. 
+Clearly, any edge $e \in P_{uv}$ is present in some clique of $\sigma$.
+Let $C_i$ and $C_j$ be two cliques of $\sigma$, and $e_i$ and $e_j$ are two adjacent edges of $P_{uv}$ 
+such that $e_i \in C_i$ and $e_j \in C_j$. By clique intersection property, all the cliques in the path joining 
+$C_i$ and $C_j$ contains the common vertex of $e_i$ and $e_j$.
+For any clique $C \in \sigma$, either $C$ contains an edge of $P_{uv}$ or it is present in the path joining some 
+$C_i$ and $C_j$.
+Therefore, all the cliques of $\sigma$ are definitely hit by the internal vertices of $P_{uv}$ which are $d_G(u,v)-1$ in number, i.e.,
+$|S| \leq d_G(u,v)-1$.
+Hence the lemma.
+
+\end{proof}
+
+\begin{corollary} \label{hitselany}
+ Let $u$ and $v$ be non-adjacent vertices in $G$, and $C_u$ and $C_v$ be two maximal cliques of $T$ containing them,
+ and let $S$ be a minimum hitting set that hits all the cliques in the path joining $C_u$ and
+ $C_v$ in $T$. Then $|S| \leq d_G(u,v)+1$.
+\end{corollary}
+\begin{proof}
+From lemma \ref{hitsel} we know that the size of the hitting set of the path joining $T_u$ and $T_v$ is upper bounded by $d_G(u,v)-1$.
+To this hitting set, if we add the vertices $u$ and $v$, we get a hitting set of all the cliques on the paths from $C_u$ to $C_v$.  Therefore, 
+$|S| \leq d_G(u,v)+1$.
+\end{proof}
+\begin{theorem}\label{the:4}
+% Let $x,y \in V$ and  $C_x$ and $C_y$ are cliques of $T$ such that $x \in C_x$ and $y \in C_y$.
+ Let $S \subseteq V$ be a set of  vertices that hits all the cliques in the path joining two cliques $C_u$ and $C_v$ in $T$, then there is a shortest path
+ $P$ in $G$ between $u$ and $v$ such that $P$ contains all the vertices of $S$ and $|P| \leq 2|S|$.
+\end{theorem}
+\begin{proof}
+Since $S$ is a hitting set of the path joining $C_u$ and $C_v$ in $T$, it follows that in $G$ there is a path from $u$ to $v$ of length at most $2 |S|$.
+The factor 2 is the worst possible and is achieved in the case when $S$ is an independent set, 
+and since any two consecutive cliques on the path from $C_u$ to $C_v$ share at least one common vertex,
+two consecutive vertices in the independent set $S$ can be connected by a path of length 2 via this common vertex.
+The hitting set vertices are now joined by a path of length at most $2|S|-2$, 
+and therefore, by adding edges to $u$ and $v$ from the ends of this path, there is a path of length at most $2|S|$ from $u$ to $v$ in $G$.  Hence the claim.
+ \end{proof}
+ \\
+ We now show that a minimum hitting set of cliques in the path connecting $T_u$ and $T_v$ can be found efficiently. 
+ 
+ \noindent
+ {\bf Structure of a Minimum Hitting Set.} 
+ Let $P = [C_1,C_{2},\dots,C_b]$ be the path joining $T_u$ and $T_v$ in $T$, and $u \in C_1, v \in C_b$.  
+ We reiterate that $C_1$ and $C_b$ are the only cliques in $T_u$ and $T_v$, respectively.  
+ In this part it is useful to visualize this path as a sequence of cliques. 
+ Therefore a prefix of the path $P$ is a prefix of the corresponding sequence. 
+ Let $S$ be a minimum hitting set of the cliques in $P$. 
+ Let $v_m$ be a vertex in $C_1$ such that it occurs in a maximum number of cliques (consecutive cliques, naturally) in $P$.  
+ Consequently, there is a minimum hitting set $S$ of cliques in $P$ such that $v_m \in S$.  
+ Indeed this is true because if we have a minimum hitting set $S'$ that does not satisfy this property, 
+ then we can replace $v \in S' \cap C_1$ by $v_m$, and we will have a minimum hitting set satisfying the desired property.  
+ This gives us an algorithm to find a minimum hitting set. \\
+ {\bf Data Structure for a Minimum Hitting Set:}\\
+ Partition the cliques in $P$ into  sub-paths $IS_1,IS_2,\dots,IS_r$ such that
+ for  $1 \leq i \leq r$, sub path $IS_i$ is the {\em maximum length prefix} of cliques in $P \setminus \{IS_1,\ldots, IS_{i-1}\}$ that have a common element.
+ To compute this maximum length prefix, we start with the empty prefix and the empty set $M$ of common elements. 
+ Let $C_j$ be the clique considered in the $j$-th iteration- clearly, it is the first clique in the remaining sequence.  
+ If $M \cap C_j = \phi$, then we have found the current prefix as the maximum length prefix, and if it is non-empty then $C_j$ is added to the current prefix.
+ Let $M_i$ denote the set of common elements in $IS_i, 1 \leq i \leq r$.   Consider the set $S = \{v_i \mid v_i \in M_i, 1 \leq i \leq r\}$.
+ 
+ \begin{figure}
+	    \centering
+		\includegraphics[scale = 0.65]{HittingSet.pdf}
+	\caption{Hitting Set $S$ for the path joining $C_1$ and $C_b$}
+	\end{figure}
+
+ \begin{theorem}\label{hittingset}
+ The $\emph{hitting set}$ $S$ computed above is a minimum hitting set of cliques in $P$. Further, it can be computed in $O(n^2)$ time.
+ \end{theorem}
+ \begin{proof}
+ The optimality is clear from the structure of a canonical minimum hitting set. 
+ The running time is also straightforward, as $M$ in the data structure is upper bounded by the size of the maximum clique, 
+ and its intersection with another  clique $C$ is computed.  
+ Intersection between two subsets  $M$ and $C$ of $n$ element universe can be computed in $O(n)$ time by representing the sets as bit vectors.  
+ A chordal graph on $n$ vertices has at most $n$ maximal cliques, the set intersection will be done at most $n$ times.  
+ Therefore, it follows that the hitting set can be computed in $O(n^2)$ time.  Hence the theorem.
+ \end{proof}
+ \\
+ This lemma plays a crucial role in an algorithm in the next section in which we find the 
+ hitting set of the cliques in each path from the root clique in the rooted clique tree. 
+ The algorithm is presented in Algorithm \ref{alghs}, and also is a formal presentation of the 
+ algorithm analyzed in Theorem \ref{hittingset} for the case of the hitting set of cliques on the path between two cliques. 
+
+ \begin{lemma}\label{addHS}
+ Let $C_k$ be a clique on the path $P$ connecting $T_u$ and $T_v$, and let $P_1$ be the path from $C_1$ to $C_k$, and $P_2$ is the path from $C_k$ to $C_b$.    
+ Let $S$, $S_1$ and $S_2$ be the minimum hitting sets for $P$, $ P_1$, and $P_2$ respectively, then $|S| \leq |S_1|+|S_2| \leq |S|+1$. 
+ \end{lemma}
+ \begin{proof}
+ Clearly, $S_1 \cup S_2$ is a hitting set for cliques in $P$.  Therefore, $|S| \leq |S_1| + |S_2|$.   
+ In $S$ consider those elements that hit $C_k$.  There can be at most 2 elements that hit $C_k$ owing to the  structure of a minimum hitting set.
+ Let  $H_1$ and $H_2$ be those elements of $S$ that hit only cliques in $P_1$ and $P_2$, respectively. 
+ Further,  by adding to $H_1$ one vertex of $S$ which is in $C_k$, and covers $P_1$, we get a hitting set of cliques in $P_1$. 
+ Similarly, by adding one vertex of $S$ which is in $C_k$ and covers $P_2$, we get a hitting set of cliques in $P_2$. 
+ Therefore, $|S_1| \leq |H_1|+1$ and $|S_2| \leq |H_2|+1$.  Also, $|S| \geq |H_1|+|H_2|+1$.  Therefore, it follows that
+ $|S_1|+|S_2| \leq |H_1|+|H_2|+2 \leq |S|+1$.  
+ \end{proof}
+ \\
+ Lemma \ref{addHS} is used to find an efficient and good approximation to the hitting set of cliques in many paths in a clique tree.  
+ The efficiency is gained by using the exact hitting set of cliques in some paths in the clique tree to
+ calculate approximate hitting sets of cliques in other paths.  
+ \section{Approximate Distance Oracle for Chordal Graphs}\label{preprocessing}
+ In this section we present the details of the data structures involved in setting up the distance oracle.  
+ The preprocessing algorithm receives a chordal graph $G = (V,E)$ as an input adjacency matrix and sets up the distance oracle. 
+ It first constructs a clique tree $T$ of the graph $G$. 
+ Construction of clique tree $T$ of a chordal graph require $O(n)$ time.
+ These is achieved using known algorithms  to construct a clique tree~\cite{golumbic}. \\  
+ {\bf Vertex to Maximal Clique Mapping:}  This is very crucial, as the idea is to approximate the 
+ distance between two vertices $u_i,u_j$ in the graph by the hitting set of the maximal cliques in the 
+ path connecting the corresponding maximal cliques in $T$.   Towards this end, an $n$-element array is used. 
+ In this array the $i$-th element corresponds to $u_i$ and it points to a maximal clique of the clique tree $T$ that contains $u_i$.   
+ This is achieved by inspecting each clique of the clique tree $T$ in an arbitrary order, and whenever the array entry corresponding 
+ to a vertex $u_i$ is empty and is encountered in the current clique $C_j$, the array entry is updated to point to $C_j$.  
+%  This again takes $O(n^2)$ time in the worst case, though it can be tightly written as $O(\alpha(G) \omega(G))$ 
+%  where $\alpha(G)$ is the size of the minimum clique cover, and $\omega(G)$ is the size of the maximum clique.  
+%  We refer to this array as ${\cal H}$.  To populate the array ${\cal H}$ the algorithm inspect each clique of the 
+%  clique cover  $\mathcal{C}$. The size of a clique is bounded by $n$ and also $|\mathcal{C}| \leq n$. 
+%  Hence  takes $O(n^2)$ time to populate ${\cal H}$.  
+%  The clique cover can be stored in $O(n)$ space and the array ${\cal H}$ also takes $O(n)$ space. 
+%  Therefore, the space complexity is $O(n)$. \\
+We refer to this array as ${\cal H}$.  To populate the array ${\cal H}$ the algorithm inspects each clique of the clique tree  $T$. 
+ The size of a clique is bounded by $n$ and also number of maximal cliques in a chordal graph is at most $n$. Hence it takes $O(n^2)$ time to populate ${\cal H}$. 
+ Further, the array ${\cal H}$ contains a constant size entry corresponding to each vertex, therefore, the space occupied by ${\cal H}$ is $O(n)$.\\
+{\bf Hitting Set Oracle for a rooted Clique Tree:}  We now present an algorithm to calculate the hitting set of cliques on all paths originating from a 
+single vertex in the clique tree.   The algorithm is presented by way of a function definition $DFS(C,X,l)$ in Algorithm \ref{alghs}.  
+This information is then used to calculate the approximate distance information efficiently on a query.
+\begin{algorithm}[] 
+  \caption{DFS($C$,$X$,$l$)- Used to Set up the Hitting Set Oracle}
+  \label{alghs}
+  \begin{algorithmic}[1]
+  \STATE Let $i$ be the index of maximal clique $C$.
+  \STATE $X \leftarrow C \cap X$
+  \IF{$X \neq \phi$}
+    \STATE HS[$i$] = $l$
+    \COMMENT {\tt /* no increase in hitting set to hit C */}
+  \ELSE 
+    \STATE HS[$i$] = $l+1$
+    \COMMENT {\tt /*  increase in hitting set to hit C */}
+  \ENDIF
+  \IF{C is a leaf node in T}
+    \STATE return
+  \ELSE
+    \FOR{each $C' \in \textsc{Children}(C)$}
+    \STATE  \COMMENT {\tt /* Find hitting sets of cliques on paths to descendants of C */}
+      \IF{$X \neq \phi$}
+	\STATE DFS($C'$,$X$,$l$)
+      \ELSE
+	\STATE $X \leftarrow C'$
+	\STATE DFS($C'$,$X$,$l+1$)
+       \ENDIF
+     \ENDFOR
+  \ENDIF
+  \end{algorithmic}
+ \end{algorithm}
+ \begin{lemma} \label{dfsoutput}
+On termination of the function call $DFS(C_r,C_r,1)$, for each $1 \leq i \leq n$ the array $HS[i]$ has 
+the value of the minimum hitting set of  the cliques in the path from $C_r$ to clique $C_i$ in the clique tree $T$.
+\end{lemma} 
+\begin{proof}
+The correctness proof works based on Theorem \ref{hittingset}.
+The proof is a direct application of Theorem \ref{hittingset} if the tree rooted at $C_r$ is a path.   
+In case the tree is not a path, let us focus on one particular node $C_i$ in the tree.  
+When the DFS traversal visits $C_i$, owing to the careful use of recursion, we can consider just the path from $C_r$ to $C_i$ in our analysis.  
+Now we appeal to Theorem \ref{hittingset} to conclude that $HS[i]$ contains the minimum hitting set of the cliques on the path from $C_r$ to $C_i$.
+\end{proof}
+\\
+The array $HS$ has one element per maximal clique in $G$.  Therefore, it has at most $n$ elements in it.  
+Since a DFS traversal is used to populate $HS$ using an $O(n)$ time set intersection performed at each node, 
+
+it follows that the entries of $HS$ are calculated in $O(n^2)$ time.
+Further, the clique tree itself requires $O(n^2)$ space and therefore, the setup time and space of the algorithm is $O(n^2)$. \\   
+
+ {\bf Setting up the rooted $T$ for LCA queries:} To be able to answer distance queries efficiently,
+ our aim is to use the hitting set  of the cliques on the path between a pair of cliques in $T$.   
+ For this, we will be using Lemma \ref{addHS}. In particular for the distance between $u$ and $v$, 
+ we propose to use the hitting set of the cliques on the path between $C_u, C_v \in {\cal C}$.  
+ To compute the value of this hitting set, we will take the least common ancestor $C$ of $C_u$ and $C_v$ in the rooted tree,
+ and compute the hitting set of the cliques on the path from $C$ and $C_u$, and similarly between $C$ and $C_v$. 
+ Using these hitting set values, we apply Lemma \ref{addHS}. Therefore, it is crucial that we can perform LCA queries efficiently.
+ Towards this end we preprocess the rooted tree $T$, using algorithm presented in~\cite{lcabyvishkin}, 
+ to build a data structure $D$ of linear size in linear time. Using $D$ we can compute the 
+ least common ancestor of any two cliques $C_u$ and $C_v$ in $T$ in constant time.  \\
+ 
+ \noindent
+ As a consequence of the above results in Lemma \ref{dfsoutput} and the LCA algorithm in \cite{lcabyvishkin}, 
+ we have the following theorem about the time to construct our distance oracle and the space occupied by it.
+ \begin{theorem} \label{oracle}
+ Given a chordal graph $G$, the data structure, $HS$, ${\cal H}$ and $D$ use $O(n)$ space and as described above can be constructed in $O(n^2)$ time and $O(n^2)$ space.  
+ \end{theorem}
+ \section{Constant Time Response to Distance Queries}
+ The query consists of $u_i,u_j \in V$ as input and the response is a value $d_{ij}$ which is the
+ approximate distance between $u_i$ and $u_j$ in $G$.   
+ The algorithm given below in Algorithm \ref{querydist} uses the oracle set up earlier in this section. 
+ Recall that ${\cal H}[i]$ gives the index of a maximal clique in a clique cover that contains vertex $u_i$.  
+ Similarly, $HS[i]$ gives the size of the minimum hitting set of the  maximal cliques on path connecting $C_r$ and $C_i$.  
+ Finally, $D$ can respond to LCA queries on $T$ in constant time.
+  
+  The most important benefit of using the hitting sets of the cliques on a path between two cliques in $T$ 
+  is that for any pair of cliques this can be computed within an additive error of 3.  
+  Using this approximate hitting set value, we can then provide an estimate of the distance, as shown in Algorithm \ref{querydist}.   
+  \begin{algorithm}[h] 
+  \caption{$Query(u_i,u_j)$- uses the Oracle ${\cal H}, HS, D$ as in Theorem \ref{oracle}}
+  \label{querydist}
+  \begin{algorithmic}[1]
+    \IF{$\{u_i,u_j\} \in E(G)$}
+    	\STATE return 1
+	\STATE {\tt /* distance is 1 in constant time by probing adjacency matrix */}
+  \ENDIF
+  \STATE $p = {\cal H}[i]$; 
+  \STATE $q = {\cal H}[j]$;
+  \STATE {\tt /* these are indices of two maximal cliques containing $u_i$ and $u_j$ */}
+  \IF {$p==r$ (or $q==r$)}
+  \STATE {\tt /* $r$ be the index of root clique $C_r$ */}
+  	\STATE $h_{pq}=HS[q]$ (or $HS[p,q]=HS[p]$)
+	\STATE {\tt /* one of the two queried vertices is in root clique $C_r$ */}
+	\ELSE
+	\STATE Query $D$ with $p$ and $q$.
+	\STATE Let $s$ be the least common ancestor of $p$ and $q$ in $T$.
+	 \IF {$p==s$ (or $q==s$)}
+  	\STATE $h_{pq}=(HS[q]-HS[p]+1)$ (or $HS[p,q]=(HS[p]-HS[q]+1)$)
+	\STATE {\tt /* $r, p, q$ are in a single path */}
+	\ELSE
+	\IF {$s==r$}
+  	\STATE $h_{pq}=HS[q]+HS[p]$ 
+	\ELSE
+	\STATE  $h_{pq}=HS[q]+HS[p]-2HS[s]+2$
+	\ENDIF
+	\ENDIF
+	\ENDIF
+	\STATE return $d_{ij} = 2*h_{pq}$
+	\STATE {\tt /* Approximate Distance Returned */}
+    \end{algorithmic}
+ \end{algorithm}
+
+ \begin{lemma}\label{lam:ab}
+  For two cliques $C_p$ and $C_q$ in $T$, let $S_{pq}$ denote a minimum hitting set of the cliques on the path connecting $C_p$ and $C_q$ in $T$.  
+  Then then value $h_{pq}$ calculated in Algorithm \ref{querydist} is such that $h_{pq} \leq |S_{pq}|+3$.
+ \end{lemma}
+ \begin{proof}
+ The proof follows a case analysis as in the algorithm \ref{querydist}. 
+ If $C_p$  is same as $C_r$, then $h_{pq} = HS[p] = |S_{rp}|=|S_{pq}|$.   
+ The case when  $C_q$ is same as $C_r$ is similar with $h_{pq}=HS[q]=|S_{rq}|=|S_{pq}|$.
+ In the case when $p,q,r$, lie on a single path in $T$, it follows that the LCA of $p,q$ is $p$ or $q$.  
+ Let us assume that it is $p$ for the analysis, and the case of the LCA being $q$ is symmetric.  
+ From Lemma \ref{addHS}, we know that $HS[q] \leq HS[p]+|S_{pq}| \leq HS[q]+1$.  
+ Therefore, $HS[q]-HS[p] \leq |S_{pq}| \leq HS[q]-HS[p]+1 = h_{pq}$.  
+ Therefore, $h_{pq}-1 \leq |S_{pq}| \leq h_{pq}$, and it follows that $h_{pq} \leq |S_{pq}| + 1$.
+ In the case when $r$ is the LCA of $p$ and $q$, from Lemma \ref{addHS}, we know that $|S_{pq}| \leq HS[p]+HS[q] = h_{pq} \leq |S_{pq}|+1$.   
+ Finally, in the case when $s \neq r$ is the LCA of $p$ and $q$, we have three inequalities that together give tight bounds on $|S_{pq}|$. 
+ Again, from Lemma \ref{addHS} we know that $HS[p] \leq |S_{pk}| + HS[k] \leq HS[p]+1$, and $HS[q] \leq |S_{qk}| + HS[k] \leq HS[q]+1$. 
+ Further, we also know that $|S_{pq}| \leq |S_{pk}|+|S_{qk}| \leq |S_{pq}|+1$.  
+ From these three inequalities it follows $h_{pq} = HS[p]+HS[q]-2HS[k]+2 \leq |S_{pk}|+|S_{qk}| + 2 \leq |S_{pq}|+3$. 
+ We have now placed a bound on $h_{pq}$ in all the cases, and  the lemma is proved.
+ \end{proof}
+  
+ \begin{lemma}\label{distlemm}
+ For any two vertices $u_i, u_j \in V(G)$, the value $d_{ij}$ output by Algorithm \ref{querydist} is such that  $d_{ij} \leq 2d_G[u_i,u_j]+8$.  
+ Further, there is a path in $G$ of length at most $d_{ij}$.
+ \end{lemma}
+ \begin{proof}
+ We know that $d_{ij} = 2h_{pq}$. From Lemma \ref{lam:ab}, $h_{pq} \leq |S_{pq}|+3$. Further, from Corollary \ref{hitselany}, 
+ we know that $|S_{pq}| \leq d_G(u_i,u_j) + 1$.  Therefore, it follows that $d_{ij} \leq 2(d_G(u_i,u_j)+1+ 3)=2d_G(u_i,u_j)+8$.
+ Since there is a hitting set of size at most $h_{pq}$ that hits the cliques on the path from $C_p$ to $C_q$, 
+ from Theorem \ref{the:4} it follows that there is a path of length $d_{ij}=2h_{pq}$. Hence the lemma.
+ \end{proof}
+ \\
+ We have now proved all the properties of our distance oracle for chordal graphs and these complete the proof of  Theorem \ref{maintheorem}.
+ 
+ \subsection{Response to a query of shortest path}
+ Lemma \ref{distlemm} proves that a path of length at most $d_{ij}$ exists between $u_i$ and $u_j$ in $G$. 
+ We can modify the distance oracle in this chapter to store entire hitting sets instead of the size of the hitting set.
+ We essentially keep the hitting sets of cliques on all paths originating from a single vertex in the clique tree.
+ Now, by including clique tree also in our modified distance oracle we can respond to distance queries with paths of length at most $2d_G(u,v)+8$.
+ The query time would take length of the path being output.
+ Size of the clique tree is $O(n^2)$. Also, it requires $O(n^2)$ space to keep hitting set of cliques on all paths originating from a 
+single vertex in the clique tree. Therefore, the size of the modified distance oracle is $O(n^2)$.
+
+\section{Concluding Remarks}
+
+
+
+ 

@@ -1,0 +1,431 @@
+\chapter{A SURVEY OF DISTANCE ORACLES AND TREE SPANNERS} \label{ch_review}
+%Chapter 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distance Oracle}
+ All Pairs Shortest Path ($\textsc{APSP}$) problem is one of the most fundamental problems in graph theory. 
+ The $\emph{all pairs shortest path}$ problem on $G$ is to compute shortest path between all pairs of vertices of $G$.
+ One of the most interesting ways to approach this problem is to preprocess a graph to setup data structure that 
+ can efficiently answer queries of distance between any pair of vertices. 
+ This data structure is referred as $\emph{distance oracle}$ of the graph. 
+ Distance oracle essentially stores the information about the distance between vertices of graph.
+ In most of the real world applications we are not interested in queries for all the
+ distances, but we query for distance between some pairs of nodes more frequently than others. 
+ For example, in a big city like Chennai, distance between many pairs of
+ addresses are of no interest to most of the people. we want to access distances between some pairs of nodes 
+ quickly. Distance oracle of small size suits best for these kind of applications. 
+ \par A distance oracle can be exact or approximate. An exact distance oracle returns exact distance
+ when queried for distance between any pair of vertices. An approximate distance oracle returns
+ approximate distance between the pair of vertices. Distance return by an approximate distance 
+ oracle has stretch $t$ if the distance $d_{uv}$ return by the distance oracle is upper bounded by 
+ $t \cdot d_G(u,v)$ i.e., $d_{uv} \leq t \cdot d_G(u,v)$.
+ \subsection{Distance Oracle for General Graphs}
+ A classical algorithm for solving $\textsc{APSP}$ in general weighted graphs is given by Floyd and Warshall ~\cite{cormen}.
+ It outputs an $n \times n$ matrix that contains shortest distance between every pair of vertices, in $\Theta(n^3)$ time.
+ Later, Seidel~\cite{seidel} devised an algorithm to compute $\textsc{APSP}$ matrix for unweighted, undirected general graphs in 
+ $O(M(n)$ log $n)$ time, where $M(n)$ is the time to multiply two $n \times n$ matrix.
+ $M(n)$ is currently known to be $O(n^{2.376})$~\cite{matrix}. Theorem proved by Seidel is as follows,
+ \begin{theorem}[\cite{seidel}]
+  Given the adjacency matrix of an unweighted, undirected graph $G$, we can compute distance matrix $D$ of $G$ in 
+  $O(M(n)$ log $n)$ time, where $M(n)$ is the time to multiply two matrices of small integers.
+ \end{theorem}
+ 
+ Absence of sub-cubic time algorithm for solving $\textsc{APSP}$ inspired researchers to design approximate distance oracles.
+ Zwick~\cite{zwick} designed an algorithm that can compute matrix of approximate distance between vertices of graph
+ in \~{O}$(n^{\omega}/\epsilon)$ time, where $\epsilon > 0$ and $\omega < 2.376$. The stretch of the distances
+ computed by the algorithm presented by Zwick is at most $\epsilon$. Theorem presented by Zwick is as follows,
+ \begin{theorem}[\cite{zwick}]
+  For every weighted graph $G$ we can compute a matrix of estimated distance of relative error at most $\epsilon$
+  in \~{O}$(n^{\omega}/\epsilon)$ time.
+ \end{theorem}
+ 
+ Cohen et al.~\cite{cohenzwick} designed three algorithms to solve $\textsc{APSP}$ approximately for weighted graphs.
+ Details of running time and stretch of algorithms are as follows,
+ \begin{enumerate}
+  \item Fist algorithm runs in \~{O}$(n^{3/2}m^{1/2})$ and computes $\emph{all pairs approximate shortest path}$ ($\textsc{APSP}$)
+  matrix within an approximation factor of 2.
+  \item Second algorithm runs in \~{O}$(n^{7/3})$ time and computes $\textsc{APASP}$ matrix
+  within an approximation factor of 7/3.
+  \item Third algorithm runs in \~{O}$(n^2)$ time and computes $\textsc{APASP}$ matrix
+  within an approximation factor of 3.
+ \end{enumerate}
+
+ Algorithm designed by Zwick~\cite{zwick} and Cohen et al.~\cite{cohenzwick} computes an $n \times n$ matrix
+ that contains approximate distance between every pair of vertices of graph. Storing distance between all pairs of vertices
+ will surely require $O(n^2)$ space. Can we do something better in terms of the space used to keep the distance information?
+ Is it possible to answer distance queries in constant time without keeping all the distances explicitly? Researchers later 
+ addressed these questions by designing distance oracles of size strictly less then $O(n^2)$, i.e., these oracles do not
+ store all the distances explicitly but are able to answer distance queries in constant time. 
+ 
+ Thorup et al.~\cite{thorup} designed a distance oracle for general weighted graph that can answer
+ distance queries in constant time without keeping the distances between all the pairs explicitly.
+ Thorup et al.~\cite{thorup} showed that for any integer $k \geq 1$, a general graph can be preprocessed in $O(kmn^{1/k})$ time
+ to produce a distance oracle that will occupy $O(n^{1+1/k})$ space. Subsequent distance queries can be answered approximately 
+ in $O(k)$ time with approximation factor $2k - 1$. They are essentially extracting some distance information of size 
+ $O(kn^{1+1/k})$ from graph and with the help of this information they are able to answer any distance query in $O(k)$ time.
+ Query response time of $O(k)$ can be considered as constant considering the fact that $k$ is typically a small constant.
+ Main theorem of the paper presented by Thorup et al.~\cite{thorup} is as follows,
+ \begin{theorem}[\cite{thorup}]
+  Let $G = (V,E)$ be a weighted undirected graph with non-negative edge weights. Let $k > 1$. Then, the graph $G$ can be
+  preprocessed in $O(kmn^{1/k})$ expected time, producing a data structure of size $O(kn^{1+1/k})$, such that subsequent
+  distance queries can be answered approximately in $O(k)$ time. The stretch of the produced estimates is at most $2k - 1$.
+ \end{theorem}
+ The space requirement of this oracle is essentially optimal. Thorup et al.~\cite{thorup} showed that 1963 girth conjuncture
+ by Erd\H{o}s, and others, implies that the size of any distance oracle that answers distance queries with stretch strictly
+ less than $2k + 1$ is $\Omega(n^{1+1/k})$. This is one of the remarkable results in the field of the data structures that stores
+ distance information of graphs.
+ 
+ We are interested in distance oracles that can answer distance queries within small stretch. Algorithm presented
+ by Thorup et al. require $O(mn^{1/2})$ time to build a distance oracle that can answer distance queries
+ with stretch factor of 3. The size of the oracle is $O(n^{1.5})$. For dense graphs with $m = O(n^2)$, the time to
+ set up oracle is $O(n^{2.5})$ which is rather high for a distance oracle of stretch 3. In fact the algorithm
+ presented by Cohen et al.~\cite{cohenzwick} require only \~{O}$(n^2)$ time to build a distance oracle that can
+ answer distance queries with stretch of 3. However, the algorithm presented in~\cite{cohenzwick} outputs an $n \times n$
+ matrix of approximate distances, therefore it requires $n^2$ space to store the oracle. Thus, one should prefer Thorup et al's
+ algorithm to optimize time and Cohen et al's algorithm to optimize size of the oracle. But is it possible to design a distance oracle 
+ that can combine the attractive features of these two distance oracles?
+ 
+ Baswana et al.~\cite{baswana} almost answered the question posed in the last paragraph by presenting a distance
+ oracle that combines some features of two distance oracles~\cite{thorup,cohen}. They essentially presented two 
+ algorithms for constructing distance oracles. Details of running time, stretch and size of oracle are as following,
+ \begin{enumerate}
+  \item A general graph $G$ can be preprocessed in $O(min(n^2 \log n,mn^{1/2}))$ time to build a data structure
+  of size $O(n^{3/2})$. This data structure can be used to answer distance queries with stretch factor of 3.
+  The disadvantage of this data structure is its query response time, it takes $O(\log n)$ time to answer distance queries.
+  \item For integers $k > 2$, they presented an algorithm to construct an approximate distance oracle of size $O(n^{1+1/k})$ in
+  $O(min(n^2,kmn^{1/k}))$. Subsequent distance queries can be answered in $O(k)$ time within stretch of $2k - 1$.
+ \end{enumerate}
+ Clearly, for distance oracles of stretch greater than equal to 5, the algorithm presented by Baswana et al. combines
+ the desirable features of oracles presented by Cohen et al. and Thorup et al. In Table \ref{weighted} we have compiled
+ all major results on distance oracle for weighted general graph.
+ 
+ \begin{table}[ht]
+ \caption{Exact and Approximate Distance Oracles for General Weighted Graphs}
+ \label{weighted}
+ \centering
+ \begin{tabular}{|c|c|c|c|c|} 
+ \hline 
+ Stretch & Processing time & Size & Query time & Reference\\
+ \hline  
+ 1 & $O(n^3$) & $O(n^2)$ & $O(1)$ & Floyd and Warshall \cite{cormen} \\
+ \hline
+ $1+\epsilon$ & $O(n^{\omega}/\epsilon)$ & $O(n^2)$ & $O(1)$ & Zwick \cite{zwick} \\
+ \hline
+  2 & \~{O}$(n^{3/2}m^{1/2})$ & $O(n^2)$ & $O(1)$ & Cohen et al. \cite{cohenzwick} \\
+ \hline
+  7/3 & \~{O}$(n^{7/3})$ & $O(n^2)$ & $O(1)$ & Cohen et al. \cite{cohenzwick}  \\
+ \hline
+    & $O(mn^{1/2})$ & $O(n^{3/2})$ & $O(1)$ & Thorup et al. \cite{thorup}\\
+  3 & \~{O}$(n^2)$ & $O(n^2)$ & $O(1)$  & Cohen et al. \cite{cohenzwick} \\
+    & $O(min(n^2\log n,mn^{1/2}))$ & $O(n^{3/2})$ & $O(\log n)$ & Baswana et al. \cite{baswana} \\
+ \hline
+  $2k -1$ (for $k > 2$) & $O(kmn^{1/k})$ & $O(kn^{1+1/k})$ & $O(1)$ & Thorup et al. \cite{thorup}  \\
+  & $Omin(n^2,kmn^{1/k})$ & $O(kn^{1+1/k})$ & $O(1)$ & Baswana et al. \cite{baswana}  \\
+ \hline
+ \end{tabular}
+ \end{table}
+ 
+ \subsection{Distance Oracle for Chordal Graph Family}
+ In this thesis we present an approximate distance oracle for chordal graphs. 
+ With this regard it is important to study the existing results for $\textsc{APSP}$ on chordal graphs and its subclasses.
+ 
+ Han et al.$\cite{han}$ presented an algorithm to compute $\textsc{APSP}$ matrix for a chordal graph $G$. 
+ They divide the pairs of vertices into two sets. First set contains the pairs of vertices having distance at most two.
+ The other set contains the pairs having distance three or more. They solved $\textsc{APSP}$ separately on these two disjoint sets.
+ Finally, they combined the two solutions to get an $\textsc{APSP}$ matrix for chordal graphs. 
+ 
+ First part of the problem, i.e., determining the pairs of vertices having distance at most two, is solved by computing square of the graph.
+ Given a graph $G = (V,E)$, the square of the graph is defined as $G^2 = (V',E')$, where $V' = V$ and $(x,y) \in E$ if and only if $1 \leq d_G(x,y) \leq 2$.
+ Square of a graph can be computed by squaring the adjacency matrix of the graph. If $M^2$ is the square of the adjacency matrix of the graph,
+ then for any $v_i,v_j \in V$ if $M^2[v_i,v_j] = 1$ then $1 \leq d_G(v_i,v_j) \leq 2$. 
+ The time complexity of multiplication of two $n \times n$ matrices is known to be $O(n^{2.376})$~\cite{matrix}.
+ Therefore, it requires $O(n^2)$ time to compute $G^2$ by using matrix multiplication.
+ 
+ The other part of the solution, i.e., solving $\textsc{APSP}$ for the pairs of vertices having distance at least three,
+ is solved by exploring structural properties of chordal graphs. Given a $\emph{perfect elimination ordering}$ of the graph $G$,
+ $H(u)$ for a vertex $u \in V$ can be defined as the neighbor of $u$ having highest label with respect to the perfect elimination ordering.
+ Han et al. proved the following two important theorems about the structural properties of the chordal graph. 
+ 
+ \begin{theorem}[\cite{han}]
+ Given a chordal graph $G = (V,E)$, let $u,v \in V$ such that $d_G(u,v) \geq 3$, there exists a shortest path between $u$ and $v$ 
+ which contains either $H(u)$ or $H(v)$.
+ \end{theorem}
+
+ \begin{theorem}[\cite{han}]
+  Given a chordal graph $G = (V,E)$, let $u,v \in V$ such that $d_G(u,v) \geq 3$. Then $d(u,v) =$ min($d(H(u),v)+1,d(u,H(v)+1)$, where $d(u,v)$ is the length of a shortest path between $u$ and $v$.
+ \end{theorem}
+ 
+ Han et al. also proved that their algorithm require $O(n^2)$ time, if $G^2$ is known. If $G^2$ is not known, then we also need to consider
+ the running time of computing $G^2$ which is $O(n^{2.376})$. Therefore, given a chordal graph $G$, the algorithm given by
+ Han et al.~\cite{han} can compute $\textsc{APSP}$ matrix for the graph in $O(n^{2.376})$ time.
+ 
+ From the above discussion it is clear that matrix multiplication acts as a bottleneck for solving $\textsc{APSP}$ on chordal graph.
+ Even the algorithm proposed by Seidel~\cite{seidel}, to compute $\textsc{APSP}$ matrix for general unweighted graph, uses 
+ matrix multiplication as a subroutine. Therefore, matrix multiplication is the bottleneck in solving $\textsc{APSP}$ on chordal
+ as well as general unweighted graph. 
+ 
+ Han et al.~\cite{han} presented an algorithm to transform a general graph $G$ into a split graph $G_s$ such that
+ given square of the split graph $G_s$ the square of $G$ can be computed efficiently without using matrix multiplication.
+ This transformation essentially proves that computing square of a split graph is as hard as computing square of a general graph.
+ \begin{theorem}[\cite{han}]\label{squareofsplit}
+ Let $G = (V,E)$ be a general unweighted graph. 
+ Then, we can construct a split graph $G_s$ such that if square of $G_s$ 
+ is known then we can compute square of $G$ in $O(n^2)$ time without using matrix multiplication.
+ \end{theorem}
+ \begin{proof}
+ Let $G_s = (V',E')$ such that $V' = C \cup I$, where
+ $C$ is a clique on $|V|$ vertices and $I$ is an independent set of $|V|$ vertices. 
+ Let $f_{I}: V \rightarrow I$ and $f_{C}: V \rightarrow C$ be the bijective functions. 
+ Let $(f_I(x),f_C(y)) \in E'$ if and only if $(x,y) \in E$. Clearly, $G_s$ is a split graph.
+ Also, $d_G(x,y) = 2$ if and only if $d_{G_s}(f_I(x),f_C(y)) = 2$. 
+ Therefor, given square of $G_s$ we can construct square of $G$.
+ Construction of split graph require only $O(n^2)$ time. 
+ Also, if $G_s^2$ matrix for $G_s$ is given then we can populate $G^2$ matrix for general graph as well. Hence the  claim.
+  \end{proof}
+  
+ Theorem \ref{squareofsplit} essentially proves that the square of an unweighted general graph can be computed 
+ efficiently if the technique to compute the square of a split graph is known. 
+ Algorithm presented by  Seidel~\cite{seidel} to compute $\textsc{APSP}$ 
+ matrix for general unweighted graph $G$ uses matrix multiplication as a subroutine to compute square of $G$.
+ The matrix multiplication subroutine can be replaced by a subroutine that first computes a split graph $G_s$ 
+ corresponding to $G$ as explained in Theorem \ref{squareofsplit} and then, finally it computes square of $G$ using
+ square of $G_s^2$. This subroutine will require $O(n^2)$ time if square of the split graph $G_s^2$ can be 
+ computed in $O(n^2)$. Therefore, computing square of a split graph efficiently without using matrix multiplication 
+ will reduce the time complexity of computing $\textsc{APSP}$ matrix for general unweighted graphs by combining 
+ Seidel's algorithm~\cite{seidel} and Theorem\ref{squareofsplit}. Unfortunately, there does not exist any technique
+ to compute square of a split graph in $O(n^2)$ time. We leave this as an open question to compute square of 
+ a split graph efficiently without using matrix multiplication.
+ 
+ \subsubsection{Distance Oracle for Subclasses of Chordal Graphs}
+ $\textsc{APSP}$ is closely related to distance oracles. 
+ For many subclasses of chordal graphs, $\textsc{APSP}$ matrix can be computed in $O(n^2)$ time.
+ 
+ Ravi et al.~\cite{cpr} have given an algorithm to compute $\textsc{APSP}$ matrix for unweighted interval graphs
+ in $O(n^2)$ time. They essentially explored the perfect elimination ordering of vertices of interval graphs 
+ to design the algorithm. They used the IG-ordering~\cite{ramag} of vertices of interval graphs to 
+ compute neighborhood tree for each vertex. Finally, they used properties of neighborhood trees to compute
+ $\textsc{APSP}$ matrix of the given interval graph. The theorem proved by Ravi et. al.~\cite{cpr} is as follows:
+ \begin{theorem}
+ Given an unweighted interval graph $G$, a matrix $M$ containing all pairs shortest path information of $G$ 
+ can be computed optimally in $O(n^2)$ time.  
+ \end{theorem}  
+ 
+ $k$-tree is also an important subclass of chordal graphs. 
+ Radhakrishnan et al.~\cite{ktree} have given an algorithm to compute all pairs shortest path matrix
+ for $k$-trees in $O(kn^2)$ time. They presented an algorithm to solve system of linear equations to solve
+ path problems for bounded tree width graphs. They essentially presented algorithm to compute $\textsc{APAP}$
+ matrix for $k$-trees in $O(kn^2)$ time. They proved the following theorem.
+ \begin{theorem}
+ All pairs shortest path matrix for a $k$-tree can be computed optimally in $O(kn^2)$ time.
+ \end{theorem}
+ 
+ Dahlhaus~\cite{stronglychordal} proved that $\textsc{APSP}$ matrix can be computed in $O(n^2)$ time for
+ \emph{Strongly Chordal Graphs}, \emph{Distance Hereditary graphs}, \emph{Path Graphs} and \emph{Permutation Graphs}.
+ \mbox{Table \ref{subclasses}} tabulates previous results for computing $\textsc{APSP}$ matrix for different subclasses of
+ chordal graphs.
+ 
+  \begin{table}[ht]
+ \caption{All Pairs Shortest Path for Subclasses of Chordal graphs}
+ \label{subclasses}
+ \centering
+ \begin{tabular}{|c|c|c|c|} 
+ \hline 
+ Graph Class & Time Required & Space Required & Reference\\
+ \hline  
+ Chordal Graphs & $O(n^2$) & $O(n^2)$ & Han et al.~cite{han} \\
+ \hline
+ Interval Graphs & $O(n^2)$ & $O(n^2)$ & Ravi et al.~\cite{cpr} \\
+ \hline
+ $k$-trees & $O(kn^2)$ & $O(n^2)$ & Radhakrishnan et al.~\cite{ktree} \\
+ \hline
+ Strongly Chordal Graphs & $O(n^2)$ & $O(n^2)$ & Dahlhaus~\cite{stronglychordal}\\
+ \hline
+ Distance Hereditary graphs & $O(n^2)$ & $O(n^2)$ & Dahlhaus~\cite{stronglychordal}\\
+ \hline
+ Path Graphs & $O(n^2)$ & $O(n^2)$ & Dahlhaus~\cite{stronglychordal}\\
+ \hline
+ Permutation Graphs & $O(n^2)$ & $O(n^2)$ & Dahlhaus~\cite{stronglychordal}\\
+ \hline
+ \end{tabular}
+ \end{table}
+ 
+ \section{Tree $t$-Spanner}
+ Given a graph $G = (V,E)$, a tree $t$-spanner $T$ of $G$ is a spanning tree of $G$ such that for any pair of 
+ vertices $u,v \in V$, $d_T(u,v) \leq d_G(u,v)$, where $d_T(u,v)$ and $d_G(u,v)$ are the distances
+ between $u$ and $v$ in $T$ and $G$ respectively. Tree $t$-spanner problem has numerous applications in the 
+ field of communication network, motion planning, distributed systems and network design. In this section 
+ we survey the previous results of tree $t$-spanner for general graphs, chordal graphs and its subclasses.
+ 
+ \subsection{Tree $t$-Spanner for General Graphs}
+ Cai et al.~\cite{cai} have proved that for a given weighted general graph $G$, the problem to determine whether there 
+ exists a tree $t$-spanner for $G$ is NP-Complete for $t > 1$. They have also given a linear time algorithm to compute
+ tree 1-spanner of a weighted general graph if such a spanner exists. In the same paper, Cai et al. also proved 
+ that the decision version of tree $t$-spanner problem is NP-Complete even for unweighted graph when $t \geq 4$.
+ Also, they have given an algorithm to construct tree 2-spanner for a given unweighted general graph, if such a 
+ spanner exists. They proved the NP-hardness of the tree $t$-spanner problem for both weighted and unweighted
+ graphs by reducing 3SAT to tree $t$-spanner. Cai et al.~\cite{cai} essentially proved the following theorems.
+ \begin{theorem}[\cite{cai}]
+ For any fixed rational number $t > 1$, it is NP-Complete to decide whether a given weighted general graph
+ contains a tree $t$-spanner or not, even if all edge weights are positive integers. 
+ \end{theorem}
+ 
+ \begin{corollary}[\cite{cai}]
+ For any fixed rational number $t > 1$ and $W > 0$, it is NP-Complete to decide whether a 
+ given weighted general graph contains a $t$-spanner of weight $W$ or not, even if all edge weights
+ are positive integers.
+ \end{corollary}
+ 
+ \begin{theorem}[\cite{cai}]
+ For any fixed rational number $t \geq 4$, it is NP-Complete to decide whether a given unweighted general graph
+ contains a tree $t$-spanner or not, even if all edge weights are positive integers.
+ \end{theorem}
+ 
+ This problem is known to be NP-Complete since 1995~\cite{cai}. In 2001 D. Peleg et al.~\cite{peleg} proved the
+ inapproximability for tree $t$-spanner problem. They essentially proved that approximating tree
+ $t$-spanner problem within a factor better than (1+$\sqrt{5}$)/2 is not possible unless $P = NP$. 
+ Liebchen et al.~\cite{liebchen} have improved the inapproximability result and prove that the tree $t$-spanner
+ problem cannot be approximated within a factor better then 2 unless $P = NP$.
+ 
+ In 2008, Emek and Peleg~\cite{emek} have given an approximation algorithm for tree $t$-spanner problem on 
+ unweighted general graphs. They presented an $O($log$ n)$-approximation algorithm for this problem. 
+ They used the graph decomposition technique to break a given unweighted graph of $n$ vertices into connected
+ components of size at most n/2. This is achieved by discarding all the edges internal to some ball $B$ of radius
+ proportional to the optimal stretch of the tree $t-$spanner of the graph. This algorithm is then applied 
+ recursively to generate spanning tree of each connected component. Finally, this forest of spanning trees is
+ combined by the single source shortest path spanning tree of $B$. They proved the following theorem.
+ \begin{theorem}[\cite{emek}]
+ Given an unweighted graph $G$ on $n$ vertices and $m$ edges. A tree $t$-spanner of $G$ can be constructed in
+ $O(min(mn$log$n,n^3))$ time such that $t \leq O($log$ n) \times t'$, where $t'$ is the stretch of optimal tree 
+ spanner of $G$. 
+ \end{theorem}
+ 
+ Recently in 2014, Dragan et al.~\cite{dragan} have devised an algorithm to construct a tree 
+ (2$\lceil t/2 \rceil \lfloor $log$ n \rfloor$)-spanner for an unweighted general graph $G$, if $G$ 
+ admits a tree $t$-spanner. They used the tree $t$-spanner for chordal graphs to design an approximation
+ algorithm for tree $t$-spanner problem on general graphs. The main result of their paper is as follows.
+ \begin{theorem}[\cite{dragan}]
+ Let $G$ be an arbitrary connected unweighted graph on $n$ vertices and $m$ edges such that $G$ admits a 
+ tree $t$-spanner. Then, a tree (2$\lceil t/2 \rceil \lfloor $log$ n \rfloor$)-spanner of $G$ can be constructed
+ in $O(mn$log$^2n)$ time. 
+ \end{theorem}
+ 
+  \begin{table}[ht]
+ \caption{Complexity of Tree $t$-Spanner Problem on Different Classes of Graphs}
+ \label{subclasses}
+ \centering
+ \begin{tabular}{|c|c|c|c|} 
+ \hline 
+ Graph Class & Complexity & Stretch factor $t$ & Reference\\
+ \hline  
+ General Weighted Graphs & NP-Complete & $t > 1$ & Cai et al.~\cite{cai} \\
+ \hline
+ General Unweighted Graphs & NP-Complete & $t \geq 4$ & Cai et al.~\cite{cai} \\
+ \hline
+ Chordal Graphs & NP-Complete & $t \geq 4$ & Brandst{\"a}dt et al.~\cite{treespannerNP}\\
+ \hline
+ Chordal Bipertite Graphs & NP-Complete & $t \geq 4$ & Brandst{\"a}dt et al.~\cite{treespannerNP}\\
+ \hline
+ Planer Graphs & NP-Complete & $t > 1$ & Fekete et al.~\cite{fekete}\\
+ \hline
+ Outerplaner Graphs & P-time solvable & $t > 0$ & Peleg et al.~\cite{outerplaner}\\
+ \hline
+ \end{tabular}
+ \end{table}
+ 
+\subsection{Tree $t$-Spanner for Chordal Graph Family}
+Cai et al.~\cite{cai} have proved that the decision version of tree $t$-spanner problem is NP-Complete for general unweighted graphs when $t \geq 4$.
+Brandst{\"a}dt et al.~\cite{treespannerNP} have strengthened the result in~\cite{cai} by proving that this problem remains NP-Complete even for
+the class of chordal graphs when $t$ is fixed and $t \geq 4$. Brandst{\"a}dt et al. have given a reduction from 3SAT to tree $t$-spanner of chordal graphs
+to prove the hardness of the problem. They essentially proved the following theorem.
+
+\begin{theorem}[\cite{treespannerNP}]
+For any fixed integer $t \geq 4$, the decision version of the tree $t$-spanner problem is NP-Complete for the class of chordal graphs
+having diameter at most $t$+1 (if $t$ is even) or $t$+2 (if $t$ is odd).
+\end{theorem}
+
+In the same paper Brandst{\"a}dt et al.~\cite{treespannerNP} have also proved that a chordal graph admits a tree $t$-spanner, if the diameter of the graph
+is at most $t-1$ and $t$ is even or if the diameter of the graph is $t-2$ and $t$ is odd. They proved the following theorem.
+
+\begin{theorem}[\cite{treespannerNP}]
+For any even integer $t \geq 2$ (or $t \geq 3$, when $t$ is odd), every chordal graph admits a tree $t$-spanner if the diameter of the graph is 
+at most $t-1$ (or $t-2$, when $t$ is odd).
+\end{theorem}
+
+The status of the computational complexity of tree 3-spanner problem for chordal graphs is still open. 
+Therefore, in general we can say that the decision version of tree $t$-spanner problem for chordal graphs is polynomial time solvable when $t$= 1 or 2, 
+the status of the problem is still open for $t= 3$ and for $t \geq 4$ the problem is NP-Complete.
+
+F. Dragan et al.~\cite{dragan} have proved that for any given integer $t$, there exists a chordal graph $G$ on $n$ vertices such that $G$ does not admit 
+a tree $t$-spanner with $t <$ $ $log$_2\frac{n}{3}+2$. F. Dragan et al.~\cite{dragan} have used  a special class of chordal graphs presented in~\cite{sf} to prove
+this property. They iterativey generated this class of chordal graphs from a triangle. 
+Let $G_1$ be a  triangle. Clearly, $G_1$ is a chordal graph as well as outerplanar graph. 
+$G_2$ can be constructed from $G_1$ by adding a new vertex for each edge on the outer face of $G_1$ and 
+making this vertex adjacent to both the end points of the corresponding edge. Similarly, $G_k$ can be constructed from $G_{k-1}$. 
+Clearly, $G_k$ is also a chordal graph.  F. Dragan et al. used these chordal graphs and proved the following theorem.
+
+\begin{theorem}[\cite{dragan}]
+For any integer $k > 0$, $G_k$ is a chordal graph with $n = 3 \cdot 2^{k-1}$ vertices and 
+$G_k$ does not admit any tree $t$-spanner with $t <$ $ $log$_2\frac{n}{3}+2$.
+\end{theorem}
+
+F. Dragan et al.~\cite{dragan} have designed an algorithm to construct tree $t$-spanner for a chordal graph on $n$ vertices and $m$ edges,
+where $t$ = 2$\lfloor $log$_2n \rfloor$. They also proved that such a tree spanner for a given chordal graph can be constructed in $O(m $log$n)$ time.
+The algorithm presented in~\cite{dragan} make use of the \emph{balanced clique separator} of chordal graph $G$. 
+A balanced clique separator $C \subseteq V(G)$, such that the vertices of $C$ form a clique and 
+every connected component in the graph induced by the vertices in $V(G) \setminus C$ contains at most $n/2$ vertices (where $|V(G)|$ = $n$). 
+They also proved that such a balanced clique separator $C$ for a connected chordal graph $G$ can be found in $O(E(G))$ time.
+The algorithm presented in~\cite{dragan} decomposes the given chordal graph $G$ by using its balanced clique separator. 
+The algorithm is applied recursively on each connected component of the decomposed graph. 
+This process will lead to a hierarchical tree structure in the following way. 
+Decompose the graph $G$ into $G_1,G_2,\cdots,G_k$ using its balanced clique separator $C$.
+In the resulting hierarchical tree, $C$ will be the parent of  $G_1,G_2,\cdots,G_k$.
+The algorithm is applied recursively on $G_1,G_2,\cdots,G_k$ to create their hierarchical trees.
+Clearly, the balanced clique separator of $G$ will be the root of the tree.
+Finally, this hierarchical tree structure is used to construct the spanning tree of the graph.
+\begin{theorem}[\cite{dragan}]
+Any chordal graph $G$ on $n$ vertices and $m$ edges admits a tree $t$-spanner, where $t$ = 2$\lfloor $log$_2n \rfloor$. 
+Also, such a tree spanner of $G$ can be constructed in $O(m $log$n)$ time.
+\end{theorem}
+
+F. Dragan et al. in~\cite{collective} have designed an algorithm to construct collective tree spanner for chordal graphs.
+A system of $\alpha$ collective additive tree $\beta$-spanner for a graph $G$ is a set $S$ of $\alpha$ spanning trees of $G$,
+such that for any edge $(u,v)$ of $G$ there exists a tree $T \in S$ with the property that $d_G(u,v) \leq d_T(u,v) + \beta$. 
+Dragan et al.~\cite{collective} have designed a system of $O($log$_2n)$ collective additive tree 2-spanner for chordal graphs.
+They proved the following theorem.
+\begin{theorem}[\cite{collective}]
+Any chordal graph $G$ on $n$ vertices admits a system of $O($log$_2n)$ collective additive tree 2-spanner.
+\end{theorem} 
+
+ \subsubsection{Tree $t$-Spanner for Subclasses of Chordal Graphs}
+Many subclasses of chordal graphs admit a tree 3-spanner. 
+Madanlal et al.~\cite{madanlal} have proved that any interval graph admits a tree 3-spanner. 
+The have presented and proved the following theorem.
+\begin{theorem}[\cite{madanlal}]
+Given an interval graph $G$, a tree 3-spanner of $G$ can be constructed in linear time.
+\end{theorem}
+
+Brandst{\"a}dt et al.~\cite{treespannerNP} have proved that split graphs and very strongly chordal graphs admit a tree 3-spanner.
+Also, tree 3-spanner for split graphs and very strongly chordal graphs can be constructed in linear time. 
+Brandst{\"a}dt et al.~\cite{treespannerNP} also proved that $k$-trees ($k \leq 3$) and chordal graphs with diameter at most two admit
+tree 3-spanner which can be constructed in linear time.
+ 
+ 
+ \section{Conclusion}
+ In this chapter we presented a survey of distance oracles and tree $t$-spanner problem on different sub classes of graphs. 
+ Both the problems are interconnected to each    other. We will study a new algorithm to build distance oracle for chordal graphs in next chapter.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+     
+  
+
+
+ 
+ 
+ 
+ 
