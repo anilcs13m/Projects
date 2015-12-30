@@ -1,0 +1,35 @@
+33D32945 STP File, STP Format Version 1.0
+
+   SECTION Comment
+   Name    "Odd Wheel"
+   Creator "T. Koch, A. Martin and S. Voss"
+   Remark  "Example used to describe the STP data format"   
+   END
+
+   SECTION Graph
+   Nodes 9
+   Edges 12
+   E 1 2 10
+   E 1 9 1
+   E 2 6 1
+   E 2 3 8
+   E 3 4 9
+   E 3 5 2
+   E 4 5 2
+   E 6 5 1
+   E 6 7 1
+   E 7 8 0.5
+   E 8 9 0.5
+   E 9 5 1
+   END
+
+   SECTION
+   Terminals 4
+   T 1
+   T 2
+   T 3
+   T 4
+   END
+
+
+   EOF
