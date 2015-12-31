@@ -14,5 +14,8 @@ Rating Predcition and Movies Recommendation System
 Movies Sentiment Analysis
 ~~~
 ~~~
+Spell Checker
+~~~
+~~~
 Steiner Tree Improved Heuristic Algorithm
 ~~~
