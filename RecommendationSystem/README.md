@@ -1,4 +1,4 @@
-Rating Prediction and Recommending Moives
+Rating Prediction and Recommending Movies
 =========================================
 
 Recommendation engines use item and user-based similarity measures to examine a user's historical preferences to
@@ -13,6 +13,18 @@ have not rated by the user or some of the user never rated movies. So how to dea
 =====================
 * First we loaded dataset here we have three different dataset first is movies and user rating matrix second user movies matrix 
   that have (0,1) entry represent 1 of user j rated movie i in this matrix and other dataset is the parameter vector that have learning parameters for user and movie
+
+* Implementing the collaborative filtering cost function and gradient
+
+* You can now start training your algorithm to make movie recommendations for yourself
+
+* Predict the rating of movie i for user j
+
+* Computes the ratings for all the movies and users and displays the movies that it recommends
+
+
+
+
 
 
 
