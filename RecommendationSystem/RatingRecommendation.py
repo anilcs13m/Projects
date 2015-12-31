@@ -130,6 +130,10 @@ X = np.random.random(size=(movies, features))
 Theta = np.random.random(size=(users, features))
 params = np.concatenate((np.ravel(X), np.ravel(Theta)))
 
+"""
+   Mean normalization is required to fix the problem for a user who didn't rated any movie 
+   and we are suppose to recommend some movie the that user with out any rating of the user
+   to any movie"""
 
 Y_mean = np.zeros((movies, 1))
 Y_norm = np.zeros((movies, users))
