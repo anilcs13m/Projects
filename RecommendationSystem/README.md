@@ -1,5 +1,5 @@
-Recommendation System
-=====================
+Rating Prediction and Recommending Moives
+=========================================
 
 Recommendation engines use item and user-based similarity measures to examine a user's historical preferences to
 make recommendations for new "things" the user might be interested in.  
