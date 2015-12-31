@@ -23,8 +23,9 @@ X = params_data['X']  #(1682, 10)
 Theta = params_data['Theta'] #(943, 10)
 
 """
-Movies names this file contain two rows first is sequence number and second the the name of the movie 
-we are here reading on the name of the movies"""
+	Movies names this file contain two rows first is sequence number and second the the name of the movie 
+	we are here reading on the name of the movies
+"""
 
 movies_name = {}
 f = open('data/movie_ids.txt')
@@ -36,8 +37,9 @@ for line in f:
 #len(movies_name)
 
 """
-	Computing the Cost Function and Gradients with added Regularization, Cost Function for Collaborative Filtering Intuitively, 
-    the "Cost" is the degree to which a set of Movie Rating Rredictions deviate from the true Predictions. 
+	Computing the Cost Function and Gradients with added Regularization, 
+	Cost Function for Collaborative Filtering Intuitively, the "Cost" is 
+	the degree to which a set of Movie Rating Rredictions deviate from the true Predictions. 
 """
 def comput_cost_grad(params, Y, R, num_features, learning_rate):
     Y = np.matrix(Y)  # (1682, 943)
@@ -115,7 +117,9 @@ print('Rated {0} with {1} stars.'.format(movies_name[454], str(int(my_rating[454
 R = movies_data['R']
 Y = movies_data['Y']
 
-"""We can add our own ratings vector to the existing data set to include in the model."""
+"""
+	We can add our own ratings vector to the existing data set to include in the model.
+"""
 
 Y = np.append(Y, my_rating, axis=1) 
 R = np.append(R, my_rating != 0, axis=1) 
@@ -133,7 +137,8 @@ params = np.concatenate((np.ravel(X), np.ravel(Theta)))
 """
    Mean normalization is required to fix the problem for a user who didn't rated any movie 
    and we are suppose to recommend some movie the that user with out any rating of the user
-   to any movie"""
+   to any movie, this is we can say use for recommending movie to new users.
+"""
 
 Y_mean = np.zeros((movies, 1))
 Y_norm = np.zeros((movies, users))
@@ -156,18 +161,23 @@ fun_min = minimize(fun=comput_cost_grad, x0=params,
 X = np.matrix(np.reshape(fun_min.x[:movies * features], (movies, features)))
 Theta = np.matrix(np.reshape(fun_min.x[movies * features:], (users, features)))
 
-"""Our trained parameters are now in X and Theta. 
-	We can use these to create some recommendations for the user we added."""
+"""
+	Our trained parameters are now in X and Theta. 
+	We can use these to create some recommendations for the user we added.
+"""
 
 predictions = X * Theta.T 
 my_predictions = predictions[:, -1] + Y_mean
 
 sorted_preds = np.sort(my_predictions, axis=0)[::-1]
-"""That gives us an ordered list of the top ratings, but we lost what index those ratings are for. 
-	"""
+"""
+	That gives us an ordered list of the top ratings, but we lost what index those ratings are for. 
+"""
 sorted_preds[:10]
 
-"""We actually need to use argsort so we know what movie the predicted rating corresponds to"""
+"""	
+	We actually need to use argsort so we know what movie the predicted rating corresponds to
+"""
 movie_idx = np.argsort(my_predictions, axis=0)[::-1] 
 ### testing
 # for i in range(5):
