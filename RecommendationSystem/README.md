@@ -11,8 +11,8 @@ have not rated by the user or some of the user never rated movies. So how to dea
 Here are the steps that we followed to make redictions of rating and recommend movie
 
 =====================
-first we loaded dataset here we have three different dataset first is movies and user rating matrix second user movies matrix 
-that have (0,1) entry represent 1 of user j rated movie i in this matrix and other dataset is the parameter vector that have learning parameters for user and movie
+*first we loaded dataset here we have three different dataset first is movies and user rating matrix second user movies matrix 
+ that have (0,1) entry represent 1 of user j rated movie i in this matrix and other dataset is the parameter vector that have learning parameters for user and movie
 
 
 
