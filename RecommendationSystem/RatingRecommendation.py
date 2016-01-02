@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 
 
 """
-	This dataset consists of ratings on a scale of 1 to 5, Y is a (1682 x 943) (num_movies x num_users) matrix, and 
+    This dataset consists of ratings on a scale of 1 to 5, Y is a (1682 x 943) (num_movies x num_users) matrix, and 
 	R is the (1682 x 943) matrix R(i,j)=1 mean user j has rated movie i
 """
 movies_data = loadmat('data/movies.mat')
@@ -16,7 +16,7 @@ Y = movies_data['Y'] #(1682,943)
 R = movies_data['R'] #(1682,943)
 
 """
-parameters  theta and X
+    parameters  theta and X
 """
 params_data = loadmat('data/movieParams.mat') 
 X = params_data['X']  #(1682, 10)
@@ -79,9 +79,9 @@ def comput_cost_grad(params, Y, R, num_features, learning_rate):
 my_rating = np.zeros((1682, 1))
 
 my_rating[0] = 4
-my_rating[6] = 3
-my_rating[11] = 5
-my_rating[53] = 4
+my_rating[9] = 1
+my_rating[15] = 3
+my_rating[45] = 4
 my_rating[63] = 5
 my_rating[65] = 3
 my_rating[68] = 5
@@ -97,9 +97,9 @@ my_rating[405] = 5
 my_rating[454] = 1
 
 print('Rated {0} with {1} stars.'.format(movies_name[0], str(int(my_rating[0]))))
-print('Rated {0} with {1} stars.'.format(movies_name[6], str(int(my_rating[6]))))
-print('Rated {0} with {1} stars.'.format(movies_name[11], str(int(my_rating[11]))))
-print('Rated {0} with {1} stars.'.format(movies_name[53], str(int(my_rating[53]))))
+print('Rated {0} with {1} stars.'.format(movies_name[9], str(int(my_rating[9]))))
+print('Rated {0} with {1} stars.'.format(movies_name[15], str(int(my_rating[15]))))
+print('Rated {0} with {1} stars.'.format(movies_name[45], str(int(my_rating[45]))))
 print('Rated {0} with {1} stars.'.format(movies_name[63], str(int(my_rating[63]))))
 print('Rated {0} with {1} stars.'.format(movies_name[65], str(int(my_rating[65]))))
 print('Rated {0} with {1} stars.'.format(movies_name[68], str(int(my_rating[68]))))
@@ -130,6 +130,7 @@ users = Y.shape[1]  # 944
 features = 10 
 learning_rate = 10. # we can change the learning parameter
 
+
 X = np.random.random(size=(movies, features))
 Theta = np.random.random(size=(users, features))
 params = np.concatenate((np.ravel(X), np.ravel(Theta)))
@@ -151,7 +152,7 @@ for i in range(movies):
 Y_norm.mean()
 
 """
-	Implementations of Optimization Algorithms CG
+	Optimization Algorithms CG
 """
 fun_min = minimize(fun=comput_cost_grad, x0=params, 
 					args=(Y_norm, R, features, learning_rate), 
